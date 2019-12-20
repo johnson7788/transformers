@@ -1,13 +1,8 @@
-# Plug and Play Language Models: a Simple Approach to Controlled Text Generation
-
+# Plug and Play Language Models: PPLM 简单的控制语言生成方向的模型方法
 Authors: [Sumanth Dathathri](https://dathath.github.io/), [Andrea Madotto](https://andreamad8.github.io/), Janice Lan, Jane Hung, Eric Frank, [Piero Molino](https://w4nderlu.st/), [Jason Yosinski](http://yosinski.com/), and [Rosanne Liu](http://www.rosanneliu.com/)
-
 This folder contains the original code used to run the Plug and Play Language Model (PPLM).
-
 Paper link: https://arxiv.org/abs/1912.02164
-
 Blog link: https://eng.uber.com/pplm
-
 Please check out the repo under uber-research for more information: https://github.com/uber-research/PPLM
 
 
