@@ -798,7 +798,7 @@ if __name__ == '__main__':
         "--pretrained_model",
         "-M",
         type=str,
-        default="gpt2-medium",
+        default="bert-base-chinese",
         help="pretrained model name or path to local checkpoint",
     )
     parser.add_argument(

@@ -5,6 +5,21 @@ Paper link: https://arxiv.org/abs/1912.02164
 Blog link: https://eng.uber.com/pplm
 Please check out the repo under uber-research for more information: https://github.com/uber-research/PPLM
 
+## 原理
+GPT2属于 p(x) 生成的文本是无条件的概率分布,无法控制其生成方向
+p(x|a) 是我们要创建的LM语言模型，就是带有属性的文本，偏向某种感情或主题
+
+三个步骤：
+1. 使用语言模型transformer进行前向传递，以使用预测p（a | x）的属性模型来计算所需属性的可能性
+2. 反向传播基于属性模型中的梯度来更新LM的内部潜在表示，这里是更新transformer的K,V, 以便增加所生成的遍历具有所需属性的可能性
+3. 生成词汇表上的新分布,根据新的分布生成新词 
+
+保持修改后的语言模型transformer和原始语言模型GPT-2生成的流畅度相似，损失函数是通过计算2个分布的KL散度
+
+属性模型：
+方法1: 词袋法   简单直观，无法表达属性
+方法2: PPLM-Discrim， 分为单属性和多属性， 单属性，例如积极或消极，多属性，例如积极的政治方向 
+
 
 ## 安装方法
 
