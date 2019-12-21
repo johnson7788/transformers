@@ -34,7 +34,7 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 from tqdm import trange
 
-from transformers import GPT2Tokenizer
+from transformers import GPT2Tokenizer, BertTokenizer, BertForMaskedLM
 from transformers.file_utils import cached_path
 from transformers.modeling_gpt2 import GPT2LMHeadModel
 from pplm_classification_head import ClassificationHead
@@ -680,7 +680,7 @@ def run_pplm_example(
               "to discriminator's = {}".format(discrim, pretrained_model))
 
     # load pretrained model
-    model = GPT2LMHeadModel.from_pretrained(
+    model = BertForMaskedLM.from_pretrained(
         pretrained_model,
         output_hidden_states=True
     )
@@ -688,7 +688,7 @@ def run_pplm_example(
     model.eval()
 
     # load tokenizer
-    tokenizer = GPT2Tokenizer.from_pretrained(pretrained_model)
+    tokenizer = BertTokenizer.from_pretrained(pretrained_model)
 
     # Freeze GPT-2 weights
     for param in model.parameters():

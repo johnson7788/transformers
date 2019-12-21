@@ -36,6 +36,7 @@ cd examples/pplm
 
 ```bash
 python run_pplm.py -B military --cond_text "The potato" --length 50 --gamma 1.5 --num_iterations 3 --num_samples 10 --stepsize 0.03 --window_length 5 --kl_scale 0.01 --gm_scale 0.99 --colorama --sample
+python run_pplm.py -B military_chinese.txt --cond_text "The potato" --length 50 --gamma 1.5 --num_iterations 3 --num_samples 10 --stepsize 0.03 --window_length 5 --kl_scale 0.01 --gm_scale 0.99 --colorama --sample
 ```
 -B 使用  PPLM-BoW模型, military 生成的文本偏向的关键词，关键词的风格, 变量 BAG_OF_WORDS_ARCHIVE_MAP
 --length 生成文本长度50个字
