@@ -307,7 +307,7 @@ def get_classifier(
         embed_size=params['embed_size']
     ).to(device)
     if "url" in params:
-        resolved_archive_file = cached_path(params["url"])
+        resolved_archive_file = cached_path(params["url"], cache_dir='./')
     elif "path" in params:
         resolved_archive_file = params["path"]
     else:
