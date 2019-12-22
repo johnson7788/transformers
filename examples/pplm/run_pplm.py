@@ -34,7 +34,7 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 from tqdm import trange
 
-from transformers import GPT2Tokenizer, BertTokenizer, BertForMaskedLM
+from transformers import GPT2Tokenizer
 from transformers.file_utils import cached_path
 from transformers.modeling_gpt2 import GPT2LMHeadModel
 from pplm_classification_head import ClassificationHead
@@ -307,7 +307,7 @@ def get_classifier(
         embed_size=params['embed_size']
     ).to(device)
     if "url" in params:
-        resolved_archive_file = cached_path(params["url"], cache_dir='./')
+        resolved_archive_file = cached_path(params["url"])
     elif "path" in params:
         resolved_archive_file = params["path"]
     else:
@@ -680,7 +680,7 @@ def run_pplm_example(
               "to discriminator's = {}".format(discrim, pretrained_model))
 
     # load pretrained model
-    model = BertForMaskedLM.from_pretrained(
+    model = GPT2LMHeadModel.from_pretrained(
         pretrained_model,
         output_hidden_states=True
     )
@@ -688,7 +688,7 @@ def run_pplm_example(
     model.eval()
 
     # load tokenizer
-    tokenizer = BertTokenizer.from_pretrained(pretrained_model)
+    tokenizer = GPT2Tokenizer.from_pretrained(pretrained_model)
 
     # Freeze GPT-2 weights
     for param in model.parameters():
@@ -798,7 +798,7 @@ if __name__ == '__main__':
         "--pretrained_model",
         "-M",
         type=str,
-        default="bert-base-chinese",
+        default="gpt2-medium",
         help="pretrained model name or path to local checkpoint",
     )
     parser.add_argument(
