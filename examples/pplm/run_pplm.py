@@ -34,7 +34,7 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 from tqdm import trange
 
-from transformers import GPT2Tokenizer
+from transformers import GPT2Tokenizer, GPT2Config
 from transformers.file_utils import cached_path
 from transformers.modeling_gpt2 import GPT2LMHeadModel
 from pplm_classification_head import ClassificationHead
@@ -679,16 +679,21 @@ def run_pplm_example(
         print("discrim = {}, pretrained_model set "
               "to discriminator's = {}".format(discrim, pretrained_model))
 
+    config = GPT2Config.from_json_file('./gpt2sanwen/config.json')
     # load pretrained model
     model = GPT2LMHeadModel.from_pretrained(
-        pretrained_model,
-        output_hidden_states=True
+        './gpt2sanwen/pytorch_model.bin',
+        # pretrained_model,
+        # cache_dir='./gpt2-medium',
+        config=config,
+        # output_hidden_states=True
     )
     model.to(device)
     model.eval()
-
+    print(model.config)
     # load tokenizer
-    tokenizer = GPT2Tokenizer.from_pretrained(pretrained_model)
+    tokenizer = GPT2Tokenizer.from_pretrained('./gpt2sanwen/vocab.txt')
+    # tokenizer = GPT2Tokenizer.from_pretrained(pretrained_model, cache_dir='./gpt2-medium',)
 
     # Freeze GPT-2 weights
     for param in model.parameters():
