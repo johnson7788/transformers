@@ -34,7 +34,7 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 from tqdm import trange
 
-from transformers import GPT2Tokenizer, GPT2Config
+from transformers import GPT2Tokenizer, GPT2Config, BertTokenizer
 from transformers.file_utils import cached_path
 from transformers.modeling_gpt2 import GPT2LMHeadModel
 from pplm_classification_head import ClassificationHead
@@ -352,7 +352,7 @@ def get_bag_of_words_indices(bag_of_words_ids_or_paths: List[str], tokenizer) ->
         with open(filepath, "r") as f:
             words = f.read().strip().split("\n")
         bow_indices.append(
-            [tokenizer.encode(word.strip(), add_prefix_space=True) for word in
+            [tokenizer.encode(word.strip()) for word in
              words])
     return bow_indices
 
@@ -692,7 +692,7 @@ def run_pplm_example(
     model.eval()
     print(model.config)
     # load tokenizer
-    tokenizer = GPT2Tokenizer.from_pretrained('./gpt2sanwen/vocab.txt')
+    tokenizer = BertTokenizer.from_pretrained('./gpt2sanwen/vocab.txt', bos_token='<S>', cls_token='', sep_token='')
     # tokenizer = GPT2Tokenizer.from_pretrained(pretrained_model, cache_dir='./gpt2-medium',)
 
     # Freeze GPT-2 weights
@@ -709,6 +709,8 @@ def run_pplm_example(
         while not raw_text:
             print("Did you forget to add `--cond_text`? ")
             raw_text = input("Model prompt >>> ")
+        print(tokenizer.bos_token)
+        print(raw_text)
         tokenized_cond_text = tokenizer.encode(tokenizer.bos_token + raw_text)
 
     print("= Prefix of sentence =")
