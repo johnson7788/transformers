@@ -37,6 +37,8 @@ from transformers import (
     XLMWithLMHeadModel,
     XLNetLMHeadModel,
     XLNetTokenizer,
+    AutoModelWithLMHead,
+    AutoTokenizer,
 )
 
 
@@ -54,6 +56,7 @@ MODEL_CLASSES = {
     "xlnet": (XLNetLMHeadModel, XLNetTokenizer),
     "transfo-xl": (TransfoXLLMHeadModel, TransfoXLTokenizer),
     "xlm": (XLMWithLMHeadModel, XLMTokenizer),
+    "auto": (AutoModelWithLMHead, AutoTokenizer),
 }
 
 # Padding text to help Transformer-XL and XLNet with short prompts as proposed by Aman Rusia
@@ -70,6 +73,8 @@ man is chased outside and beaten. Twenty years later, Rasputin sees a vision of
 the Virgin Mary, prompting him to become a priest. Rasputin quickly becomes famous,
 with people, even a bishop, begging for his blessing. <eod> </s> <eos>"""
 
+PADDING_TEXT = """
+事发后，摄制组和天门山景区立即调动两架直升机和多架无人机在所有可能降落的山体上空进行地毯式搜寻。当天下午，当地政府迅速抵达现场开展搜救工作，调度消防队、蓝天救援队、摄制组、景区工作人员以及熟悉地形的当地村民第一时间开展联合搜救<eod> </s> <eos>"""
 
 def set_seed(args):
     np.random.seed(args.seed)

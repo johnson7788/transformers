@@ -35,10 +35,38 @@ from torch.autograd import Variable
 from tqdm import trange
 
 from pplm_classification_head import ClassificationHead
-from transformers import GPT2Tokenizer
 from transformers.file_utils import cached_path
-from transformers.modeling_gpt2 import GPT2LMHeadModel
 
+from transformers import (
+    CTRLLMHeadModel,
+    CTRLTokenizer,
+    GPT2LMHeadModel,
+    GPT2Tokenizer,
+    OpenAIGPTLMHeadModel,
+    OpenAIGPTTokenizer,
+    TransfoXLLMHeadModel,
+    TransfoXLTokenizer,
+    XLMTokenizer,
+    XLMWithLMHeadModel,
+    XLNetLMHeadModel,
+    XLNetTokenizer,
+    AutoTokenizer,
+    AutoModelWithLMHead,
+)
+
+
+MODEL_CLASSES = {
+    "gpt2": (GPT2LMHeadModel, GPT2Tokenizer),
+    # "ctrl": (CTRLLMHeadModel, CTRLTokenizer),
+    # "openai-gpt": (OpenAIGPTLMHeadModel, OpenAIGPTTokenizer),
+    "auto": (AutoModelWithLMHead, AutoTokenizer),
+    "xlnet": (XLNetLMHeadModel, XLNetTokenizer),
+    # "transfo-xl": (TransfoXLLMHeadModel, TransfoXLTokenizer),
+    # "xlm": (XLMWithLMHeadModel, XLMTokenizer),
+}
+#使用的模型是什么
+USEMODEL = 'xlnet'
+model_class, tokenizer_class = MODEL_CLASSES[USEMODEL]
 
 PPLM_BOW = 1
 PPLM_DISCRIM = 2
@@ -121,7 +149,7 @@ def perturb_past(
     kl_scale=0.01,
     device="cuda",
 ):
-    # Generate inital perturbed past
+    # Generate inital perturbed past, perturb_past这个函数的主要目的是更新Ht, grad_accumulator [24], grad_accumulator[0] [2,1,16,2,64]
     grad_accumulator = [(np.zeros(p.shape).astype("float32")) for p in past]
 
     if accumulated_hidden is None:
@@ -133,7 +161,7 @@ def perturb_past(
         decay_mask = 1.0
 
     # TODO fix this comment (SUMANTH)
-    # Generate a mask is gradient perturbated is based on a past window
+    # Generate a mask is gradient perturbated is based on a past window， past[0].shape 【2，1，16，3，64】
     _, _, _, curr_length, _ = past[0].shape
 
     if curr_length > window_length and window_length > 0:
@@ -160,23 +188,28 @@ def perturb_past(
             to_var(torch.from_numpy(p_), requires_grad=True, device=device) for p_ in grad_accumulator
         ]
 
-        # Compute hidden using perturbed past
+        # Compute hidden using perturbed past， 累加方式计算更新的隐状态
+        # perturbed_past [[2,1,16,4,64], 共24]
         perturbed_past = list(map(add, past, curr_perturbation))
+        # curr_perturbation length 24, curr_perturbation[0].shape [2,1,16,4,64], curr_length 是int，单词数目
         _, _, _, curr_length, _ = curr_perturbation[0].shape
+        # all_hidden list 25,  all_hidden[0] [1,1,1024], hidden [1,1,1024], all_logits [1,1,DICT_SIZE]
         all_logits, _, all_hidden = model(last, past=perturbed_past)
         hidden = all_hidden[-1]
+        # accumulated_hidden [1,1024]
         new_accumulated_hidden = accumulated_hidden + torch.sum(hidden, dim=1).detach()
-        # TODO: Check the layer-norm consistency of this with trained discriminator (Sumanth)
+        # TODO: Check the layer-norm consistency of this with trained discriminator (Sumanth), logits, probs [1,DICT_SIZE]
         logits = all_logits[:, -1, :]
         probs = F.softmax(logits, dim=-1)
 
         loss = 0.0
         loss_list = []
+        # 做线性计算计算损失
         if loss_type == PPLM_BOW or loss_type == PPLM_BOW_DISCRIM:
             for one_hot_bow in one_hot_bows_vectors:
                 bow_logits = torch.mm(probs, torch.t(one_hot_bow))
                 bow_loss = -torch.log(torch.sum(bow_logits))
-                loss += bow_loss
+                loss += bow_loss   #把BOW的loss加入loss中
                 loss_list.append(bow_loss)
             print(" pplm_bow_loss:", loss.data.cpu().numpy())
 
@@ -201,14 +234,14 @@ def perturb_past(
             loss_list.append(discrim_loss)
 
         kl_loss = 0.0
-        if kl_scale > 0.0:
+        if kl_scale > 0.0:    #计算kl散度损失
             unpert_probs = F.softmax(unpert_logits[:, -1, :], dim=-1)
             unpert_probs = unpert_probs + SMALL_CONST * (unpert_probs <= SMALL_CONST).float().to(device).detach()
             correction = SMALL_CONST * (probs <= SMALL_CONST).float().to(device).detach()
             corrected_probs = probs + correction.detach()
             kl_loss = kl_scale * ((corrected_probs * (corrected_probs / unpert_probs).log()).sum())
             print(" kl_loss", kl_loss.data.cpu().numpy())
-            loss += kl_loss
+            loss += kl_loss   #加入kl loss到loss中
 
         loss_per_iter.append(loss.data.cpu().numpy())
         print(" pplm_loss", (loss - kl_loss).data.cpu().numpy())
@@ -216,7 +249,7 @@ def perturb_past(
         # compute gradients
         loss.backward()
 
-        # calculate gradient norms
+        # calculate gradient norms，
         if grad_norms is not None and loss_type == PPLM_BOW:
             grad_norms = [
                 torch.max(grad_norms[index], torch.norm(p_.grad * window_mask))
@@ -227,13 +260,13 @@ def perturb_past(
                 (torch.norm(p_.grad * window_mask) + SMALL_CONST) for index, p_ in enumerate(curr_perturbation)
             ]
 
-        # normalize gradients
+        # normalize gradients  计算Ht的范式， 论文中更新delta Ht的公式部分
         grad = [
             -stepsize * (p_.grad * window_mask / grad_norms[index] ** gamma).data.cpu().numpy()
             for index, p_ in enumerate(curr_perturbation)
         ]
 
-        # accumulate gradient
+        # accumulate gradient,论文中更新delta Ht的公式部分
         grad_accumulator = list(map(add, grad, grad_accumulator))
 
         # reset gradients, just to make sure
@@ -246,10 +279,10 @@ def perturb_past(
             new_past.append(p_.detach())
         past = new_past
 
-    # apply the accumulated perturbations to the past
+    # apply the accumulated perturbations to the past, pert_past, grad_accumulator [24], pert_past, grad_accumulator[0] [2,1,16,2,64]
     grad_accumulator = [to_var(torch.from_numpy(p_), requires_grad=True, device=device) for p_ in grad_accumulator]
     pert_past = list(map(add, past, grad_accumulator))
-
+    #返回新的past和更新的Ht，grad_norms 【【1】】长度24，loss_per_iter 每次迭代的损失
     return pert_past, new_accumulated_hidden, grad_norms, loss_per_iter
 
 
@@ -295,6 +328,12 @@ def get_classifier(
 
 
 def get_bag_of_words_indices(bag_of_words_ids_or_paths: List[str], tokenizer) -> List[List[List[int]]]:
+    """
+    BOW 词集进行tokenizer
+    :param bag_of_words_ids_or_paths:
+    :param tokenizer:
+    :return:
+    """
     bow_indices = []
     for id_or_path in bag_of_words_ids_or_paths:
         if id_or_path in BAG_OF_WORDS_ARCHIVE_MAP:
@@ -325,7 +364,7 @@ def build_bows_one_hot_vectors(bow_indices, tokenizer, device="cuda"):
 def full_text_generation(
     model,
     tokenizer,
-    context=None,
+    context=None,  # <|endoftext|>The potato组成的ID list
     num_samples=1,
     device="cuda",
     bag_of_words=None,
@@ -347,8 +386,8 @@ def full_text_generation(
     repetition_penalty=1.0,
     **kwargs
 ):
+    # 获取判别器的参数
     classifier, class_id = get_classifier(discrim, class_label, device)
-
     bow_indices = []
     if bag_of_words:
         bow_indices = get_bag_of_words_indices(bag_of_words.split(";"), tokenizer)
@@ -367,7 +406,7 @@ def full_text_generation(
 
     else:
         raise Exception("Specify either a bag of words or a discriminator")
-
+    #这个原始LM输出
     unpert_gen_tok_text, _, _ = generate_text_pplm(
         model=model,
         tokenizer=tokenizer,
@@ -384,7 +423,7 @@ def full_text_generation(
     pert_gen_tok_texts = []
     discrim_losses = []
     losses_in_time = []
-
+    # num_samples 循环输出次数, pert_gen_tok_text是经过更新后得到的text token，discrim_loss判别模型损失， loss_in_time每个时刻的损失
     for i in range(num_samples):
         pert_gen_tok_text, discrim_loss, loss_in_time = generate_text_pplm(
             model=model,
@@ -448,35 +487,35 @@ def generate_text_pplm(
     kl_scale=0.01,
     repetition_penalty=1.0,
 ):
-    output_so_far = None
+    output_so_far = None  # 第一次值tensor([[50256,   464, 21219]])
     if context:
         context_t = torch.tensor(context, device=device, dtype=torch.long)
         while len(context_t.shape) < 2:
             context_t = context_t.unsqueeze(0)
         output_so_far = context_t
 
-    # collect one hot vectors for bags of words
+    # collect one hot vectors for bags of words, 把BOW词集One_hot化 [[149,DICT_SIZE]], DICT_SIZE: 50257
     one_hot_bows_vectors = build_bows_one_hot_vectors(bow_indices, tokenizer, device)
 
     grad_norms = None
     last = None
     unpert_discrim_loss = 0
     loss_in_time = []
-    for i in trange(length, ascii=True):
+    for i in trange(length, ascii=True):   #trange是进度条，length是生成总数
 
         # Get past/probs for current output, except for last word
         # Note that GPT takes 2 inputs: past + current_token
 
-        # run model forward to obtain unperturbed
+        # run model forward to obtain unperturbed, last是最后一个单词的ID
         if past is None and output_so_far is not None:
             last = output_so_far[:, -1:]
-            if output_so_far.shape[1] > 1:
+            if output_so_far.shape[1] > 1:    #如果当前的单词数大于1， 把除了最后一个单词的前面单词作为输入，放入GPT模型
                 _, past, _ = model(output_so_far[:, :-1])
-
+        #GPT2模型返回3个值
         unpert_logits, unpert_past, unpert_all_hidden = model(output_so_far)
-        unpert_last_hidden = unpert_all_hidden[-1]
+        unpert_last_hidden = unpert_all_hidden[-1]   # unpert_last_hidden [1,3,1024]
 
-        # check if we are abowe grad max length
+        # check if we are above grad max length
         if i >= grad_length:
             current_stepsize = stepsize * 0
         else:
@@ -487,8 +526,8 @@ def generate_text_pplm(
             pert_past = past
 
         else:
-            accumulated_hidden = unpert_last_hidden[:, :-1, :]
-            accumulated_hidden = torch.sum(accumulated_hidden, dim=1)
+            accumulated_hidden = unpert_last_hidden[:, :-1, :]   #accumulated_hidden [1,2,1024]
+            accumulated_hidden = torch.sum(accumulated_hidden, dim=1)  #accumulated_hidden [1,1024]
 
             if past is not None:
                 pert_past, _, grad_norms, loss_this_iter = perturb_past(
@@ -515,8 +554,9 @@ def generate_text_pplm(
                 loss_in_time.append(loss_this_iter)
             else:
                 pert_past = past
-
-        pert_logits, past, pert_all_hidden = model(last, past=pert_past)
+        #pert_logits [24], pert_logits[0] [2,1,16,2,64], past [24] past[0] [2,1,16,3,64], pert_all_hidden[25], pert_all_hidden[0] [1,1,1024]
+        # pert_logits, past, pert_all_hidden = model(last, past=pert_past)
+        pert_logits, past, pert_all_hidden = model(last, mems=pert_past)
         pert_logits = pert_logits[:, -1, :] / temperature  # + SMALL_CONST
 
         for token_idx in set(output_so_far[0].tolist()):
@@ -524,7 +564,7 @@ def generate_text_pplm(
                 pert_logits[0, token_idx] *= repetition_penalty
             else:
                 pert_logits[0, token_idx] /= repetition_penalty
-
+        # pert_probs [1,DICT_SIZE]
         pert_probs = F.softmax(pert_logits, dim=-1)
 
         if classifier is not None:
@@ -536,9 +576,9 @@ def generate_text_pplm(
         else:
             unpert_discrim_loss = 0
 
-        # Fuse the modified model and original model
+        # Fuse the modified model and original model, 如果使用pplm修改，那么pert_probs的变化
         if perturb:
-
+            # unpert_logits [1,3,DICT_SIZE]  --> [1,DICT_SIZE]
             unpert_probs = F.softmax(unpert_logits[:, -1, :], dim=-1)
 
             pert_probs = (pert_probs ** gm_scale) * (unpert_probs ** (1 - gm_scale))  # + SMALL_CONST
@@ -552,14 +592,14 @@ def generate_text_pplm(
             pert_logits = top_k_filter(pert_logits, k=top_k)  # + SMALL_CONST
             pert_probs = F.softmax(pert_logits, dim=-1)
 
-        # sample or greedy
+        # sample or greedy, 是否用多项式抽样
         if sample:
             last = torch.multinomial(pert_probs, num_samples=1)
 
         else:
             _, last = torch.topk(pert_probs, k=1, dim=-1)
 
-        # update context/output_so_far appending the new token
+        # update context/output_so_far appending the new token， output_so_far 【1，3】，last 【1，1】
         output_so_far = last if output_so_far is None else torch.cat((output_so_far, last), dim=1)
 
         print(tokenizer.decode(output_so_far.tolist()[0]))
@@ -580,20 +620,20 @@ def set_generic_model_params(discrim_weights, discrim_meta):
 
 
 def run_pplm_example(
-    pretrained_model="gpt2-medium",
-    cond_text="",
+    pretrained_model="gpt2-medium",    #预训练好的LM
+    cond_text="",        #起始词
     uncond=False,
-    num_samples=1,
-    bag_of_words=None,
-    discrim=None,
+    num_samples=1,       #生成样本数
+    bag_of_words=None,  #使用的BOW词典，主题
+    discrim=None,      #是否使用判别式属性模型
     discrim_weights=None,
     discrim_meta=None,
     class_label=-1,
-    length=100,
+    length=100,      #生成的长度
     stepsize=0.02,
     temperature=1.0,
     top_k=10,
-    sample=False,
+    sample=False,   #是否采用抽样
     num_iterations=3,
     grad_length=10000,
     horizon_length=1,
@@ -604,8 +644,8 @@ def run_pplm_example(
     kl_scale=0.01,
     seed=0,
     no_cuda=False,
-    colorama=False,
-    repetition_penalty=1.0,
+    colorama=False,     #彩色高亮显示
+    repetition_penalty=1.0,   #重复单词惩罚性
 ):
     # set Random seed
     torch.manual_seed(seed)
@@ -613,7 +653,7 @@ def run_pplm_example(
 
     # set the device
     device = "cuda" if torch.cuda.is_available() and not no_cuda else "cpu"
-
+    #加判别式模型的参数
     if discrim == "generic":
         set_generic_model_params(discrim_weights, discrim_meta)
 
@@ -622,18 +662,18 @@ def run_pplm_example(
         print("discrim = {}, pretrained_model set " "to discriminator's = {}".format(discrim, pretrained_model))
 
     # load pretrained model
-    model = GPT2LMHeadModel.from_pretrained(pretrained_model, output_hidden_states=True)
+    model = model_class.from_pretrained(pretrained_model, output_hidden_states=True, mem_len=200)
     model.to(device)
     model.eval()
 
     # load tokenizer
-    tokenizer = GPT2Tokenizer.from_pretrained(pretrained_model)
+    tokenizer = tokenizer_class.from_pretrained(pretrained_model)
 
-    # Freeze GPT-2 weights
+    # Freeze GPT-2 weights, 不训练GPT2的参数
     for param in model.parameters():
         param.requires_grad = False
 
-    # figure out conditioning text
+    # figure out conditioning text, 有和没有起始词的情况， 起始词tokenized,
     if uncond:
         tokenized_cond_text = tokenizer.encode([tokenizer.bos_token])
     else:
@@ -641,14 +681,14 @@ def run_pplm_example(
         while not raw_text:
             print("Did you forget to add `--cond_text`? ")
             raw_text = input("Model prompt >>> ")
+        #The potato ==>[50256,464,21219] ---> 第一次打印 <|endoftext|>The potato
         tokenized_cond_text = tokenizer.encode(tokenizer.bos_token + raw_text)
-
     print("= Prefix of sentence =")
     print(tokenizer.decode(tokenized_cond_text))
     print()
 
     # generate unperturbed and perturbed texts
-
+    # full_text_generation 是只生成用LM语言的词语，目的为了进行对比, unpert_gen_tok_text是未经过pert的token，pert_gen_tok_texts是经过pert的token
     # full_text_generation returns:
     # unpert_gen_tok_text, pert_gen_tok_texts, discrim_losses, losses_in_time
     unpert_gen_tok_text, pert_gen_tok_texts, _, _ = full_text_generation(
@@ -676,7 +716,7 @@ def run_pplm_example(
         repetition_penalty=repetition_penalty,
     )
 
-    # untokenize unperturbed text
+    # untokenize unperturbed text, 先把未经过pert的token转换成单词输出
     unpert_gen_text = tokenizer.decode(unpert_gen_tok_text.tolist()[0])
 
     print("=" * 80)
@@ -695,7 +735,7 @@ def run_pplm_example(
             # w[0] because we are sure w has only 1 item because previous fitler
             bow_word_ids.update(w[0] for w in filtered)
 
-    # iterate through the perturbed texts
+    # iterate through the perturbed texts, 打印出经过perturb的num_samples个句子
     for i, pert_gen_tok_text in enumerate(pert_gen_tok_texts):
         try:
             # untokenize unperturbed text
@@ -719,7 +759,7 @@ def run_pplm_example(
         except Exception as exc:
             print("Ignoring error while generating perturbed text:", exc)
 
-        # keep the prefix, perturbed seq, original seq for each index
+        # keep the prefix, perturbed seq, original seq for each index, 保存这次记过到一个list
         generated_texts.append((tokenized_cond_text, pert_gen_tok_text, unpert_gen_tok_text))
 
     return
@@ -731,8 +771,8 @@ if __name__ == "__main__":
         "--pretrained_model",
         "-M",
         type=str,
-        default="gpt2-medium",
-        help="pretrained model name or path to local checkpoint",
+        default="hfl/chinese-xlnet-base",
+        help="pretrained model name or path to local checkpoint, gpt2-medium",
     )
     parser.add_argument("--cond_text", type=str, default="The lake", help="Prefix texts to condition on")
     parser.add_argument("--uncond", action="store_true", help="Generate from end-of-text as prefix")
