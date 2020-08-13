@@ -42,9 +42,15 @@ python run_pplm.py -B military_chinese.txt --cond_text "The potato" --length 50 
 --length 生成文本长度50个字
 --cond_text 起始单词 
 --gamma 梯度归一化时的平方参数
+<<<<<<< HEAD
 --num_iterations  迭代次数
 --num_samples  生成10个段落样本
 --stepsize 梯度步长
+=======
+--num_iterations  扰动次数？
+--num_samples  生成10个段落样本
+--stepsize 梯度
+>>>>>>> d5c81c5b381f39d2c9901bdac34f4ae13a4df56a
 --window_length 窗口长度，滑动窗口的长度
 --kl_scale KL散度系数
 --gm_scale 0.99 

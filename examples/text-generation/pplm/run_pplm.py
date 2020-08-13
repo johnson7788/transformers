@@ -34,7 +34,15 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 from tqdm import trange
 
+<<<<<<< HEAD:examples/pplm/run_pplm.py
+from transformers import GPT2Tokenizer, GPT2Config, BertTokenizer
+=======
 from pplm_classification_head import ClassificationHead
+<<<<<<< HEAD
+=======
+from transformers import GPT2Tokenizer
+>>>>>>> b290c32e1617fa74f44ccd8b83365fe764437be9:examples/text-generation/pplm/run_pplm.py
+>>>>>>> d5c81c5b381f39d2c9901bdac34f4ae13a4df56a
 from transformers.file_utils import cached_path
 
 from transformers import (
@@ -342,7 +350,13 @@ def get_bag_of_words_indices(bag_of_words_ids_or_paths: List[str], tokenizer) ->
             filepath = id_or_path
         with open(filepath, "r") as f:
             words = f.read().strip().split("\n")
+<<<<<<< HEAD:examples/pplm/run_pplm.py
+        bow_indices.append(
+            [tokenizer.encode(word.strip()) for word in
+             words])
+=======
         bow_indices.append([tokenizer.encode(word.strip(), add_prefix_space=True) for word in words])
+>>>>>>> b290c32e1617fa74f44ccd8b83365fe764437be9:examples/text-generation/pplm/run_pplm.py
     return bow_indices
 
 
@@ -661,13 +675,33 @@ def run_pplm_example(
         pretrained_model = DISCRIMINATOR_MODELS_PARAMS[discrim]["pretrained_model"]
         print("discrim = {}, pretrained_model set " "to discriminator's = {}".format(discrim, pretrained_model))
 
+    config = GPT2Config.from_json_file('./gpt2sanwen/config.json')
     # load pretrained model
+<<<<<<< HEAD
     model = model_class.from_pretrained(pretrained_model, output_hidden_states=True, mem_len=200)
+=======
+<<<<<<< HEAD:examples/pplm/run_pplm.py
+    model = GPT2LMHeadModel.from_pretrained(
+        './gpt2sanwen/pytorch_model.bin',
+        # pretrained_model,
+        # cache_dir='./gpt2-medium',
+        config=config,
+        # output_hidden_states=True
+    )
+=======
+    model = GPT2LMHeadModel.from_pretrained(pretrained_model, output_hidden_states=True)
+>>>>>>> b290c32e1617fa74f44ccd8b83365fe764437be9:examples/text-generation/pplm/run_pplm.py
+>>>>>>> d5c81c5b381f39d2c9901bdac34f4ae13a4df56a
     model.to(device)
     model.eval()
-
+    print(model.config)
     # load tokenizer
+<<<<<<< HEAD
     tokenizer = tokenizer_class.from_pretrained(pretrained_model)
+=======
+    tokenizer = BertTokenizer.from_pretrained('./gpt2sanwen/vocab.txt', bos_token='<S>', cls_token='', sep_token='')
+    # tokenizer = GPT2Tokenizer.from_pretrained(pretrained_model, cache_dir='./gpt2-medium',)
+>>>>>>> d5c81c5b381f39d2c9901bdac34f4ae13a4df56a
 
     # Freeze GPT-2 weights, 不训练GPT2的参数
     for param in model.parameters():
@@ -681,7 +715,12 @@ def run_pplm_example(
         while not raw_text:
             print("Did you forget to add `--cond_text`? ")
             raw_text = input("Model prompt >>> ")
+<<<<<<< HEAD
         #The potato ==>[50256,464,21219] ---> 第一次打印 <|endoftext|>The potato
+=======
+        print(tokenizer.bos_token)
+        print(raw_text)
+>>>>>>> d5c81c5b381f39d2c9901bdac34f4ae13a4df56a
         tokenized_cond_text = tokenizer.encode(tokenizer.bos_token + raw_text)
     print("= Prefix of sentence =")
     print(tokenizer.decode(tokenized_cond_text))
