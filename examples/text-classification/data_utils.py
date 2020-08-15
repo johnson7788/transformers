@@ -80,7 +80,7 @@ def _glue_convert_examples_to_features(
         raise KeyError(output_mode)
     #获取所有样本的labels
     labels = [label_from_example(example) for example in examples]
-
+    #所有样本字符到id的，padding或traucate 后的结果
     batch_encoding = tokenizer(
         [(example.text_a, example.text_b) for example in examples],
         max_length=max_length,
@@ -91,12 +91,12 @@ def _glue_convert_examples_to_features(
     features = []
     for i in range(len(examples)):
         inputs = {k: batch_encoding[k][i] for k in batch_encoding}
-
+        # 把input_ids, attention_mask, token_type_ids, label 放到一个对象InputFeatures 里面
         feature = InputFeatures(**inputs, label=labels[i])
         features.append(feature)
-
+    #打印前5个样本
     for i, example in enumerate(examples[:5]):
-        logger.info("*** Example ***")
+        logger.info("*** 打印前5个样本 ***")
         logger.info("guid: %s" % (example.guid))
         logger.info("features: %s" % features[i])
 
@@ -224,6 +224,14 @@ class GlueDataset(Dataset):
         mode: Union[str, Split] = Split.train,
         cache_dir: Optional[str] = None,
     ):
+        """
+        Args:
+            args: 数据集的参数
+            tokenizer: 使用的tokenizer
+            limit_length: 序列限制的长度
+            mode: 是train，还是dev，还是text的数据集
+            cache_dir: 使用的数据的cache目录是
+        """
         self.args = args
         self.processor = glue_processors[args.task_name]()
         self.output_mode = glue_output_modes[args.task_name]
@@ -232,13 +240,14 @@ class GlueDataset(Dataset):
                 mode = Split[mode]
             except KeyError:
                 raise KeyError("mode is not a valid split name")
-        # Load data features from cache or dataset file
+        #生成cached文件的名字
         cached_features_file = os.path.join(
             cache_dir if cache_dir is not None else args.data_dir,
             "cached_{}_{}_{}_{}".format(
                 mode.value, tokenizer.__class__.__name__, str(args.max_seq_length), args.task_name,
             ),
         )
+        #获取label的列表
         label_list = self.processor.get_labels()
         self.label_list = label_list
 
@@ -272,9 +281,9 @@ class GlueDataset(Dataset):
                 )
                 start = time.time()
                 torch.save(self.features, cached_features_file)
-                # ^ This seems to take a lot of time so I want to investigate why and how we can improve.
+                # 保存cache文件
                 logger.info(
-                    "Saving features into cached file %s [took %.3f s]", cached_features_file, time.time() - start
+                    "保存 features文件到cached file %s [took %.3f s]", cached_features_file, time.time() - start
                 )
 
     def __len__(self):
