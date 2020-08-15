@@ -6,6 +6,7 @@ __pycache__/
 *$py.class
 .data
 model
+examples/text-classification/glue_data
 
 # C extensions
 *.so
