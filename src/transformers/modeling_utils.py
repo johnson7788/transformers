@@ -227,7 +227,7 @@ class ModuleUtilsMixin:
 
     def get_extended_attention_mask(self, attention_mask: Tensor, input_shape: Tuple[int], device: device) -> Tensor:
         """
-        Makes broadcastable attention and causal masks so that future and masked tokens are ignored.
+        进行broadcastable attention 以便将来masked tokens被忽略。
 
         Arguments:
             attention_mask (:obj:`torch.Tensor`):

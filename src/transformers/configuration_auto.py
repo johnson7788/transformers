@@ -133,12 +133,9 @@ class AutoConfig:
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path, **kwargs):
-        r""" Instantiates one of the configuration classes of the library
-        from a pre-trained model configuration.
-
-        The configuration class to instantiate is selected
-        based on the `model_type` property of the config object, or when it's missing,
-        falling back to using pattern matching on the `pretrained_model_name_or_path` string:
+        r""" 从预训练的模型配置实例化库的配置类之一。
+        根据配置对象的model_type属性选择要实例化的配置类，或者当缺少该类时，
+        回退使用对pretrained_model_name_or_path字符串进行模式匹配：
 
             - `t5`: :class:`~transformers.T5Config` (T5 model)
             - `distilbert`: :class:`~transformers.DistilBertConfig` (DistilBERT model)
@@ -161,31 +158,30 @@ class AutoConfig:
         Args:
             pretrained_model_name_or_path (:obj:`string`):
                 Is either: \
-                    - a string with the `shortcut name` of a pre-trained model configuration to load from cache or download, e.g.: ``bert-base-uncased``.
-                    - a string with the `identifier name` of a pre-trained model configuration that was user-uploaded to our S3, e.g.: ``dbmdz/bert-base-german-cased``.
-                    - a path to a `directory` containing a configuration file saved using the :func:`~transformers.PretrainedConfig.save_pretrained` method, e.g.: ``./my_model_directory/``.
-                    - a path or url to a saved configuration JSON `file`, e.g.: ``./my_model_directory/configuration.json``.
+                    - 具有预先训练的模型配置的``快捷方式名称''的字符串，可从缓存或下载中加载 e.g.: ``bert-base-uncased``.
+                    - 一个带有预训练模型配置的`dentifier name` 的字符串，该字符串已由用户上传到我们的S3, e.g.: ``dbmdz/bert-base-german-cased``.
+                    - 包含配置文件的目录路径，该配置文件使用 :func:`~transformers.PretrainedConfig.save_pretrained` method, e.g.: ``./my_model_directory/``.
+                    - 保存的配置JSON`file`的路径或url, e.g.: ``./my_model_directory/configuration.json``.
 
             cache_dir (:obj:`string`, optional, defaults to `None`):
-                Path to a directory in which a downloaded pre-trained model
-                configuration should be cached if the standard cache should not be used.
+                保存预训练模型下载的缓存文件夹
 
             force_download (:obj:`boolean`, optional, defaults to `False`):
-                Force to (re-)download the model weights and configuration files and override the cached versions if they exist.
+            强制（重新）下载模型权重和配置文件，并覆盖已存在的缓存版本。
 
             resume_download (:obj:`boolean`, optional, defaults to `False`):
-                Do not delete incompletely received file. Attempt to resume the download if such a file exists.
+            不删除未完全下载的文件。 如果存在此类文件，尝试继续下载。
 
             proxies (:obj:`Dict[str, str]`, optional, defaults to `None`):
-                A dictionary of proxy servers to use by protocol or endpoint, e.g.: :obj:`{'http': 'foo.bar:3128', 'http://hostname': 'foo.bar:4012'}`.
+                协议或端点要使用的代理服务器字典, e.g.: :obj:`{'http': 'foo.bar:3128', 'http://hostname': 'foo.bar:4012'}`.
                 The proxies are used on each request. See `the requests documentation <https://requests.readthedocs.io/en/master/user/advanced/#proxies>`__ for usage.
 
             return_unused_kwargs (:obj:`boolean`, optional, defaults to `False`):
-                - If False, then this function returns just the final configuration object.
-                - If True, then this functions returns a tuple `(config, unused_kwargs)` where `unused_kwargs` is a dictionary consisting of the key/value pairs whose keys are not configuration attributes: ie the part of kwargs which has not been used to update `config` and is otherwise ignored.
+                - 如果为False，则此函数仅返回最终配置对象。
+                - 如果为True，则此函数返回一个元组`（config，unused_kwargs）`，其中`unused_kwargs`是由键/值对组成的字典，其keys是没有使用的属性：即kwargs尚未用于更新的部分config，
 
-            kwargs (:obj:`Dict[str, any]`, optional, defaults to `{}`): key/value pairs with which to update the configuration object after loading.
-                - The values in kwargs of any keys which are configuration attributes will be used to override the loaded values.
+            kwargs (:obj:`Dict[str, any]`, optional, defaults to `{}`): 加载配置文件后，这个kwargs更新配置对象的键/值对。
+                - 作为配置属性的任何键的kwarg中的值将用于覆盖加载的值。
                 - Behavior concerning key/value pairs whose keys are *not* configuration attributes is controlled by the `return_unused_kwargs` keyword parameter.
 
 

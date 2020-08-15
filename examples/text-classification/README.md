@@ -1,16 +1,16 @@
 ## GLUE Benchmark
 
 # Run TensorFlow 2.0 version
+run_tf_glue.py 是tensorflow版本的GLUE分类
+脚本是  [`run_tf_glue.py`](https://github.com/huggingface/transformers/blob/master/examples/text-classification/run_tf_glue.py).
 
-Based on the script [`run_tf_glue.py`](https://github.com/huggingface/transformers/blob/master/examples/text-classification/run_tf_glue.py).
+对GLUE基准的MRPC任务上的序列分类库TensorFlow 2.0 Bert模型进行微调:  [General Language Understanding Evaluation](https://gluebenchmark.com/).
 
-Fine-tuning the library TensorFlow 2.0 Bert model for sequence classification on the  MRPC task of the GLUE benchmark: [General Language Understanding Evaluation](https://gluebenchmark.com/).
+该脚本具有用于在Tensor Core（NVIDIA Volta / Turing GPU）和将来的硬件上运行模型的混合精度选项（Automatic Mixed Precision / AMP），以及XLA的选项，该选项使用XLA编译器来减少模型运行时间。
+在脚本中使用“ USE_XLA”或“ USE_AMP”变量来切换选项。
+这些选项和以下基准由@tlkh提供。
 
-This script has an option for mixed precision (Automatic Mixed Precision / AMP) to run models on Tensor Cores (NVIDIA Volta/Turing GPUs) and future hardware and an option for XLA, which uses the XLA compiler to reduce model runtime.
-Options are toggled using `USE_XLA` or `USE_AMP` variables in the script.
-These options and the below benchmark are provided by @tlkh.
-
-Quick benchmarks from the script (no other modifications):
+脚本的快速基准测试（无其他修改）：
 
 | GPU    | Mode | Time (2nd epoch) | Val Acc (3 runs) |
 | --------- | -------- | ----------------------- | ----------------------|
@@ -20,21 +20,18 @@ Quick benchmarks from the script (no other modifications):
 | V100    | AMP | 22s | 0.8646/0.8385/0.8411 |
 | 1080 Ti | FP32 | 55s | - |
 
-Mixed precision (AMP) reduces the training time considerably for the same hardware and hyper-parameters (same batch size was used).
-
-
+对于相同的硬件和超参数（使用相同的批次大小），混合精度（AMP）大大减少了训练时间。
 
 # Run PyTorch version
+脚本是Pytorch版本 [`run_glue.py`](https://github.com/huggingface/transformers/blob/master/examples/text-classification/run_glue.py).
 
-Based on the script [`run_glue.py`](https://github.com/huggingface/transformers/blob/master/examples/text-classification/run_glue.py).
+在GLUE基准上微调用于序列分类的库模型： [General Language Understanding
+Evaluation](https://gluebenchmark.com/).
+该脚本可以微调以下模型：BERT，XLM，XLNet和RoBERTa。 
 
-Fine-tuning the library models for sequence classification on the GLUE benchmark: [General Language Understanding
-Evaluation](https://gluebenchmark.com/). This script can fine-tune the following models: BERT, XLM, XLNet and RoBERTa.
-
-GLUE is made up of a total of 9 different tasks. We get the following results on the dev set of the benchmark with an
-uncased  BERT base model (the checkpoint `bert-base-uncased`). All experiments ran single V100 GPUs with a total train
-batch sizes between 16 and 64. Some of these tasks have a small dataset and training can lead to high variance in the results
-between different runs. We report the median on 5 runs (with different seeds) for each of the metrics.
+GLUE由9个不同的任务组成。我们在不带大小写的BERT基本模型（checkpoint“ bert-base-uncased”）的基准开发集上获得以下结果。
+所有实验都运行单个V100 GPU，总训练批大小在16到64之间。
+其中一些任务的数据集很小，训练可能导致不同运行之间的结果差异很大。我们针对每个指标报告5次运行（中位数不同）的中位数。
 
 | Task  | Metric                       | Result      |
 |-------|------------------------------|-------------|
@@ -48,16 +45,16 @@ between different runs. We report the median on 5 runs (with different seeds) fo
 | RTE   | Accuracy                     | 61.73       |
 | WNLI  | Accuracy                     | 45.07       |
 
-Some of these results are significantly different from the ones reported on the test set
-of GLUE benchmark on the website. For QQP and WNLI, please refer to [FAQ #12](https://gluebenchmark.com/faq) on the webite.
+其中一些结果与网站上GLUE基准测试集上报告的结果有很大不同。
+有关QQP和WNLI，请参阅网站上的  [FAQ #12](https://gluebenchmark.com/faq) on the webite.
 
-Before running any one of these GLUE tasks you should download the
+在运行这些GLUE任务中的任何一项之前， you should download the
 [GLUE data](https://gluebenchmark.com/tasks) by running the following lines at the root of the repo
 ```
 python utils/download_glue_data.py --data_dir /path/to/glue --tasks all
 ```
 
-after replacing *path/to/glue* with a value that you like. Then you can run
+替换GLUE_DIR路径
 
 ```bash
 export GLUE_DIR=/path/to/glue
@@ -75,29 +72,27 @@ python run_glue.py \
   --num_train_epochs 3.0 \
   --output_dir /tmp/$TASK_NAME/
 ```
+其中任务名称可以是CoLA，SST-2，MRPC，STS-B，QQP，MNLI，QNLI，RTE，WNLI之一。
 
-where task name can be one of CoLA, SST-2, MRPC, STS-B, QQP, MNLI, QNLI, RTE, WNLI.
 
-The dev set results will be present within the text file `eval_results.txt` in the specified output_dir.
-In case of MNLI, since there are two separate dev sets (matched and mismatched), there will be a separate
-output folder called `/tmp/MNLI-MM/` in addition to `/tmp/MNLI/`.
+开发集的结果将出现在指定output_dir中的文本文件eval_results.txt中。
+对于MNLI，由于有两个单独的开发集（匹配和不匹配），所以除了/tmp/MNLI/之外，还有一个单独的输出文件夹，称为`/tmp/MNLI-MM/。
 
-The code has not been tested with half-precision training with apex on any GLUE task apart from MRPC, MNLI,
-CoLA, SST-2. The following section provides details on how to run half-precision training with MRPC. With that being
-said, there shouldn’t be any issues in running half-precision training with the remaining GLUE tasks as well,
-since the data processor for each task inherits from the base class DataProcessor.
+除了MRPC，MNLI，CoLA和SST-2之外，还没有对任何GLUE任务进行过半精度训练的测试。
+下一节提供有关如何使用MRPC进行半精度训练的详细信息。 
+话虽如此，对剩余的GLUE任务进行半精度训练也不应该有任何问题，因为每个任务的数据处理器都继承自基类DataProcessor。
+
 
 ## Running on TPUs in PyTorch
 
 **Update**: read the more up-to-date [Running on TPUs](../README.md#running-on-tpus) in the main README.md instead.
 
-Even when running PyTorch, you can accelerate your workloads on Google's TPUs, using `pytorch/xla`. For information on how to setup your TPU environment refer to the
+即使在运行PyTorch时，也可以使用pytorch / xla加快Google TPU上的工作量。 有关如何设置TPU环境的信息， using `pytorch/xla`. 请参阅
 [pytorch/xla README](https://github.com/pytorch/xla/blob/master/README.md).
 
-The following are some examples of running the `*_tpu.py` finetuning scripts on TPUs. All steps for data preparation are
-identical to your normal GPU + Huggingface setup.
+以下是在TPU上运行`* _tpu.py`优化脚本的一些示例。数据准备的所有步骤均与常规GPU + Huggingface设置相同。
 
-For running your GLUE task on MNLI dataset you can run something like the following:
+为了在MNLI数据集上运行GLUE任务，您可以运行以下内容：
 
 ```
 export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
@@ -125,10 +120,10 @@ python run_glue_tpu.py \
 
 #### Fine-tuning example
 
-The following examples fine-tune BERT on the Microsoft Research Paraphrase Corpus (MRPC) corpus and runs in less
-than 10 minutes on a single K-80 and in 27 seconds (!) on single tesla V100 16GB with apex installed.
+以下示例对Microsoft Research Paraphrase语料库（MRPC）语料库上的BERT进行了微调，
+并且在单个K-80上运行不到10分钟，而在安装了apex的单个tesla V100 16GB上运行了27秒。
 
-Before running any one of these GLUE tasks you should download the
+在运行这些GLUE任务中的任何一项之前，您应该下载， 通过运行
 [GLUE data](https://gluebenchmark.com/tasks) by running
 [this script](https://gist.github.com/W4ngatang/60c2bdb54d156a41194446737ce03e2e)
 and unpack it to some directory `$GLUE_DIR`.
@@ -149,13 +144,13 @@ python run_glue.py \
   --output_dir /tmp/mrpc_output/
 ```
 
-Our test ran on a few seeds with [the original implementation hyper-
-parameters](https://github.com/google-research/bert#sentence-and-sentence-pair-classification-tasks) gave evaluation
-results between 84% and 88%.
+我们的测试基于 [the original implementation hyper-
+parameters](https://github.com/google-research/bert#sentence-and-sentence-pair-classification-tasks) 
+评估结果介于84％和88％之间。
 
 #### Using Apex and mixed-precision
 
-Using Apex and 16 bit precision, the fine-tuning on MRPC only takes 27 seconds. First install
+使用Apex和16位精度，在MRPC上的微调仅需27秒。 First install
 [apex](https://github.com/NVIDIA/apex), then run the following example:
 
 ```bash
@@ -176,9 +171,8 @@ python run_glue.py \
 ```
 
 #### Distributed training
+这是在8个V100 GPU上使用分布式训练的示例。使用的模型是BERTwhole-word-masking，在MRPC上达到F1> 92
 
-Here is an example using distributed training on 8 V100 GPUs. The model used is the BERT whole-word-masking and it
-reaches F1 > 92 on MRPC.
 
 ```bash
 export GLUE_DIR=/path/to/glue
@@ -197,7 +191,8 @@ python -m torch.distributed.launch \
     --output_dir /tmp/mrpc_output/
 ```
 
-Training with these hyper-parameters gave us the following results:
+使用这些超参数进行训练可以为我们带来以下结果：
+
 
 ```bash
 acc = 0.8823529411764706
@@ -210,7 +205,7 @@ loss = 0.07231863956341798
 
 ### MNLI
 
-The following example uses the BERT-large, uncased, whole-word-masking model and fine-tunes it on the MNLI task.
+下面的示例使用BERT大型，BERT-large, uncased, whole-word-masking model，并在MNLI任务上对其进行微调。
 
 ```bash
 export GLUE_DIR=/path/to/glue
@@ -247,9 +242,9 @@ The results  are the following:
 
 # Run PyTorch version using PyTorch-Lightning
 
-Run `bash run_pl.sh` from the `glue` directory. This will also install `pytorch-lightning` and the requirements in `examples/requirements.txt`. It is a shell pipeline that will automatically download, pre-process the data and run the specified models. Logs are saved in `lightning_logs` directory.
+从`glue`目录运行`bash run_pl.sh`。 这也将安装`pytorch-lightning`和`examples / requirements.txt`中的要求。 这是一个shell管道，将自动下载，预处理数据并运行指定的模型。 日志保存在“ lightning_logs”目录中。
 
-Pass `--gpus` flag to change the number of GPUs. Default uses 1. At the end, the expected results are:
+传递--gpus标志来更改GPU的数量。 默认使用1.最后，预期结果是：
 
 ```
 TEST RESULTS {'val_loss': tensor(0.0707), 'precision': 0.852427800698191, 'recall': 0.869537067011978, 'f1': 0.8608974358974358}
@@ -260,13 +255,14 @@ TEST RESULTS {'val_loss': tensor(0.0707), 'precision': 0.852427800698191, 'recal
 
 Based on the script [`run_xnli.py`](https://github.com/huggingface/transformers/blob/master/examples/text-classification/run_xnli.py).
 
-[XNLI](https://www.nyu.edu/projects/bowman/xnli/) is a crowd-sourced dataset based on [MultiNLI](http://www.nyu.edu/projects/bowman/multinli/). It is an evaluation benchmark for cross-lingual text representations. Pairs of text are labeled with textual entailment annotations for 15 different languages (including both high-resource language such as English and low-resource languages such as Swahili).
+[XNLI](https://www.nyu.edu/projects/bowman/xnli/) is a crowd-sourced dataset based on [MultiNLI](http://www.nyu.edu/projects/bowman/multinli/). 
+它是跨语言文本表示形式的评估基准。成对的文本用15种不同语言（包括high-resource language （例如英语）和low-resource languages （例如Swahili语））的文本包含注释标记。
 
 #### Fine-tuning on XNLI
 
-This example code fine-tunes mBERT (multi-lingual BERT) on the XNLI dataset. It runs in 106 mins
-on a single tesla V100 16GB. The data for XNLI can be downloaded with the following links and should be both saved (and un-zipped) in a
-`$XNLI_DIR` directory.
+此示例代码在XNLI数据集上微调了mBERT（多语言BERT）。 它在单个tesla V100 16GB上运行106分钟。 
+可以通过以下链接下载XNLI的数据，并且应将其同时保存（并解压缩）在`$XNLI_DIR`目录中。
+
 
 * [XNLI 1.0](https://www.nyu.edu/projects/bowman/xnli/XNLI-1.0.zip)
 * [XNLI-MT 1.0](https://www.nyu.edu/projects/bowman/xnli/XNLI-MT-1.0.zip)
@@ -289,7 +285,7 @@ python run_xnli.py \
   --save_steps -1
 ```
 
-Training with the previously defined hyper-parameters yields the following results on the **test** set:
+使用先前定义的超参数进行训练会在**test**集合上产生以下结果：
 
 ```bash
 acc = 0.7093812375249501

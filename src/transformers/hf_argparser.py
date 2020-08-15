@@ -13,12 +13,8 @@ DataClassType = NewType("DataClassType", Any)
 
 class HfArgumentParser(ArgumentParser):
     """
-    This subclass of `argparse.ArgumentParser` uses type hints on dataclasses
-    to generate arguments.
-
-    The class is designed to play well with the native argparse. In particular,
-    you can add more (non-dataclass backed) arguments to the parser after initialization
-    and you'll get the output back after parsing as an additional namespace.
+     这个argparse.ArgumentParser子类使用数据类的类型提示来生成参数。
+     该类旨在与本机argparse配合使用。 特别是，您可以在初始化后向解析器添加更多（非数据类支持的）参数，并且在解析后将输出作为附加的名称空间返回到输出。
     """
 
     dataclass_types: Iterable[DataClassType]

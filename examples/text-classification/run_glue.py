@@ -44,37 +44,38 @@ logger = logging.getLogger(__name__)
 @dataclass
 class ModelArguments:
     """
-    Arguments pertaining to which model/config/tokenizer we are going to fine-tune from.
+    关于我们要微调的model/config/tokenizer的参数。
     """
 
     model_name_or_path: str = field(
-        metadata={"help": "Path to pretrained model or model identifier from huggingface.co/models"}
+        metadata={"help": "huggingface.co/models中预训练模型或模型标识符的路径"}
     )
     config_name: Optional[str] = field(
-        default=None, metadata={"help": "Pretrained config name or path if not the same as model_name"}
+        default=None, metadata={"help": "预训练的配置名称或路径（如果与model_name不同）"}
     )
     tokenizer_name: Optional[str] = field(
-        default=None, metadata={"help": "Pretrained tokenizer name or path if not the same as model_name"}
+        default=None, metadata={"help": "预训练的tokenizer生成器名称或路径（如果与model_name不同）"}
     )
     cache_dir: Optional[str] = field(
-        default=None, metadata={"help": "Where do you want to store the pretrained models downloaded from s3"}
+        default=None, metadata={"help": "您想在哪里存储从s3下载的预训练模型,缓存模型文件夹"}
     )
 
 
 def main():
-    # See all possible arguments in src/transformers/training_args.py
-    # or by passing the --help flag to this script.
-    # We now keep distinct sets of args, for a cleaner separation of concerns.
+    # 在src/transformers/training_args.py中查看所有可能的参数，
+    # 或将 -help标志传递给此脚本。 现在，我们保留了不同的参数集，以更清晰地分离关注点。
 
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
 
     if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
-        # If we pass only one argument to the script and it's the path to a json file,
-        # let's parse it to get our arguments.
+        # 如果我们仅向脚本传递一个参数，并且它是json文件的路径，
+        # 让我们对其进行解析以获取参数。
         model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
     else:
+        #通过命令行传递参数
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
+    # 判断是不是重新训练
     if (
         os.path.exists(training_args.output_dir)
         and os.listdir(training_args.output_dir)
@@ -85,12 +86,13 @@ def main():
             f"Output directory ({training_args.output_dir}) already exists and is not empty. Use --overwrite_output_dir to overcome."
         )
 
-    # Setup logging
+    #设置日志格式
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
         datefmt="%m/%d/%Y %H:%M:%S",
         level=logging.INFO if training_args.local_rank in [-1, 0] else logging.WARN,
     )
+    #打印当前设置
     logger.warning(
         "Process rank: %s, device: %s, n_gpu: %s, distributed training: %s, 16-bits training: %s",
         training_args.local_rank,
@@ -99,23 +101,22 @@ def main():
         bool(training_args.local_rank != -1),
         training_args.fp16,
     )
+    #打印参数
     logger.info("Training/evaluation parameters %s", training_args)
 
-    # Set seed
+    #随机数种子
     set_seed(training_args.seed)
-
+    #num_labels 类别数量, output_mode  是任务类型，'classification'
     try:
         num_labels = glue_tasks_num_labels[data_args.task_name]
         output_mode = glue_output_modes[data_args.task_name]
     except KeyError:
         raise ValueError("Task not found: %s" % (data_args.task_name))
 
-    # Load pretrained model and tokenizer
-    #
-    # Distributed training:
-    # The .from_pretrained methods guarantee that only one local process can concurrently
-    # download model & vocab.
-
+    # 加载预训练的模型和令牌生成器
+    # 分布式培训：
+    # from_pretrained方法保证只有一个本地进程可以并发下载模型和vocab。
+    #添加自定义参数finetuning_task, num_labels
     config = AutoConfig.from_pretrained(
         model_args.config_name if model_args.config_name else model_args.model_name_or_path,
         num_labels=num_labels,
@@ -126,6 +127,7 @@ def main():
         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
         cache_dir=model_args.cache_dir,
     )
+    # .ckpt 是可以加载tensorflow的模型
     model = AutoModelForSequenceClassification.from_pretrained(
         model_args.model_name_or_path,
         from_tf=bool(".ckpt" in model_args.model_name_or_path),
@@ -173,8 +175,8 @@ def main():
             model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None
         )
         trainer.save_model()
-        # For convenience, we also re-save the tokenizer to the same directory,
-        # so that you can share your model easily on huggingface.co/models =)
+        # 为了方便起见，我们还将令牌生成器重新保存到同一目录中，
+        # 以便您可以轻松地在huggingface.co/models上共享模型
         if trainer.is_world_master():
             tokenizer.save_pretrained(training_args.output_dir)
 
@@ -183,7 +185,7 @@ def main():
     if training_args.do_eval:
         logger.info("*** Evaluate ***")
 
-        # Loop to handle MNLI double evaluation (matched, mis-matched)
+        # 如果是mnli, 循环以处理MNLI双重评估（匹配，不匹配)
         eval_datasets = [eval_dataset]
         if data_args.task_name == "mnli":
             mnli_mm_data_args = dataclasses.replace(data_args, task_name="mnli-mm")

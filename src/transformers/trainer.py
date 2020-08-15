@@ -133,34 +133,33 @@ def get_tpu_sampler(dataset: Dataset):
 
 class Trainer:
     """
-    Trainer is a simple but feature-complete training and eval loop for PyTorch,
-    optimized for 🤗 Transformers.
+    Trainer是针对PyTorch的一个简单但功能齐全的训练和评估循环，已针对🤗Transformers进行了优化。
 
     Args:
         model (:class:`~transformers.PreTrainedModel`):
-            The model to train, evaluate or use for predictions.
+            用于训练，评估或用于预测的模型。
         args (:class:`~transformers.TrainingArguments`):
-            The arguments to tweak training.
+            调整训练参数
         data_collator (:obj:`DataCollator`, `optional`, defaults to :func:`~transformers.default_data_collator`):
             The function to use to from a batch from a list of elements of :obj:`train_dataset` or
             :obj:`eval_dataset`.
         train_dataset (:obj:`torch.utils.data.dataset.Dataset`, `optional`):
-            The dataset to use for training.
+            用于训练的数据集。
         eval_dataset (:obj:`torch.utils.data.dataset.Dataset`, `optional`):
-            The dataset to use for evaluation.
+            用于评估的数据集。
         compute_metrics (:obj:`Callable[[EvalPrediction], Dict]`, `optional`):
-            The function that will be used to compute metrics at evaluation. Must take a
-            :class:`~transformers.EvalPrediction` and return a dictionary string to metric values.
+            评估时将用于计算指标的功能。必须采取
+            :class:`~transformers.EvalPrediction` and 然后将字典字符串返回指标值。
         prediction_loss_only (:obj:`bool`, `optional`, defaults to `False`):
-            When performing evaluation and predictions, only returns the loss.
+            在执行评估和预测时，仅返回损失。
         tb_writer (:obj:`SummaryWriter`, `optional`):
-            Object to write to TensorBoard.
+             写入TensorBoard的对象
         optimizers (:obj:`Tuple[torch.optim.Optimizer, torch.optim.lr_scheduler.LambdaLR`, `optional`):
-            A tuple containing the optimizer and the scheduler to use. Will default to an instance of
+            包含要使用的优化程序和调度程序的元组。Will default to an instance of
             :class:`~transformers.AdamW` on your model and a scheduler given by
             :func:`~transformers.get_linear_schedule_with_warmup` controlled by :obj:`args`.
         kwargs:
-            Deprecated keyword arguments.
+            不推荐使用的关键字参数。
     """
 
     def __init__(
@@ -252,7 +251,7 @@ class Trainer:
         Will use no sampler if :obj:`self.train_dataset` is a :obj:`torch.utils.data.IterableDataset`, a random sampler
         (adapted to distributed training if necessary) otherwise.
 
-        Subclass and override this method if you want to inject some custom behavior.
+        如果要注入一些自定义行为，请子类化并重写此方法。
         """
         if self.train_dataset is None:
             raise ValueError("Trainer: training requires a train_dataset.")
@@ -329,10 +328,11 @@ class Trainer:
 
     def create_optimizer_and_scheduler(self, num_training_steps: int):
         """
-        Setup the optimizer and the learning rate scheduler.
+        设置优化程序和学习率调度程序。默认使用Adam和get_linear_schedule_with_warmup
 
-        We provide a reasonable default that works well. If you want to use something else, you can pass a tuple in the
-        Trainer's init through :obj:`optimizers`, or subclass and override this method in a subclass.
+        我们提供了一个合理的默认设置，可以很好地运行。 如果要使用其他方法，
+        可以通过优化器或子类在Trainer的init中传递一个元组，并在子类中覆盖此方法。
+
         """
         if self.optimizer is None:
             no_decay = ["bias", "LayerNorm.weight"]
@@ -433,14 +433,14 @@ class Trainer:
 
     def train(self, model_path: Optional[str] = None):
         """
-        Main training entry point.
+        主训练入口
 
         Args:
             model_path (:obj:`str`, `optional`):
-                Local path to the model if the model to train has been instantiated from a local path. If present,
-                training will resume from the optimizer/scheduler states loaded here.
+            如果要从本地路径实例化要训练的模型，则为模型的本地路径。 如果存在，则训练将从此处加载的optimizer/scheduler状态恢复。
         """
         train_dataloader = self.get_train_dataloader()
+        #最大训练步数
         if self.args.max_steps > 0:
             t_total = self.args.max_steps
             num_train_epochs = (
@@ -450,15 +450,16 @@ class Trainer:
             t_total = int(len(train_dataloader) // self.args.gradient_accumulation_steps * self.args.num_train_epochs)
             num_train_epochs = self.args.num_train_epochs
 
+        #创建optimizer和scheduler
         self.create_optimizer_and_scheduler(num_training_steps=t_total)
 
-        # Check if saved optimizer or scheduler states exist
+        # 检查是否存在 saved optimizer or scheduler states
         if (
             model_path is not None
             and os.path.isfile(os.path.join(model_path, "optimizer.pt"))
             and os.path.isfile(os.path.join(model_path, "scheduler.pt"))
         ):
-            # Load in optimizer and scheduler states
+            # 加载optimizer and scheduler states
             self.optimizer.load_state_dict(
                 torch.load(os.path.join(model_path, "optimizer.pt"), map_location=self.args.device)
             )
@@ -508,9 +509,9 @@ class Trainer:
         self.epoch = 0
         epochs_trained = 0
         steps_trained_in_current_epoch = 0
-        # Check if continuing training from a checkpoint
+        # 检查是否从一个checkpoint继续训练
         if model_path is not None:
-            # set global_step to global_step of last saved checkpoint from model path
+            # 将global_step设置为模型路径中最后保存的检查点的global_step
             try:
                 self.global_step = int(model_path.split("-")[-1].split("/")[0])
                 epochs_trained = self.global_step // (len(train_dataloader) // self.args.gradient_accumulation_steps)
@@ -550,7 +551,7 @@ class Trainer:
 
             for step, inputs in enumerate(epoch_iterator):
 
-                # Skip past any already trained steps if resuming training
+                # 如果恢复继续训练，则跳过所有已经训练的步骤
                 if steps_trained_in_current_epoch > 0:
                     steps_trained_in_current_epoch -= 1
                     continue
@@ -722,18 +723,19 @@ class Trainer:
 
     def training_step(self, model: nn.Module, inputs: Dict[str, Union[torch.Tensor, Any]]) -> float:
         """
-        Perform a training step on a batch of inputs.
+         对batch输入执行训练步骤。
 
-        Subclass and override to inject custom behavior.
+         子类和重写以注入自定义行为。
 
         Args:
             model (:obj:`nn.Module`):
                 The model to train.
             inputs (:obj:`Dict[str, Union[torch.Tensor, Any]]`):
-                The inputs and targets of the model.
+                模型的输入和目标。
 
-                The dictionary will be unpacked before being fed to the model. Most models expect the targets under the
-                argument :obj:`labels`. Check your model's documentation for all accepted arguments.
+                字典将被解压缩，然后再输入模型。 大多数模型都希望在目标标签下使用目标。
+                检查模型的文档以获取所有可接受的参数。
+
 
         Return:
             :obj:`float`: The training loss on this batch.
@@ -790,8 +792,8 @@ class Trainer:
 
     def is_local_process_zero(self) -> bool:
         """
-        Whether or not this process is the local (e.g., on one machine if training in a distributed fashion on
-        several machines) main process.
+    此过程是否是本地主过程
+    （例如，在一台机器上，如果以分布式方式在多台机器上进行训练）。
         """
         if is_torch_tpu_available():
             return xm.is_master_ordinal(local=True)
@@ -822,9 +824,9 @@ class Trainer:
 
     def save_model(self, output_dir: Optional[str] = None):
         """
-        Will save the model, so you can reload it using :obj:`from_pretrained()`.
+        将保存模型，因此您可以使用from_pretrained（）来重新加载模型。
 
-        Will only save from the world_master process (unless in TPUs).
+         仅从world_master进程中保存（除非在TPU中）。
         """
 
         if is_torch_tpu_available():
