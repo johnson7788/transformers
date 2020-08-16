@@ -103,7 +103,7 @@ def main():
         training_args.fp16,
     )
     #打印参数
-    logger.info("Training/evaluation parameters %s", training_args)
+    logger.info("训练/评估 参数 %s", training_args)
 
     #随机数种子
     set_seed(training_args.seed)
@@ -112,7 +112,7 @@ def main():
         num_labels = glue_tasks_num_labels[data_args.task_name]
         output_mode = glue_output_modes[data_args.task_name]
     except KeyError:
-        raise ValueError("Task not found: %s" % (data_args.task_name))
+        raise ValueError("没有发现相关任务: %s" % (data_args.task_name))
 
     # 加载预训练的模型和令牌生成器
     # 分布式培训：
@@ -161,7 +161,7 @@ def main():
 
         return compute_metrics_fn
 
-    # Initialize our Trainer
+    #初始化一个Trainer
     trainer = Trainer(
         model=model,
         args=training_args,
@@ -172,6 +172,7 @@ def main():
 
     # Training
     if training_args.do_train:
+        logger.info("*** 开始训练 ***")
         trainer.train(
             model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None
         )
@@ -184,7 +185,7 @@ def main():
     # Evaluation
     eval_results = {}
     if training_args.do_eval:
-        logger.info("*** Evaluate ***")
+        logger.info("*** 开始评估 ***")
 
         # 如果是mnli, 循环以处理MNLI双重评估（匹配，不匹配)
         eval_datasets = [eval_dataset]
@@ -211,7 +212,7 @@ def main():
             eval_results.update(eval_result)
 
     if training_args.do_predict:
-        logging.info("*** Test ***")
+        logging.info("*** 开始预测 ***")
         test_datasets = [test_dataset]
         if data_args.task_name == "mnli":
             mnli_mm_data_args = dataclasses.replace(data_args, task_name="mnli-mm")

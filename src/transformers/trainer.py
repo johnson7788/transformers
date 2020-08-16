@@ -475,7 +475,7 @@ class Trainer:
         if self.args.n_gpu > 1:
             model = torch.nn.DataParallel(model)
 
-        # Distributed training (should be after apex fp16 initialization)
+        # 分布式训练 (should be after apex fp16 initialization)
         if self.args.local_rank != -1:
             model = torch.nn.parallel.DistributedDataParallel(
                 model,

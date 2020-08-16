@@ -7,6 +7,7 @@ __pycache__/
 .data
 model
 examples/text-classification/glue_data
+examples/text-classification/data
 
 # C extensions
 *.so
