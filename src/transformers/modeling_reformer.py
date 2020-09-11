@@ -126,8 +126,7 @@ def _get_min_chunk_len(config):
 
 
 class AxialPositionEmbeddings(nn.Module):
-    """Constructs axial position embeddings. Useful for very long input
-    sequences to save memory and time.
+    """构造轴向位置嵌入。 对于很长的输入序列很有用，以节省内存和时间。
     """
 
     def __init__(self, config):
@@ -145,7 +144,7 @@ class AxialPositionEmbeddings(nn.Module):
             self.axial_pos_embds_dim, config.hidden_size
         )
 
-        # create weights
+        # create weights, 公式中的d1,d2是这里的axial_pos_embd_dim
         for axis, axial_pos_embd_dim in enumerate(self.axial_pos_embds_dim):
             # create expanded shapes
             ax_shape = [1] * len(self.axial_pos_shape)
@@ -195,7 +194,7 @@ class AxialPositionEmbeddings(nn.Module):
                 self.axial_pos_shape, sequence_length, self.least_common_mult_chunk_length,
             )
 
-            # compute how many columns are needed
+            #计算需要多少列
             max_position_id = position_ids.max().item()
             required_pos_encodings_columns = -(-(max_position_id + 1) // self.axial_pos_shape[1])
 
@@ -218,7 +217,7 @@ class AxialPositionEmbeddings(nn.Module):
 
 
 class PositionEmbeddings(nn.Module):
-    """Constructs conventional position embeddings of shape `[max_pos_embeddings, hidden_size]`.
+    """常规位置编码 `[max_pos_embeddings, hidden_size]`.
     """
 
     def __init__(self, config):
@@ -233,7 +232,8 @@ class PositionEmbeddings(nn.Module):
 
 
 class ReformerEmbeddings(nn.Module):
-    """Construct the embeddings from word, position and token_type embeddings.
+    """
+    构造embeddings, 单词，位置和token_type。
     """
 
     def __init__(self, config):

@@ -1,7 +1,12 @@
-import tensorflow as tf
-data = tf.constant([2, 0, 4], dtype=tf.float32)
-result_1 = tf.norm(data)
-with tf.Session() as sess:
-    print(sess.run(result_1))
+from transformers import BertTokenizer
+tokenizer = BertTokenizer.from_pretrained("bert-base-cased")
 
-tf.keras.regularizers.l1()
+sequence_a = "This is a short sequence."
+sequence_b = "This is a rather long sequence. It is at least longer than the sequence A."
+
+encoded_dict = tokenizer(sequence_a, sequence_b)
+decoded = tokenizer.decode(encoded_dict["input_ids"])
+print(decoded)
+
+token_type_id = encoded_dict['token_type_ids']
+print(token_type_id)
