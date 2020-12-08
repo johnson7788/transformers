@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2018 The Google AI Language Team Authors.
+# Copyright 2020 The HuggingFace Team. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,28 +20,34 @@ from transformers import is_torch_available
 from transformers.testing_utils import require_torch, slow, torch_device
 
 from .test_configuration_common import ConfigTester
-from .test_modeling_common import ModelTesterMixin, floats_tensor, ids_tensor
+from .test_generation_utils import GenerationTesterMixin
+from .test_modeling_common import ModelTesterMixin, floats_tensor, ids_tensor, random_attention_mask
 
 
 if is_torch_available():
     import torch
+
     from transformers import (
         RobertaConfig,
-        RobertaModel,
         RobertaForCausalLM,
         RobertaForMaskedLM,
         RobertaForMultipleChoice,
         RobertaForQuestionAnswering,
         RobertaForSequenceClassification,
         RobertaForTokenClassification,
+        RobertaModel,
     )
-    from transformers.modeling_roberta import RobertaEmbeddings, create_position_ids_from_input_ids
-    from transformers.modeling_roberta import ROBERTA_PRETRAINED_MODEL_ARCHIVE_LIST
+    from transformers.models.roberta.modeling_roberta import (
+        ROBERTA_PRETRAINED_MODEL_ARCHIVE_LIST,
+        RobertaEmbeddings,
+        create_position_ids_from_input_ids,
+    )
 
 
 class RobertaModelTester:
     def __init__(
-        self, parent,
+        self,
+        parent,
     ):
         self.parent = parent
         self.batch_size = 13
@@ -71,7 +77,7 @@ class RobertaModelTester:
 
         input_mask = None
         if self.use_input_mask:
-            input_mask = ids_tensor([self.batch_size, self.seq_length], vocab_size=2)
+            input_mask = random_attention_mask([self.batch_size, self.seq_length])
 
         token_type_ids = None
         if self.use_token_type_ids:
@@ -97,7 +103,6 @@ class RobertaModelTester:
             max_position_embeddings=self.max_position_embeddings,
             type_vocab_size=self.type_vocab_size,
             initializer_range=self.initializer_range,
-            return_dict=True,
         )
 
         return config, input_ids, token_type_ids, input_mask, sequence_labels, token_labels, choice_labels
@@ -262,7 +267,7 @@ class RobertaModelTester:
 
 
 @require_torch
-class RobertaModelTest(ModelTesterMixin, unittest.TestCase):
+class RobertaModelTest(ModelTesterMixin, GenerationTesterMixin, unittest.TestCase):
 
     all_model_classes = (
         (
@@ -277,6 +282,7 @@ class RobertaModelTest(ModelTesterMixin, unittest.TestCase):
         if is_torch_available()
         else ()
     )
+    all_generative_model_classes = (RobertaForCausalLM,) if is_torch_available() else ()
 
     def setUp(self):
         self.model_tester = RobertaModelTester(self)
@@ -288,6 +294,12 @@ class RobertaModelTest(ModelTesterMixin, unittest.TestCase):
     def test_model(self):
         config_and_inputs = self.model_tester.prepare_config_and_inputs()
         self.model_tester.create_and_check_model(*config_and_inputs)
+
+    def test_model_various_embeddings(self):
+        config_and_inputs = self.model_tester.prepare_config_and_inputs()
+        for type in ["absolute", "relative_key", "relative_key_query"]:
+            config_and_inputs[0].position_embedding_type = type
+            self.model_tester.create_and_check_model(*config_and_inputs)
 
     def test_model_as_decoder(self):
         config_and_inputs = self.model_tester.prepare_config_and_inputs_for_decoder()
@@ -348,7 +360,7 @@ class RobertaModelTest(ModelTesterMixin, unittest.TestCase):
             self.assertIsNotNone(model)
 
     def test_create_position_ids_respects_padding_index(self):
-        """ Ensure that the default position ids only assign a sequential . This is a regression
+        """Ensure that the default position ids only assign a sequential . This is a regression
         test for https://github.com/huggingface/transformers/issues/1761
 
         The position ids should be masked with the embedding object's padding index. Therefore, the
@@ -367,7 +379,7 @@ class RobertaModelTest(ModelTesterMixin, unittest.TestCase):
         self.assertTrue(torch.all(torch.eq(position_ids, expected_positions)))
 
     def test_create_position_ids_from_inputs_embeds(self):
-        """ Ensure that the default position ids only assign a sequential . This is a regression
+        """Ensure that the default position ids only assign a sequential . This is a regression
         test for https://github.com/huggingface/transformers/issues/1761
 
         The position ids should be masked with the embedding object's padding index. Therefore, the
@@ -389,6 +401,7 @@ class RobertaModelTest(ModelTesterMixin, unittest.TestCase):
         self.assertTrue(torch.all(torch.eq(position_ids, expected_positions)))
 
 
+@require_torch
 class RobertaModelIntegrationTest(unittest.TestCase):
     @slow
     def test_inference_masked_lm(self):

@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2018 The Google AI Language Team Authors.
+# Copyright 2020 The HuggingFace Team. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,17 +25,19 @@ from .test_modeling_tf_common import TFModelTesterMixin, ids_tensor
 
 if is_tf_available():
     import tensorflow as tf
-    from transformers.modeling_tf_openai import (
-        TFOpenAIGPTModel,
-        TFOpenAIGPTLMHeadModel,
-        TFOpenAIGPTDoubleHeadsModel,
+
+    from transformers.models.openai.modeling_tf_openai import (
         TF_OPENAI_GPT_PRETRAINED_MODEL_ARCHIVE_LIST,
+        TFOpenAIGPTDoubleHeadsModel,
+        TFOpenAIGPTLMHeadModel,
+        TFOpenAIGPTModel,
     )
 
 
 class TFOpenAIGPTModelTester:
     def __init__(
-        self, parent,
+        self,
+        parent,
     ):
         self.parent = parent
         self.batch_size = 13
@@ -97,7 +99,6 @@ class TFOpenAIGPTModelTester:
             n_ctx=self.max_position_embeddings,
             # type_vocab_size=self.type_vocab_size,
             # initializer_range=self.initializer_range,
-            return_dict=True,
         )
 
         head_mask = ids_tensor([self.num_hidden_layers, self.num_attention_heads], 2)
@@ -124,15 +125,13 @@ class TFOpenAIGPTModelTester:
 
         result = model(input_ids)
 
-        self.parent.assertListEqual(
-            list(result["last_hidden_state"].shape), [self.batch_size, self.seq_length, self.hidden_size]
-        )
+        self.parent.assertEqual(result.last_hidden_state.shape, (self.batch_size, self.seq_length, self.hidden_size))
 
     def create_and_check_openai_gpt_lm_head(self, config, input_ids, input_mask, head_mask, token_type_ids, *args):
         model = TFOpenAIGPTLMHeadModel(config=config)
         inputs = {"input_ids": input_ids, "attention_mask": input_mask, "token_type_ids": token_type_ids}
         result = model(inputs)
-        self.parent.assertListEqual(list(result["logits"].shape), [self.batch_size, self.seq_length, self.vocab_size])
+        self.parent.assertEqual(result.logits.shape, (self.batch_size, self.seq_length, self.vocab_size))
 
     def create_and_check_openai_gpt_double_head(
         self, config, input_ids, input_mask, head_mask, token_type_ids, mc_token_ids, *args
@@ -150,10 +149,10 @@ class TFOpenAIGPTModelTester:
             "token_type_ids": multiple_choice_token_type_ids,
         }
         result = model(inputs)
-        self.parent.assertListEqual(
-            list(result["lm_logits"].shape), [self.batch_size, self.num_choices, self.seq_length, self.vocab_size]
+        self.parent.assertEqual(
+            result.logits.shape, (self.batch_size, self.num_choices, self.seq_length, self.vocab_size)
         )
-        self.parent.assertListEqual(list(result["mc_logits"].shape), [self.batch_size, self.num_choices])
+        self.parent.assertEqual(result.mc_logits.shape, (self.batch_size, self.num_choices))
 
     def prepare_config_and_inputs_for_common(self):
         config_and_inputs = self.prepare_config_and_inputs()

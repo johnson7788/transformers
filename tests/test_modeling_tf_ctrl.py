@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2018 The Google AI Language Team Authors.
+# Copyright 2020 The HuggingFace Team. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,12 +25,18 @@ from .test_modeling_tf_common import TFModelTesterMixin, ids_tensor
 
 if is_tf_available():
     import tensorflow as tf
-    from transformers.modeling_tf_ctrl import TFCTRLModel, TFCTRLLMHeadModel, TF_CTRL_PRETRAINED_MODEL_ARCHIVE_LIST
+
+    from transformers.models.ctrl.modeling_tf_ctrl import (
+        TF_CTRL_PRETRAINED_MODEL_ARCHIVE_LIST,
+        TFCTRLLMHeadModel,
+        TFCTRLModel,
+    )
 
 
 class TFCTRLModelTester(object):
     def __init__(
-        self, parent,
+        self,
+        parent,
     ):
         self.parent = parent
         self.batch_size = 13
@@ -92,7 +98,6 @@ class TFCTRLModelTester(object):
             n_ctx=self.max_position_embeddings,
             # type_vocab_size=self.type_vocab_size,
             # initializer_range=self.initializer_range,
-            return_dict=True,
         )
 
         head_mask = ids_tensor([self.num_hidden_layers, self.num_attention_heads], 2)
@@ -119,15 +124,13 @@ class TFCTRLModelTester(object):
 
         result = model(input_ids)
 
-        self.parent.assertListEqual(
-            list(result["last_hidden_state"].shape), [self.batch_size, self.seq_length, self.hidden_size]
-        )
+        self.parent.assertEqual(result.last_hidden_state.shape, (self.batch_size, self.seq_length, self.hidden_size))
 
     def create_and_check_ctrl_lm_head(self, config, input_ids, input_mask, head_mask, token_type_ids, *args):
         model = TFCTRLLMHeadModel(config=config)
         inputs = {"input_ids": input_ids, "attention_mask": input_mask, "token_type_ids": token_type_ids}
         result = model(inputs)
-        self.parent.assertListEqual(list(result["logits"].shape), [self.batch_size, self.seq_length, self.vocab_size])
+        self.parent.assertEqual(result.logits.shape, (self.batch_size, self.seq_length, self.vocab_size))
 
     def prepare_config_and_inputs_for_common(self):
         config_and_inputs = self.prepare_config_and_inputs()

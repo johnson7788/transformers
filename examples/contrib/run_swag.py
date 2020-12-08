@@ -31,8 +31,16 @@ from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, Tenso
 from torch.utils.data.distributed import DistributedSampler
 from tqdm import tqdm, trange
 
-from transformers import WEIGHTS_NAME, AdamW, AutoConfig, AutoTokenizer, get_linear_schedule_with_warmup
-from transformers.modeling_auto import AutoModelForMultipleChoice
+import transformers
+from transformers import (
+    WEIGHTS_NAME,
+    AdamW,
+    AutoConfig,
+    AutoModelForMultipleChoice,
+    AutoTokenizer,
+    get_linear_schedule_with_warmup,
+)
+from transformers.trainer_utils import is_main_process
 
 
 try:
@@ -620,6 +628,11 @@ def main():
         bool(args.local_rank != -1),
         args.fp16,
     )
+    # Set the verbosity to info of the Transformers logger (on main process only):
+    if is_main_process(args.local_rank):
+        transformers.utils.logging.set_verbosity_info()
+        transformers.utils.logging.enable_default_handler()
+        transformers.utils.logging.enable_explicit_format()
 
     # Set seed
     set_seed(args)
@@ -629,7 +642,9 @@ def main():
         torch.distributed.barrier()  # Make sure only the first process in distributed training will download model & vocab
 
     config = AutoConfig.from_pretrained(args.config_name if args.config_name else args.model_name_or_path)
-    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_name if args.tokenizer_name else args.model_name_or_path,)
+    tokenizer = AutoTokenizer.from_pretrained(
+        args.tokenizer_name if args.tokenizer_name else args.model_name_or_path,
+    )
     model = AutoModelForMultipleChoice.from_pretrained(
         args.model_name_or_path, from_tf=bool(".ckpt" in args.model_name_or_path), config=config
     )
@@ -679,7 +694,6 @@ def main():
             checkpoints = list(
                 os.path.dirname(c) for c in sorted(glob.glob(args.output_dir + "/**/" + WEIGHTS_NAME, recursive=True))
             )
-            logging.getLogger("transformers.modeling_utils").setLevel(logging.WARN)  # Reduce model loading logs
 
         logger.info("Evaluate the following checkpoints: %s", checkpoints)
 

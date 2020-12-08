@@ -38,10 +38,14 @@ from transformers import GPT2Tokenizer, GPT2Config, BertTokenizer
 =======
 from pplm_classification_head import ClassificationHead
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 from transformers import GPT2Tokenizer
 >>>>>>> b290c32e1617fa74f44ccd8b83365fe764437be9:examples/text-generation/pplm/run_pplm.py
 >>>>>>> d5c81c5b381f39d2c9901bdac34f4ae13a4df56a
+=======
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+>>>>>>> upstream/master
 from transformers.file_utils import cached_path
 
 from transformers import (
@@ -193,8 +197,13 @@ def perturb_past(
         perturbed_past = list(map(add, past, curr_perturbation))
         # curr_perturbation length 24, curr_perturbation[0].shape [2,1,16,4,64], curr_length 是int，单词数目
         _, _, _, curr_length, _ = curr_perturbation[0].shape
+<<<<<<< HEAD
         # all_hidden list 25,  all_hidden[0] [1,1,1024], hidden [1,1,1024], all_logits [1,1,DICT_SIZE]
         all_logits, _, all_hidden = model(last, past=perturbed_past)
+=======
+        lm_output = model(last, past_key_values=perturbed_past)
+        all_logits, all_hidden = lm_output["logits"], lm_output["hidden_states"]
+>>>>>>> upstream/master
         hidden = all_hidden[-1]
         # accumulated_hidden [1,1024]
         new_accumulated_hidden = accumulated_hidden + torch.sum(hidden, dim=1).detach()
@@ -221,7 +230,8 @@ def perturb_past(
             wte = model.resize_token_embeddings()
             for _ in range(horizon_length):
                 inputs_embeds = torch.matmul(curr_probs, wte.weight.data)
-                _, curr_unpert_past, curr_all_hidden = model(past=curr_unpert_past, inputs_embeds=inputs_embeds)
+                lm_output = model(past_key_values=curr_unpert_past, inputs_embeds=inputs_embeds)
+                curr_unpert_past, curr_all_hidden = lm_output["past_key_values"], lm_output["hidden_states"]
                 curr_hidden = curr_all_hidden[-1]
                 new_accumulated_hidden = new_accumulated_hidden + torch.sum(curr_hidden, dim=1)
 
@@ -520,11 +530,24 @@ def generate_text_pplm(
         # run model forward to obtain unperturbed, last是最后一个单词的ID
         if past is None and output_so_far is not None:
             last = output_so_far[:, -1:]
+<<<<<<< HEAD
             if output_so_far.shape[1] > 1:    #如果当前的单词数大于1， 把除了最后一个单词的前面单词作为输入，放入GPT模型
                 _, past, _ = model(output_so_far[:, :-1])
         #GPT2模型返回3个值
         unpert_logits, unpert_past, unpert_all_hidden = model(output_so_far)
         unpert_last_hidden = unpert_all_hidden[-1]   # unpert_last_hidden [1,3,1024]
+=======
+            if output_so_far.shape[1] > 1:
+                past = model(output_so_far[:, :-1])["past_key_values"]
+
+        lm_output = model(output_so_far)
+        unpert_logits, unpert_past, unpert_all_hidden = (
+            lm_output["logits"],
+            lm_output["past_key_values"],
+            lm_output["hidden_states"],
+        )
+        unpert_last_hidden = unpert_all_hidden[-1]
+>>>>>>> upstream/master
 
         # check if we are above grad max length
         if i >= grad_length:
@@ -565,9 +588,18 @@ def generate_text_pplm(
                 loss_in_time.append(loss_this_iter)
             else:
                 pert_past = past
+<<<<<<< HEAD
         #pert_logits [24], pert_logits[0] [2,1,16,2,64], past [24] past[0] [2,1,16,3,64], pert_all_hidden[25], pert_all_hidden[0] [1,1,1024]
         # pert_logits, past, pert_all_hidden = model(last, past=pert_past)
         pert_logits, past, pert_all_hidden = model(last, mems=pert_past)
+=======
+
+        lm_output = model(last, past_key_values=pert_past)
+        pert_logits, past = (
+            lm_output["logits"],
+            lm_output["past_key_values"],
+        )
+>>>>>>> upstream/master
         pert_logits = pert_logits[:, -1, :] / temperature  # + SMALL_CONST
 
         for token_idx in set(output_so_far[0].tolist()):
@@ -782,7 +814,9 @@ def run_pplm_example(
                 for word_id in pert_gen_tok_text.tolist()[0]:
                     if word_id in bow_word_ids:
                         pert_gen_text += "{}{}{}".format(
-                            colorama.Fore.RED, tokenizer.decode([word_id]), colorama.Style.RESET_ALL,
+                            colorama.Fore.RED,
+                            tokenizer.decode([word_id]),
+                            colorama.Style.RESET_ALL,
                         )
                     else:
                         pert_gen_text += tokenizer.decode([word_id])
@@ -813,7 +847,10 @@ if __name__ == "__main__":
     parser.add_argument("--cond_text", type=str, default="The lake", help="Prefix texts to condition on")
     parser.add_argument("--uncond", action="store_true", help="Generate from end-of-text as prefix")
     parser.add_argument(
-        "--num_samples", type=int, default=1, help="Number of samples to generate from the modified latents",
+        "--num_samples",
+        type=int,
+        default=1,
+        help="Number of samples to generate from the modified latents",
     )
     parser.add_argument(
         "--bag_of_words",
@@ -835,13 +872,22 @@ if __name__ == "__main__":
         help="Discriminator to use",
     )
     parser.add_argument(
-        "--discrim_weights", type=str, default=None, help="Weights for the generic discriminator",
+        "--discrim_weights",
+        type=str,
+        default=None,
+        help="Weights for the generic discriminator",
     )
     parser.add_argument(
-        "--discrim_meta", type=str, default=None, help="Meta information for the generic discriminator",
+        "--discrim_meta",
+        type=str,
+        default=None,
+        help="Meta information for the generic discriminator",
     )
     parser.add_argument(
-        "--class_label", type=int, default=-1, help="Class label used for the discriminator",
+        "--class_label",
+        type=int,
+        default=-1,
+        help="Class label used for the discriminator",
     )
     parser.add_argument("--length", type=int, default=100)
     parser.add_argument("--stepsize", type=float, default=0.02)
@@ -857,7 +903,10 @@ if __name__ == "__main__":
         help="Length of past which is being optimized; 0 corresponds to infinite window length",
     )
     parser.add_argument(
-        "--horizon_length", type=int, default=1, help="Length of future to optimize over",
+        "--horizon_length",
+        type=int,
+        default=1,
+        help="Length of future to optimize over",
     )
     parser.add_argument("--decay", action="store_true", help="whether to decay or not")
     parser.add_argument("--gamma", type=float, default=1.5)
@@ -867,7 +916,10 @@ if __name__ == "__main__":
     parser.add_argument("--no_cuda", action="store_true", help="no cuda")
     parser.add_argument("--colorama", action="store_true", help="colors keywords")
     parser.add_argument(
-        "--repetition_penalty", type=float, default=1.0, help="Penalize repetition. More than 1.0 -> less repetition",
+        "--repetition_penalty",
+        type=float,
+        default=1.0,
+        help="Penalize repetition. More than 1.0 -> less repetition",
     )
 
     args = parser.parse_args()

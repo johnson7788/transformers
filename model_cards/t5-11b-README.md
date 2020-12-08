@@ -7,9 +7,22 @@ tags:
 - translation
 
 license: apache-2.0
+inference: false
 ---
 
-[Google's T5](https://ai.googleblog.com/2020/02/exploring-transfer-learning-with-t5.html) 
+## Disclaimer
+
+**Before `transformers` v3.5.0**, due do its immense size, `t5-11b` required some special treatment. 
+If you're using transformers `<= v3.4.0`, `t5-11b` should be loaded with flag `use_cdn` set to `False` as follows:
+
+```python
+t5 = transformers.T5ForConditionalGeneration.from_pretrained('t5-11b', use_cdn = False)
+```
+
+Secondly, a single GPU will most likely not have enough memory to even load the model into memory as the weights alone amount to over 40 GB.
+Model parallelism has to be used here to overcome this problem as is explained in this [PR](https://github.com/huggingface/transformers/pull/3578).
+
+## [Google's T5](https://ai.googleblog.com/2020/02/exploring-transfer-learning-with-t5.html) 
 
 Pretraining Dataset: [C4](https://huggingface.co/datasets/c4)
 
@@ -18,7 +31,6 @@ Other Community Checkpoints: [here](https://huggingface.co/models?search=t5)
 Paper: [Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer](https://arxiv.org/pdf/1910.10683.pdf)
 
 Authors: *Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang, Michael Matena, Yanqi Zhou, Wei Li, Peter J. Liu* 
-
 
 ## Abstract
 

@@ -1,13 +1,27 @@
-import logging
+# Copyright 2020 The HuggingFace Team. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import warnings
 from dataclasses import dataclass, field
 from typing import Tuple
 
 from .file_utils import cached_property, is_tf_available, tf_required
 from .training_args import TrainingArguments
+from .utils import logging
 
 
-logger = logging.getLogger(__name__)
+logger = logging.get_logger(__name__)
 
 if is_tf_available():
     import tensorflow as tf
@@ -16,11 +30,11 @@ if is_tf_available():
 @dataclass
 class TFTrainingArguments(TrainingArguments):
     """
-    TrainingArguments is the subset of the arguments we use in our example scripts
-    **which relate to the training loop itself**.
+    TrainingArguments is the subset of the arguments we use in our example scripts **which relate to the training loop
+    itself**.
 
-    Using :class:`~transformers.HfArgumentParser` we can turn this class
-    into argparse arguments to be able to specify them on the command line.
+    Using :class:`~transformers.HfArgumentParser` we can turn this class into argparse arguments to be able to specify
+    them on the command line.
 
     Parameters:
         output_dir (:obj:`str`):
@@ -34,14 +48,24 @@ class TFTrainingArguments(TrainingArguments):
             Whether to run evaluation on the dev set or not.
         do_predict (:obj:`bool`, `optional`, defaults to :obj:`False`):
             Whether to run predictions on the test set or not.
-        evaluate_during_training (:obj:`bool`, `optional`, defaults to :obj:`False`):
-            Whether to run evaluation during training at each logging step or not.
+        evaluation_strategy (:obj:`str` or :class:`~transformers.trainer_utils.EvaluationStrategy`, `optional`, defaults to :obj:`"no"`):
+            The evaluation strategy to adopt during training. Possible values are:
+
+                * :obj:`"no"`: No evaluation is done during training.
+                * :obj:`"steps"`: Evaluation is done (and logged) every :obj:`eval_steps`.
+
         per_device_train_batch_size (:obj:`int`, `optional`, defaults to 8):
             The batch size per GPU/TPU core/CPU for training.
         per_device_eval_batch_size (:obj:`int`, `optional`, defaults to 8):
             The batch size per GPU/TPU core/CPU for evaluation.
         gradient_accumulation_steps: (:obj:`int`, `optional`, defaults to 1):
             Number of updates steps to accumulate the gradients for, before performing a backward/update pass.
+
+            .. warning::
+
+                When using gradient accumulation, one step is counted as one step with backward pass. Therefore,
+                logging, evaluation, save will be conducted every ``gradient_accumulation_steps * xxx_step`` training
+                examples.
         learning_rate (:obj:`float`, `optional`, defaults to 5e-5):
             The initial learning rate for Adam.
         weight_decay (:obj:`float`, `optional`, defaults to 0):
@@ -60,7 +84,7 @@ class TFTrainingArguments(TrainingArguments):
         logging_dir (:obj:`str`, `optional`):
             Tensorboard log directory. Will default to `runs/**CURRENT_DATETIME_HOSTNAME**`.
         logging_first_step (:obj:`bool`, `optional`, defaults to :obj:`False`):
-            Wheter to log and evalulate the first :obj:`global_step` or not.
+            Whether to log and evaluate the first :obj:`global_step` or not.
         logging_steps (:obj:`int`, `optional`, defaults to 500):
             Number of update steps between two logs.
         save_steps (:obj:`int`, `optional`, defaults to 500):
@@ -80,9 +104,9 @@ class TFTrainingArguments(TrainingArguments):
         local_rank (:obj:`int`, `optional`, defaults to -1):
             During distributed training, the rank of the process.
         tpu_num_cores (:obj:`int`, `optional`):
-            When training on TPU, the mumber of TPU cores (automatically passed by launcher script).
+            When training on TPU, the number of TPU cores (automatically passed by launcher script).
         debug (:obj:`bool`, `optional`, defaults to :obj:`False`):
-            Wheter to activate the trace to record computation graphs and profiling information or not.
+            Whether to activate the trace to record computation graphs and profiling information or not.
         dataloader_drop_last (:obj:`bool`, `optional`, defaults to :obj:`False`):
             Whether to drop the last incomplete batch (if the length of the dataset is not divisible by the batch size)
             or not.
@@ -97,17 +121,36 @@ class TFTrainingArguments(TrainingArguments):
             The name of the TPU the process is running on.
         run_name (:obj:`str`, `optional`):
             A descriptor for the run. Notably used for wandb logging.
+        xla (:obj:`bool`, `optional`):
+            Whether to activate the XLA compilation or not.
     """
 
     tpu_name: str = field(
-        default=None, metadata={"help": "Name of TPU"},
+        default=None,
+        metadata={"help": "Name of TPU"},
     )
+
+    poly_power: float = field(
+        default=1.0,
+        metadata={"help": "Power for the Polynomial decay LR scheduler."},
+    )
+
+    xla: bool = field(default=False, metadata={"help": "Whether to activate the XLA compilation or not"})
 
     @cached_property
     @tf_required
     def _setup_strategy(self) -> Tuple["tf.distribute.Strategy", int]:
         logger.info("Tensorflow: setting up strategy")
+
+        if self.xla:
+            tf.config.optimizer.set_jit(True)
+
         gpus = tf.config.list_physical_devices("GPU")
+
+        # Set to float16 at first
+        if self.fp16:
+            policy = tf.keras.mixed_precision.experimental.Policy("mixed_float16")
+            tf.keras.mixed_precision.experimental.set_policy(policy)
 
         if self.no_cuda:
             strategy = tf.distribute.OneDeviceStrategy(device="/cpu:0")
@@ -121,10 +164,16 @@ class TFTrainingArguments(TrainingArguments):
                 tpu = None
 
             if tpu:
+                # Set to bfloat16 in case of TPU
+                if self.fp16:
+                    policy = tf.keras.mixed_precision.experimental.Policy("mixed_bfloat16")
+                    tf.keras.mixed_precision.experimental.set_policy(policy)
+
                 tf.config.experimental_connect_to_cluster(tpu)
                 tf.tpu.experimental.initialize_tpu_system(tpu)
 
                 strategy = tf.distribute.experimental.TPUStrategy(tpu)
+
             elif len(gpus) == 0:
                 strategy = tf.distribute.OneDeviceStrategy(device="/cpu:0")
             elif len(gpus) == 1:

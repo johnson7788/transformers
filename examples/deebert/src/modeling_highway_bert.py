@@ -2,8 +2,8 @@ import torch
 from torch import nn
 from torch.nn import CrossEntropyLoss, MSELoss
 
-from transformers.file_utils import add_start_docstrings, add_start_docstrings_to_callable
-from transformers.modeling_bert import (
+from transformers.file_utils import add_start_docstrings, add_start_docstrings_to_model_forward
+from transformers.models.bert.modeling_bert import (
     BERT_INPUTS_DOCSTRING,
     BERT_START_DOCSTRING,
     BertEmbeddings,
@@ -14,8 +14,7 @@ from transformers.modeling_bert import (
 
 
 def entropy(x):
-    """ Calculate entropy of a pre-softmax logit Tensor
-    """
+    """Calculate entropy of a pre-softmax logit Tensor"""
     exp_x = torch.exp(x)
     A = torch.sum(exp_x, dim=1)  # sum of exp(x_i)
     B = torch.sum(x * exp_x, dim=1)  # sum of x_i * exp(x_i)
@@ -104,7 +103,8 @@ class DeeBertEncoder(nn.Module):
 
 
 @add_start_docstrings(
-    "The Bert Model transformer with early exiting (DeeBERT). ", BERT_START_DOCSTRING,
+    "The Bert Model transformer with early exiting (DeeBERT). ",
+    BERT_START_DOCSTRING,
 )
 class DeeBertModel(BertPreTrainedModel):
     def __init__(self, config):
@@ -127,14 +127,14 @@ class DeeBertModel(BertPreTrainedModel):
         self.embeddings.word_embeddings = value
 
     def _prune_heads(self, heads_to_prune):
-        """ Prunes heads of the model.
-            heads_to_prune: dict of {layer_num: list of heads to prune in this layer}
-            See base class PreTrainedModel
+        """Prunes heads of the model.
+        heads_to_prune: dict of {layer_num: list of heads to prune in this layer}
+        See base class PreTrainedModel
         """
         for layer, heads in heads_to_prune.items():
             self.encoder.layer[layer].attention.prune_heads(heads)
 
-    @add_start_docstrings_to_callable(BERT_INPUTS_DOCSTRING)
+    @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING)
     def forward(
         self,
         input_ids=None,
@@ -147,33 +147,33 @@ class DeeBertModel(BertPreTrainedModel):
         encoder_attention_mask=None,
     ):
         r"""
-    Return:
-        :obj:`tuple(torch.FloatTensor)` comprising various elements depending on the configuration (:class:`~transformers.BertConfig`) and inputs:
-        last_hidden_state (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`):
-            Sequence of hidden-states at the output of the last layer of the model.
-        pooler_output (:obj:`torch.FloatTensor`: of shape :obj:`(batch_size, hidden_size)`):
-            Last layer hidden-state of the first token of the sequence (classification token)
-            further processed by a Linear layer and a Tanh activation function. The Linear
-            layer weights are trained from the next sentence prediction (classification)
-            objective during pre-training.
+        Return:
+            :obj:`tuple(torch.FloatTensor)` comprising various elements depending on the configuration (:class:`~transformers.BertConfig`) and inputs:
+            last_hidden_state (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`):
+                Sequence of hidden-states at the output of the last layer of the model.
+            pooler_output (:obj:`torch.FloatTensor`: of shape :obj:`(batch_size, hidden_size)`):
+                Last layer hidden-state of the first token of the sequence (classification token)
+                further processed by a Linear layer and a Tanh activation function. The Linear
+                layer weights are trained from the next sentence prediction (classification)
+                objective during pre-training.
 
-            This output is usually *not* a good summary
-            of the semantic content of the input, you're often better with averaging or pooling
-            the sequence of hidden-states for the whole input sequence.
-        hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True`` is passed or when ``config.output_hidden_states=True``):
-            Tuple of :obj:`torch.FloatTensor` (one for the output of the embeddings + one for the output of each layer)
-            of shape :obj:`(batch_size, sequence_length, hidden_size)`.
+                This output is usually *not* a good summary
+                of the semantic content of the input, you're often better with averaging or pooling
+                the sequence of hidden-states for the whole input sequence.
+            hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True`` is passed or when ``config.output_hidden_states=True``):
+                Tuple of :obj:`torch.FloatTensor` (one for the output of the embeddings + one for the output of each layer)
+                of shape :obj:`(batch_size, sequence_length, hidden_size)`.
 
-            Hidden-states of the model at the output of each layer plus the initial embedding outputs.
-        attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed or when ``config.output_attentions=True``):
-            Tuple of :obj:`torch.FloatTensor` (one for each layer) of shape
-            :obj:`(batch_size, num_heads, sequence_length, sequence_length)`.
+                Hidden-states of the model at the output of each layer plus the initial embedding outputs.
+            attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed or when ``config.output_attentions=True``):
+                Tuple of :obj:`torch.FloatTensor` (one for each layer) of shape
+                :obj:`(batch_size, num_heads, sequence_length, sequence_length)`.
 
-            Attentions weights after the attention softmax, used to compute the weighted average in the self-attention
-            heads.
-        highway_exits (:obj:`tuple(tuple(torch.Tensor))`:
-            Tuple of each early exit's results (total length: number of layers)
-            Each tuple is again, a tuple of length 2 - the first entry is logits and the second entry is hidden states.
+                Attentions weights after the attention softmax, used to compute the weighted average in the self-attention
+                heads.
+            highway_exits (:obj:`tuple(tuple(torch.Tensor))`:
+                Tuple of each early exit's results (total length: number of layers)
+                Each tuple is again, a tuple of length 2 - the first entry is logits and the second entry is hidden states.
         """
         if input_ids is not None and inputs_embeds is not None:
             raise ValueError("You cannot specify both input_ids and inputs_embeds at the same time")
@@ -198,7 +198,7 @@ class DeeBertModel(BertPreTrainedModel):
         extended_attention_mask: torch.Tensor = self.get_extended_attention_mask(attention_mask, input_shape, device)
 
         # If a 2D ou 3D attention mask is provided for the cross-attention
-        # we need to make broadcastabe to [batch_size, num_heads, seq_length, seq_length]
+        # we need to make broadcastable to [batch_size, num_heads, seq_length, seq_length]
         if encoder_attention_mask.dim() == 3:
             encoder_extended_attention_mask = encoder_attention_mask[:, None, :, :]
         if encoder_attention_mask.dim() == 2:
@@ -260,7 +260,7 @@ class BertHighway(nn.Module):
 
         # BertModel
         bmodel_output = (pooler_input, pooler_output) + encoder_outputs[1:]
-        # "return" bodel_output
+        # "return" bmodel_output
 
         # Dropout and classification
         pooled_output = bmodel_output[1]
@@ -288,7 +288,7 @@ class DeeBertForSequenceClassification(BertPreTrainedModel):
 
         self.init_weights()
 
-    @add_start_docstrings_to_callable(BERT_INPUTS_DOCSTRING)
+    @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING)
     def forward(
         self,
         input_ids=None,
@@ -302,32 +302,32 @@ class DeeBertForSequenceClassification(BertPreTrainedModel):
         train_highway=False,
     ):
         r"""
-        labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`, defaults to :obj:`None`):
-            Labels for computing the sequence classification/regression loss.
-            Indices should be in :obj:`[0, ..., config.num_labels - 1]`.
-            If :obj:`config.num_labels == 1` a regression loss is computed (Mean-Square loss),
-            If :obj:`config.num_labels > 1` a classification loss is computed (Cross-Entropy).
+            labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
+                Labels for computing the sequence classification/regression loss.
+                Indices should be in :obj:`[0, ..., config.num_labels - 1]`.
+                If :obj:`config.num_labels == 1` a regression loss is computed (Mean-Square loss),
+                If :obj:`config.num_labels > 1` a classification loss is computed (Cross-Entropy).
 
-    Returns:
-        :obj:`tuple(torch.FloatTensor)` comprising various elements depending on the configuration (:class:`~transformers.BertConfig`) and inputs:
-        loss (:obj:`torch.FloatTensor` of shape :obj:`(1,)`, `optional`, returned when :obj:`label` is provided):
-            Classification (or regression if config.num_labels==1) loss.
-        logits (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, config.num_labels)`):
-            Classification (or regression if config.num_labels==1) scores (before SoftMax).
-        hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True`` is passed or when ``config.output_hidden_states=True``):
-            Tuple of :obj:`torch.FloatTensor` (one for the output of the embeddings + one for the output of each layer)
-            of shape :obj:`(batch_size, sequence_length, hidden_size)`.
+        Returns:
+            :obj:`tuple(torch.FloatTensor)` comprising various elements depending on the configuration (:class:`~transformers.BertConfig`) and inputs:
+            loss (:obj:`torch.FloatTensor` of shape :obj:`(1,)`, `optional`, returned when :obj:`label` is provided):
+                Classification (or regression if config.num_labels==1) loss.
+            logits (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, config.num_labels)`):
+                Classification (or regression if config.num_labels==1) scores (before SoftMax).
+            hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True`` is passed or when ``config.output_hidden_states=True``):
+                Tuple of :obj:`torch.FloatTensor` (one for the output of the embeddings + one for the output of each layer)
+                of shape :obj:`(batch_size, sequence_length, hidden_size)`.
 
-            Hidden-states of the model at the output of each layer plus the initial embedding outputs.
-        attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed or when ``config.output_attentions=True``):
-            Tuple of :obj:`torch.FloatTensor` (one for each layer) of shape
-            :obj:`(batch_size, num_heads, sequence_length, sequence_length)`.
+                Hidden-states of the model at the output of each layer plus the initial embedding outputs.
+            attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed or when ``config.output_attentions=True``):
+                Tuple of :obj:`torch.FloatTensor` (one for each layer) of shape
+                :obj:`(batch_size, num_heads, sequence_length, sequence_length)`.
 
-            Attentions weights after the attention softmax, used to compute the weighted average in the self-attention
-            heads.
-        highway_exits (:obj:`tuple(tuple(torch.Tensor))`:
-            Tuple of each early exit's results (total length: number of layers)
-            Each tuple is again, a tuple of length 2 - the first entry is logits and the second entry is hidden states.
+                Attentions weights after the attention softmax, used to compute the weighted average in the self-attention
+                heads.
+            highway_exits (:obj:`tuple(tuple(torch.Tensor))`:
+                Tuple of each early exit's results (total length: number of layers)
+                Each tuple is again, a tuple of length 2 - the first entry is logits and the second entry is hidden states.
         """
 
         exit_layer = self.num_layers

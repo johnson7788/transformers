@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2018 The Google AI Language Team Authors.
+# Copyright 2020 The HuggingFace Team. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,36 +27,36 @@ if is_tf_available():
         GPT2Config,
         T5Config,
         TFAutoModel,
-        TFBertModel,
+        TFAutoModelForCausalLM,
+        TFAutoModelForMaskedLM,
         TFAutoModelForPreTraining,
-        TFBertForPreTraining,
+        TFAutoModelForQuestionAnswering,
+        TFAutoModelForSeq2SeqLM,
+        TFAutoModelForSequenceClassification,
         TFAutoModelWithLMHead,
         TFBertForMaskedLM,
-        TFRobertaForMaskedLM,
-        TFAutoModelForSequenceClassification,
-        TFBertForSequenceClassification,
-        TFAutoModelForQuestionAnswering,
+        TFBertForPreTraining,
         TFBertForQuestionAnswering,
-        TFAutoModelForCausalLM,
+        TFBertForSequenceClassification,
+        TFBertModel,
         TFGPT2LMHeadModel,
-        TFAutoModelForMaskedLM,
-        TFAutoModelForSeq2SeqLM,
+        TFRobertaForMaskedLM,
         TFT5ForConditionalGeneration,
     )
-    from transformers.modeling_tf_bert import TF_BERT_PRETRAINED_MODEL_ARCHIVE_LIST
-    from transformers.modeling_tf_gpt2 import TF_GPT2_PRETRAINED_MODEL_ARCHIVE_LIST
-    from transformers.modeling_tf_t5 import TF_T5_PRETRAINED_MODEL_ARCHIVE_LIST
-    from transformers.modeling_tf_auto import (
-        TF_MODEL_MAPPING,
-        TF_MODEL_FOR_PRETRAINING_MAPPING,
-        TF_MODEL_FOR_QUESTION_ANSWERING_MAPPING,
-        TF_MODEL_FOR_SEQUENCE_CLASSIFICATION_MAPPING,
-        TF_MODEL_FOR_TOKEN_CLASSIFICATION_MAPPING,
-        TF_MODEL_WITH_LM_HEAD_MAPPING,
+    from transformers.models.auto.modeling_tf_auto import (
         TF_MODEL_FOR_CAUSAL_LM_MAPPING,
         TF_MODEL_FOR_MASKED_LM_MAPPING,
+        TF_MODEL_FOR_PRETRAINING_MAPPING,
+        TF_MODEL_FOR_QUESTION_ANSWERING_MAPPING,
         TF_MODEL_FOR_SEQ_TO_SEQ_CAUSAL_LM_MAPPING,
+        TF_MODEL_FOR_SEQUENCE_CLASSIFICATION_MAPPING,
+        TF_MODEL_FOR_TOKEN_CLASSIFICATION_MAPPING,
+        TF_MODEL_MAPPING,
+        TF_MODEL_WITH_LM_HEAD_MAPPING,
     )
+    from transformers.models.bert.modeling_tf_bert import TF_BERT_PRETRAINED_MODEL_ARCHIVE_LIST
+    from transformers.models.gpt2.modeling_tf_gpt2 import TF_GPT2_PRETRAINED_MODEL_ARCHIVE_LIST
+    from transformers.models.t5.modeling_tf_t5 import TF_T5_PRETRAINED_MODEL_ARCHIVE_LIST
 
 
 @require_tf

@@ -19,7 +19,7 @@ Transfer learning, where a model is first pre-trained on a data-rich task before
 
 ## Details of the downstream task (Q&A) - Dataset 📚 🧐 ❓
 
-Dataset ID: ```squad``` from  [HugginFace/NLP](https://github.com/huggingface/nlp)
+Dataset ID: ```squad``` from  [Huggingface/NLP](https://github.com/huggingface/nlp)
 
 | Dataset  | Split | # samples |
 | -------- | ----- | --------- |
@@ -29,7 +29,7 @@ Dataset ID: ```squad``` from  [HugginFace/NLP](https://github.com/huggingface/nl
 How to load it from [nlp](https://github.com/huggingface/nlp)
 
 ```python
-train_dataset  = nlp.load_dataset('squad, split=nlp.Split.TRAIN)
+train_dataset  = nlp.load_dataset('squad', split=nlp.Split.TRAIN)
 valid_dataset = nlp.load_dataset('squad', split=nlp.Split.VALIDATION)
 ```
 Check out more about this dataset and others in [NLP Viewer](https://huggingface.co/nlp/viewer/)

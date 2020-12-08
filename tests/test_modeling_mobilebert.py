@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2018 The Google AI Language Team Authors.
+# Copyright 2020 The HuggingFace Team. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,24 +17,26 @@
 import unittest
 
 from transformers import is_torch_available
-from transformers.testing_utils import require_torch, slow, torch_device
+from transformers.testing_utils import require_sentencepiece, require_tokenizers, require_torch, slow, torch_device
 
 from .test_configuration_common import ConfigTester
-from .test_modeling_common import ModelTesterMixin, floats_tensor, ids_tensor
+from .test_modeling_common import ModelTesterMixin, floats_tensor, ids_tensor, random_attention_mask
 
 
 if is_torch_available():
     import torch
+
     from transformers import (
+        MODEL_FOR_PRETRAINING_MAPPING,
         MobileBertConfig,
-        MobileBertModel,
         MobileBertForMaskedLM,
+        MobileBertForMultipleChoice,
         MobileBertForNextSentencePrediction,
         MobileBertForPreTraining,
         MobileBertForQuestionAnswering,
         MobileBertForSequenceClassification,
         MobileBertForTokenClassification,
-        MobileBertForMultipleChoice,
+        MobileBertModel,
     )
 
 
@@ -94,7 +96,7 @@ class MobileBertModelTester:
 
         input_mask = None
         if self.use_input_mask:
-            input_mask = ids_tensor([self.batch_size, self.seq_length], vocab_size=2)
+            input_mask = random_attention_mask([self.batch_size, self.seq_length])
 
         token_type_ids = None
         if self.use_token_type_ids:
@@ -122,7 +124,6 @@ class MobileBertModelTester:
             type_vocab_size=self.type_vocab_size,
             is_decoder=False,
             initializer_range=self.initializer_range,
-            return_dict=True,
         )
 
         return config, input_ids, token_type_ids, input_mask, sequence_labels, token_labels, choice_labels
@@ -216,7 +217,10 @@ class MobileBertModelTester:
         model.to(torch_device)
         model.eval()
         result = model(
-            input_ids, attention_mask=input_mask, token_type_ids=token_type_ids, next_sentence_label=sequence_labels,
+            input_ids,
+            attention_mask=input_mask,
+            token_type_ids=token_type_ids,
+            labels=sequence_labels,
         )
         self.parent.assertEqual(result.logits.shape, (self.batch_size, 2))
 
@@ -323,6 +327,20 @@ class MobileBertModelTest(ModelTesterMixin, unittest.TestCase):
         else ()
     )
 
+    # special case for ForPreTraining model
+    def _prepare_for_class(self, inputs_dict, model_class, return_labels=False):
+        inputs_dict = super()._prepare_for_class(inputs_dict, model_class, return_labels=return_labels)
+
+        if return_labels:
+            if model_class in MODEL_FOR_PRETRAINING_MAPPING.values():
+                inputs_dict["labels"] = torch.zeros(
+                    (self.model_tester.batch_size, self.model_tester.seq_length), dtype=torch.long, device=torch_device
+                )
+                inputs_dict["next_sentence_label"] = torch.zeros(
+                    self.model_tester.batch_size, dtype=torch.long, device=torch_device
+                )
+        return inputs_dict
+
     def setUp(self):
         self.model_tester = MobileBertModelTester(self)
         self.config_tester = ConfigTester(self, config_class=MobileBertConfig, hidden_size=37)
@@ -396,13 +414,19 @@ class MobileBertModelTest(ModelTesterMixin, unittest.TestCase):
 
 
 def _long_tensor(tok_lst):
-    return torch.tensor(tok_lst, dtype=torch.long, device=torch_device,)
+    return torch.tensor(
+        tok_lst,
+        dtype=torch.long,
+        device=torch_device,
+    )
 
 
 TOLERANCE = 1e-3
 
 
 @require_torch
+@require_sentencepiece
+@require_tokenizers
 class MobileBertModelIntegrationTests(unittest.TestCase):
     @slow
     def test_inference_no_head(self):

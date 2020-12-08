@@ -19,7 +19,7 @@ Transfer learning, where a model is first pre-trained on a data-rich task before
 
 ## Details of the downstream task (Q&A) - Dataset 📚 🧐 ❓
 
-Dataset ID: ```squad_v2``` from  [HugginFace/NLP](https://github.com/huggingface/nlp)
+Dataset ID: ```squad_v2``` from  [Huggingface/NLP](https://github.com/huggingface/nlp)
 
 | Dataset  | Split | # samples |
 | -------- | ----- | --------- |
@@ -65,7 +65,7 @@ def get_answer(question, context):
 
   return tokenizer.decode(output[0])
 
-context = "Manuel have created RuPERTa-base (a Spanish RoBERTa) with the support of HF-Transformers and Google"
+context = "Manuel has created RuPERTa-base (a Spanish RoBERTa) with the support of HF-Transformers and Google"
 question = "Who has supported Manuel?"
 
 get_answer(question, context)
