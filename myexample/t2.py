@@ -1,20 +1,13 @@
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import torch
-tokenizer = AutoTokenizer.from_pretrained("bert-base-cased-finetuned-mrpc")
-model = AutoModelForSequenceClassification.from_pretrained("bert-base-cased-finetuned-mrpc")
-classes = ["not paraphrase", "is paraphrase"]
-sequence_0 = "The company HuggingFace is based in New York City"
-sequence_1 = "Apples are especially bad for your health"
-sequence_2 = "HuggingFace's headquarters are situated in Manhattan"
-paraphrase = tokenizer(sequence_0, sequence_2, return_tensors="pt")
-not_paraphrase = tokenizer(sequence_0, sequence_1, return_tensors="pt")
-paraphrase_classification_logits = model(**paraphrase)[0]
-not_paraphrase_classification_logits = model(**not_paraphrase)[0]
-paraphrase_results = torch.softmax(paraphrase_classification_logits, dim=1).tolist()[0]
-not_paraphrase_results = torch.softmax(not_paraphrase_classification_logits, dim=1).tolist()[0]
-# Should be paraphrase
-for i in range(len(classes)):
-    print(f"{classes[i]}: {int(round(paraphrase_results[i] * 100))}%")
-# Should not be paraphrase
-for i in range(len(classes)):
-    print(f"{classes[i]}: {int(round(not_paraphrase_results[i] * 100))}%")
+from datasets import list_datasets, load_dataset, list_metrics, load_metric
+
+#列出所有可用数据集
+# print(list_datasets())
+# weibo_dataset = load_dataset(path='data/weibo_ner.py')
+# print(weibo_dataset['train'][0])
+
+# msra_dataset = load_dataset('msra_ner')
+msra_dataset = load_dataset('data/msra_ner.py')
+print(msra_dataset['train'][:5])
+
+# squad_dataset = load_dataset('squad')
+# print(squad_dataset['train'][0])
