@@ -204,7 +204,7 @@ optional arguments:
                         first epochs and batches to get to the same training
                         data.
 ```
-# 测试英文Conll2003的效果，默认3个epoch
+# 测试英文Conll2003的效果， 默认3个epoch
 ```buildoutcfg
 python conll2003_run_ner.py --model_name_or_path bert-base-uncased --dataset_name conll2003 --output_dir conll-ner --do_train --do_eval
 12/09/2020 08:33:19 - INFO - __main__ -   ***** Eval results *****
@@ -216,13 +216,13 @@ python conll2003_run_ner.py --model_name_or_path bert-base-uncased --dataset_nam
 12/09/2020 08:33:19 - INFO - __main__ -     epoch = 3.0
 ```
 
-# 使用BERT的效果,默认3个epoch
+# 使用BERT的效果,最大序列长度128， 默认3个epoch
 ```buildoutcfg
 cd myexample
 python msra_run_ner.py --model_name_or_path bert-base-chinese --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128
 ```
 
-# 使用MacBERT的效果,默认3个epoch
+# 使用MacBERT的效果,最大序列长度128, 默认3个epoch
 ```buildoutcfg
 cd myexample
 python msra_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128

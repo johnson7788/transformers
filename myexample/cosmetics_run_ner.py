@@ -87,6 +87,12 @@ class DataTrainingArguments:
             "efficient on GPU but very bad for TPU."
         },
     )
+    max_length: int = field(
+        default=64,
+        metadata={
+            "help": "padding的最大序列长度，默认是64，如果是bert，最长是512"
+        },
+    )
     label_all_tokens: bool = field(
         default=False,
         metadata={
@@ -232,6 +238,8 @@ def main():
         )
 
     # 数据预处理
+    # 最大序列长度
+    max_length = data_args.max_length
     # Padding 策略
     padding = "max_length" if data_args.pad_to_max_length else False
 
@@ -254,6 +262,7 @@ def main():
         tokenized_inputs = tokenizer(
             examples[text_column_name],
             padding=padding,
+            max_length=max_length,
             truncation=True,
             # 我们使用此参数是因为数据集中的文本是单词列表(每个单词带有标签)
             is_split_into_words=True,
