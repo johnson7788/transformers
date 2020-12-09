@@ -1,0 +1,6 @@
+seqeval
+black>=20.8b1
+cookiecutter==1.7.2
+dataclasses
+datasets
+tqdm>=4.27
