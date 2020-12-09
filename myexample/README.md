@@ -226,6 +226,18 @@ python msra_run_ner.py --model_name_or_path bert-base-chinese --dataset_name msr
 ```buildoutcfg
 cd myexample
 python msra_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128
+
+12/09/2020 09:53:40 - INFO - __main__ -   ***** Eval results *****
+12/09/2020 09:53:40 - INFO - __main__ -     eval_loss = 0.03303384408354759
+12/09/2020 09:53:40 - INFO - __main__ -     eval_accuracy_score = 0.9935772542608311
+12/09/2020 09:53:40 - INFO - __main__ -     eval_precision = 0.9512422940407248
+12/09/2020 09:53:40 - INFO - __main__ -     eval_recall = 0.9528443113772455
+12/09/2020 09:53:40 - INFO - __main__ -     eval_f1 = 0.9520426287744227
+12/09/2020 09:53:40 - INFO - __main__ -     epoch = 3.0
 ```
 
-
+# cosemtics MacBert
+```buildoutcfg
+cd myexample
+python cosmetics_run_ner.py --model_name_or_path hfl/chinese-macbert-base --train_file dataset/cosmetics/train.txt --validation_file dataset/cosmetics/dev.txt --test_file dataset/cosmetics/test.txt --output_dir msra_ner --do_train --do_eval --max_length 128
+```
