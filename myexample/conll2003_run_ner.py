@@ -153,7 +153,11 @@ def main():
     # 自动下载数据集
     if data_args.dataset_name is not None:
         # 下载数据集并加载
-        datasets = load_dataset(data_args.dataset_name, data_args.dataset_config_name)
+        conll_path = 'data/conll2003.py'
+        # conll_path = '/Users/admin/.cache/huggingface/datasets/5bbfb41c2d18b5da104592eb8efc82f70e1be1f17dd6d3c9a2beb1d9280e88b9.53af5bfc09eda28c03c3ba490c11c1bd6dd3d86633304d9f12406554943f2bb0.py'
+        # data_dir = '/Users/admin/.cache/huggingface/datasets/conll2003/conll2003/1.0.0/63ba56944e35c1943434322a07ceefd79864672041b7834583709af4a5de4664'
+        # datasets = load_dataset(path=data_args.dataset_name, name=data_args.dataset_config_name)
+        datasets = load_dataset(path=conll_path, name=data_args.dataset_config_name)
     else:
         data_files = {}
         if data_args.train_file is not None:
@@ -172,13 +176,13 @@ def main():
     else:
         column_names = datasets["validation"].column_names
         features = datasets["validation"].features
+    # 使用哪个column作为text, column_names: ['chunk_tags', 'id', 'ner_tags', 'pos_tags', 'tokens']
     text_column_name = "tokens" if "tokens" in column_names else column_names[0]
+    # 哪列作为label，这里是'ner_tags'
     label_column_name = (
         f"{data_args.task_name}_tags" if f"{data_args.task_name}_tags" in column_names else column_names[1]
     )
-
-    # In the event the labels are not a `Sequence[ClassLabel]`, we will need to go through the dataset to get the
-    # unique labels.
+    #如果labels不是`Sequence [ClassLabel]`，我们将需要遍历数据集以获得唯一标签。
     def get_label_list(labels):
         unique_labels = set()
         for label in labels:
@@ -186,26 +190,28 @@ def main():
         label_list = list(unique_labels)
         label_list.sort()
         return label_list
-
+    # 看一下label的feautre是不是ClassLabel类型，已经定制好的
     if isinstance(features[label_column_name].feature, ClassLabel):
+        # label_list: ['O', 'B-PER', 'I-PER', 'B-ORG', 'I-ORG', 'B-LOC', 'I-LOC', 'B-MISC', 'I-MISC']
         label_list = features[label_column_name].feature.names
-        # No need to convert the labels since they are already ints.
+        # 由名称变成id格式的字典
         label_to_id = {i: i for i in range(len(label_list))}
     else:
         label_list = get_label_list(datasets["train"][label_column_name])
         label_to_id = {l: i for i, l in enumerate(label_list)}
     num_labels = len(label_list)
 
-    # Load pretrained model and tokenizer
+    # 开始加载预训练模型和tokenizer
     #
     # Distributed training:
     # The .from_pretrained methods guarantee that only one local process can concurrently
     # download model & vocab.
+    # 加载模型配置
     config = AutoConfig.from_pretrained(
         model_args.config_name if model_args.config_name else model_args.model_name_or_path,
         num_labels=num_labels,
-        finetuning_task=data_args.task_name,
-        cache_dir=model_args.cache_dir,
+        finetuning_task=data_args.task_name,    #ner
+        cache_dir=model_args.cache_dir,        #None
     )
     tokenizer = AutoTokenizer.from_pretrained(
         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
@@ -219,7 +225,7 @@ def main():
         cache_dir=model_args.cache_dir,
     )
 
-    # Tokenizer check: this script requires a fast tokenizer.
+    # 这个只能用fast tokenizer,  Tokenizer check
     if not isinstance(tokenizer, PreTrainedTokenizerFast):
         raise ValueError(
             "This example script only works for models that have a fast tokenizer. Checkout the big table of models "
@@ -227,42 +233,60 @@ def main():
             "requirement"
         )
 
-    # Preprocessing the dataset
-    # Padding strategy
+    # 数据预处理
+    # Padding 策略
     padding = "max_length" if data_args.pad_to_max_length else False
 
-    # Tokenize all texts and align the labels with them.
+    # Tokenize所有文本并将label与它们对齐。
     def tokenize_and_align_labels(examples):
+        """
+        datasets.map函数处理时会调用
+        Args:
+            examples: 这里是2条样本,
+        例如: examples = {dict: 5}
+ 'chunk_tags' = {list: 2} [[11, 21, 11, 12, 21, 22, 11, 12, 0], [11, 12]]
+ 'id' = {list: 2} ['0', '1']
+ 'ner_tags' = {list: 2} [[3, 0, 7, 0, 0, 0, 7, 0, 0], [1, 2]]
+ 'pos_tags' = {list: 2} [[22, 42, 16, 21, 35, 37, 16, 21, 7], [22, 22]]
+ 'tokens' = {list: 2} [['EU', 'rejects', 'German', 'call', 'to', 'boycott', 'British', 'lamb', '.'], ['Peter', 'Blackburn']]
+        Returns:
+
+        """
+        # 对单条样本的examples的tokens字段，即文本字段进行tokenizer
         tokenized_inputs = tokenizer(
             examples[text_column_name],
             padding=padding,
             truncation=True,
-            # We use this argument because the texts in our dataset are lists of words (with a label for each word).
+            # 我们使用此参数是因为数据集中的文本是单词列表(每个单词带有标签)
             is_split_into_words=True,
         )
         labels = []
         for i, label in enumerate(examples[label_column_name]):
+            # 对每条样本进行处理， label 是列表[3, 0, 7, 0, 0, 0, 7, 0, 0]
             word_ids = tokenized_inputs.word_ids(batch_index=i)
+            # word_ids: [None, 0, 1, 2, 3, 4, 5, 6, 7, 8, None]
             previous_word_idx = None
             label_ids = []
             for word_idx in word_ids:
-                # Special tokens have a word id that is None. We set the label to -100 so they are automatically
-                # ignored in the loss function.
+                # 特殊token的单词ID为None的。 我们将label设置为-100，以便在损失函数中自动将其忽略
                 if word_idx is None:
                     label_ids.append(-100)
-                # We set the label for the first token of each word.
+                # 我们为每个单词的第一个token设置label。
                 elif word_idx != previous_word_idx:
                     label_ids.append(label_to_id[label[word_idx]])
-                # For the other tokens in a word, we set the label to either the current label or -100, depending on
-                # the label_all_tokens flag.
+                # 对于单词中的其他token，我们根据label_all_tokens标志将label设置为当前label或-100。
+                # 这里是对token中不是ner的部分，给label，默认给的-100
                 else:
                     label_ids.append(label_to_id[label[word_idx]] if data_args.label_all_tokens else -100)
                 previous_word_idx = word_idx
 
             labels.append(label_ids)
+        # 最终labels是一个列表
+        # {list: 11}[-100, 3, 0, 7, 0, 0, 0, 7, 0, 0, -100]
+        # {list: 4}[-100, 1, 2, -100]
         tokenized_inputs["labels"] = labels
         return tokenized_inputs
-
+    #处理数据，用map函数
     tokenized_datasets = datasets.map(
         tokenize_and_align_labels,
         batched=True,
@@ -270,10 +294,10 @@ def main():
         load_from_cache_file=not data_args.overwrite_cache,
     )
 
-    # Data collator
+    # Data collator, 在for循环dataloader时调用
     data_collator = DataCollatorForTokenClassification(tokenizer)
 
-    # Metrics
+    # 计算metrics
     def compute_metrics(p):
         predictions, labels = p
         predictions = np.argmax(predictions, axis=2)
@@ -308,12 +332,13 @@ def main():
 
     # Training
     if training_args.do_train:
+        # 这里model_path是用来是否继续训练的，恢复训练
         trainer.train(
             model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None
         )
         trainer.save_model()  # Saves the tokenizer too for easy upload
 
-    # Evaluation
+    #评估模型
     results = {}
     if training_args.do_eval:
         logger.info("*** Evaluate ***")

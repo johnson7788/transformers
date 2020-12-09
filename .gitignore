@@ -164,3 +164,4 @@ tags
 # pre-commit
 .pre-commit*
 .DS_Store
+*.lock

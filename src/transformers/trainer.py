@@ -742,12 +742,12 @@ class Trainer:
             # Reset the past mems state at the beginning of each epoch if necessary.
             if self.args.past_index >= 0:
                 self._past = None
-
+            # 训练的步数1756
             steps_in_epoch = len(epoch_iterator) if train_dataset_is_sized else self.args.max_steps
             self.control = self.callback_handler.on_epoch_begin(self.args, self.state, self.control)
 
             for step, inputs in enumerate(epoch_iterator):
-
+                # inputs是输入的一个batch_size大小,
                 # Skip past any already trained steps if resuming training
                 if steps_trained_in_current_epoch > 0:
                     steps_trained_in_current_epoch -= 1
@@ -765,8 +765,8 @@ class Trainer:
                         tr_loss += self.training_step(model, inputs)
                 else:
                     tr_loss += self.training_step(model, inputs)
+                #耗费的算力
                 self._total_flos += self.floating_point_ops(inputs)
-
                 if (step + 1) % self.args.gradient_accumulation_steps == 0 or (
                     # last step in epoch but step is always smaller than gradient_accumulation_steps
                     steps_in_epoch <= self.args.gradient_accumulation_steps
@@ -1078,7 +1078,7 @@ class Trainer:
                 The model to train.
             inputs (:obj:`Dict[str, Union[torch.Tensor, Any]]`):
                 The inputs and targets of the model.
-
+                # 一个step的输入，是一个batch
                 The dictionary will be unpacked before being fed to the model. Most models expect the targets under the
                 argument :obj:`labels`. Check your model's documentation for all accepted arguments.
 
@@ -1087,8 +1087,8 @@ class Trainer:
         """
 
         model.train()
+        # move 到device
         inputs = self._prepare_inputs(inputs)
-
         if self.args.fp16 and _use_native_amp:
             with autocast():
                 loss = self.compute_loss(model, inputs)
