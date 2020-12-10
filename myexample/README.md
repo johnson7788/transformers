@@ -1,52 +1,56 @@
 # MSRA中文NER
 # 支持参数 -h
 ```
-usage: msra_run_ner.py [-h] --model_name_or_path MODEL_NAME_OR_PATH
-                       [--config_name CONFIG_NAME]
-                       [--tokenizer_name TOKENIZER_NAME]
-                       [--cache_dir CACHE_DIR] [--task_name TASK_NAME]
-                       [--dataset_name DATASET_NAME]
-                       [--dataset_config_name DATASET_CONFIG_NAME]
-                       [--train_file TRAIN_FILE]
-                       [--validation_file VALIDATION_FILE]
-                       [--test_file TEST_FILE] [--overwrite_cache]
-                       [--preprocessing_num_workers PREPROCESSING_NUM_WORKERS]
-                       [--pad_to_max_length] [--label_all_tokens] --output_dir
-                       OUTPUT_DIR [--overwrite_output_dir] [--do_train]
-                       [--do_eval] [--do_predict] [--model_parallel]
-                       [--evaluation_strategy {EvaluationStrategy.NO,EvaluationStrategy.STEPS,EvaluationStrategy.EPOCH}]
-                       [--prediction_loss_only]
-                       [--per_device_train_batch_size PER_DEVICE_TRAIN_BATCH_SIZE]
-                       [--per_device_eval_batch_size PER_DEVICE_EVAL_BATCH_SIZE]
-                       [--per_gpu_train_batch_size PER_GPU_TRAIN_BATCH_SIZE]
-                       [--per_gpu_eval_batch_size PER_GPU_EVAL_BATCH_SIZE]
-                       [--gradient_accumulation_steps GRADIENT_ACCUMULATION_STEPS]
-                       [--eval_accumulation_steps EVAL_ACCUMULATION_STEPS]
-                       [--learning_rate LEARNING_RATE]
-                       [--weight_decay WEIGHT_DECAY] [--adam_beta1 ADAM_BETA1]
-                       [--adam_beta2 ADAM_BETA2] [--adam_epsilon ADAM_EPSILON]
-                       [--max_grad_norm MAX_GRAD_NORM]
-                       [--num_train_epochs NUM_TRAIN_EPOCHS]
-                       [--max_steps MAX_STEPS] [--warmup_steps WARMUP_STEPS]
-                       [--logging_dir LOGGING_DIR] [--logging_first_step]
-                       [--logging_steps LOGGING_STEPS]
-                       [--save_steps SAVE_STEPS]
-                       [--save_total_limit SAVE_TOTAL_LIMIT] [--no_cuda]
-                       [--seed SEED] [--fp16]
-                       [--fp16_opt_level FP16_OPT_LEVEL]
-                       [--local_rank LOCAL_RANK]
-                       [--tpu_num_cores TPU_NUM_CORES] [--tpu_metrics_debug]
-                       [--debug] [--dataloader_drop_last]
-                       [--eval_steps EVAL_STEPS]
-                       [--dataloader_num_workers DATALOADER_NUM_WORKERS]
-                       [--past_index PAST_INDEX] [--run_name RUN_NAME]
-                       [--disable_tqdm DISABLE_TQDM]
-                       [--no_remove_unused_columns]
-                       [--label_names LABEL_NAMES [LABEL_NAMES ...]]
-                       [--load_best_model_at_end]
-                       [--metric_for_best_model METRIC_FOR_BEST_MODEL]
-                       [--greater_is_better GREATER_IS_BETTER]
-                       [--ignore_data_skip]
+usage: cosmetic_run_ner.py [-h] --model_name_or_path MODEL_NAME_OR_PATH
+                           [--config_name CONFIG_NAME]
+                           [--tokenizer_name TOKENIZER_NAME]
+                           [--cache_dir CACHE_DIR] [--task_name TASK_NAME]
+                           [--dataset_name DATASET_NAME]
+                           [--script_file SCRIPT_FILE]
+                           [--dataset_config_name DATASET_CONFIG_NAME]
+                           [--train_file TRAIN_FILE]
+                           [--validation_file VALIDATION_FILE]
+                           [--test_file TEST_FILE] [--overwrite_cache]
+                           [--preprocessing_num_workers PREPROCESSING_NUM_WORKERS]
+                           [--pad_to_max_length] [--max_length MAX_LENGTH]
+                           [--label_all_tokens] --output_dir OUTPUT_DIR
+                           [--overwrite_output_dir] [--do_train] [--do_eval]
+                           [--do_predict] [--model_parallel]
+                           [--evaluation_strategy {EvaluationStrategy.NO,EvaluationStrategy.STEPS,EvaluationStrategy.EPOCH}]
+                           [--prediction_loss_only]
+                           [--per_device_train_batch_size PER_DEVICE_TRAIN_BATCH_SIZE]
+                           [--per_device_eval_batch_size PER_DEVICE_EVAL_BATCH_SIZE]
+                           [--per_gpu_train_batch_size PER_GPU_TRAIN_BATCH_SIZE]
+                           [--per_gpu_eval_batch_size PER_GPU_EVAL_BATCH_SIZE]
+                           [--gradient_accumulation_steps GRADIENT_ACCUMULATION_STEPS]
+                           [--eval_accumulation_steps EVAL_ACCUMULATION_STEPS]
+                           [--learning_rate LEARNING_RATE]
+                           [--weight_decay WEIGHT_DECAY]
+                           [--adam_beta1 ADAM_BETA1] [--adam_beta2 ADAM_BETA2]
+                           [--adam_epsilon ADAM_EPSILON]
+                           [--max_grad_norm MAX_GRAD_NORM]
+                           [--num_train_epochs NUM_TRAIN_EPOCHS]
+                           [--max_steps MAX_STEPS]
+                           [--warmup_steps WARMUP_STEPS]
+                           [--logging_dir LOGGING_DIR] [--logging_first_step]
+                           [--logging_steps LOGGING_STEPS]
+                           [--save_steps SAVE_STEPS]
+                           [--save_total_limit SAVE_TOTAL_LIMIT] [--no_cuda]
+                           [--seed SEED] [--fp16]
+                           [--fp16_opt_level FP16_OPT_LEVEL]
+                           [--local_rank LOCAL_RANK]
+                           [--tpu_num_cores TPU_NUM_CORES]
+                           [--tpu_metrics_debug] [--debug]
+                           [--dataloader_drop_last] [--eval_steps EVAL_STEPS]
+                           [--dataloader_num_workers DATALOADER_NUM_WORKERS]
+                           [--past_index PAST_INDEX] [--run_name RUN_NAME]
+                           [--disable_tqdm DISABLE_TQDM]
+                           [--no_remove_unused_columns]
+                           [--label_names LABEL_NAMES [LABEL_NAMES ...]]
+                           [--load_best_model_at_end]
+                           [--metric_for_best_model METRIC_FOR_BEST_MODEL]
+                           [--greater_is_better GREATER_IS_BETTER]
+                           [--ignore_data_skip]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -67,6 +71,8 @@ optional arguments:
   --dataset_name DATASET_NAME
                         The name of the dataset to use (via the datasets
                         library).
+  --script_file SCRIPT_FILE
+                        处理数据集的文件路径
   --dataset_config_name DATASET_CONFIG_NAME
                         The configuration name of the dataset to use (via the
                         datasets library).
@@ -85,6 +91,8 @@ optional arguments:
                         length. If False, will pad the samples dynamically
                         when batching to the maximum length in the batch. More
                         efficient on GPU but very bad for TPU.
+  --max_length MAX_LENGTH
+                        padding的最大序列长度，默认是64，如果是bert，最长是512
   --label_all_tokens    Whether to put the label for one word on all tokens of
                         generated by that word or just on the one (in which
                         case the other tokens will have a padding index).
@@ -206,7 +214,7 @@ optional arguments:
 ```
 # 测试英文Conll2003的效果， 默认3个epoch
 ```buildoutcfg
-python conll2003_run_ner.py --model_name_or_path bert-base-uncased --dataset_name conll2003 --output_dir conll-ner --do_train --do_eval
+python conll2003_run_ner.py --model_name_or_path bert-base-uncased --dataset_name conll2003 --output_dir conll-ner --do_train --do_eval --save_total_limit 5
 12/09/2020 08:33:19 - INFO - __main__ -   ***** Eval results *****
 12/09/2020 08:33:19 - INFO - __main__ -     eval_loss = 0.050854604691267014
 12/09/2020 08:33:19 - INFO - __main__ -     eval_accuracy_score = 0.9894863907168724
@@ -219,14 +227,13 @@ python conll2003_run_ner.py --model_name_or_path bert-base-uncased --dataset_nam
 # 使用BERT的效果,最大序列长度128， 默认3个epoch
 ```buildoutcfg
 cd myexample
-python msra_run_ner.py --model_name_or_path bert-base-chinese --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128
+python msra_run_ner.py --model_name_or_path bert-base-chinese --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128 --save_total_limit 5
 ```
 
 # 使用MacBERT的效果,最大序列长度128, 默认3个epoch
 ```buildoutcfg
 cd myexample
-python msra_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128
-
+python msra_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128 --save_total_limit 5
 12/09/2020 09:53:40 - INFO - __main__ -   ***** Eval results *****
 12/09/2020 09:53:40 - INFO - __main__ -     eval_loss = 0.03303384408354759
 12/09/2020 09:53:40 - INFO - __main__ -     eval_accuracy_score = 0.9935772542608311
@@ -240,6 +247,5 @@ python msra_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_n
 使用自定义数据集:包含的column  ['id', 'ner_tags', 'tokens']
 ```buildoutcfg
 cd myexample
-python cosmetics_run_ner.py
-
+python cosmetics_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_name cosmetic_ner --script_file data/cosmetic_ner.py --train_file dataset/cosmetic/train.txt --validation_file dataset/cosmetic/dev.txt --test_file dataset/cosmetic/test.txt --output_dir cosmetic_ner --do_train --do_eval --max_length 64 --save_total_limit 5
 ```
