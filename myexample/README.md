@@ -237,7 +237,9 @@ python msra_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_n
 ```
 
 # cosemtics MacBert
+使用自定义数据集:包含的column  ['id', 'ner_tags', 'tokens']
 ```buildoutcfg
 cd myexample
-python cosmetics_run_ner.py --model_name_or_path hfl/chinese-macbert-base --train_file dataset/cosmetics/train.txt --validation_file dataset/cosmetics/dev.txt --test_file dataset/cosmetics/test.txt --output_dir msra_ner --do_train --do_eval --max_length 128
+python cosmetics_run_ner.py
+
 ```

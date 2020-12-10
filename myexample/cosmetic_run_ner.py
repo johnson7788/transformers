@@ -58,18 +58,21 @@ class DataTrainingArguments:
     dataset_name: Optional[str] = field(
         default=None, metadata={"help": "The name of the dataset to use (via the datasets library)."}
     )
+    script_file: Optional[str] = field(
+        default='data/cosmetic_ner.py', metadata={"help": "处理数据集的文件路径"}
+    )
     dataset_config_name: Optional[str] = field(
-        default=None, metadata={"help": "The configuration name of the dataset to use (via the datasets library)."}
+        default='CosmeticsNerConfig', metadata={"help": "The configuration name of the dataset to use (via the datasets library)."}
     )
     train_file: Optional[str] = field(
-        default=None, metadata={"help": "The input training data file (a csv or JSON file)."}
+        default='dataset/cosmetic/train.txt', metadata={"help": "The input training data file (a csv or JSON file)."}
     )
     validation_file: Optional[str] = field(
-        default=None,
+        default='dataset/cosmetic/dev.txt',
         metadata={"help": "An optional input evaluation data file to evaluate on (a csv or JSON file)."},
     )
     test_file: Optional[str] = field(
-        default=None,
+        default='dataset/cosmetic/test.txt',
         metadata={"help": "An optional input test data file to predict on (a csv or JSON file)."},
     )
     overwrite_cache: bool = field(
@@ -158,21 +161,18 @@ def main():
     set_seed(training_args.seed)
 
     # 自动下载数据集
-    if data_args.dataset_name is not None:
-        # 下载数据集并加载
-        msra_path = 'data/msra_ner.py'
-        # datasets = load_dataset(path=data_args.dataset_name, name=data_args.dataset_config_name)
-        datasets = load_dataset(path=msra_path, name=data_args.dataset_config_name)
-    else:
-        data_files = {}
-        if data_args.train_file is not None:
-            data_files["train"] = data_args.train_file
-        if data_args.validation_file is not None:
-            data_files["validation"] = data_args.validation_file
-        if data_args.test_file is not None:
-            data_files["test"] = data_args.test_file
-        extension = data_args.train_file.split(".")[-1]
-        datasets = load_dataset(extension, data_files=data_files)
+    if data_args.dataset_name is None:
+        print("必须给数据集一个名字，和指定训练或测试的路径，才能加载数据集")
+    #加载数据集
+    data_files = {}
+    if data_args.train_file is not None:
+        data_files["train"] = data_args.train_file
+    if data_args.validation_file is not None:
+        data_files["validation"] = data_args.validation_file
+    if data_args.test_file is not None:
+        data_files["test"] = data_args.test_file
+    datasets = load_dataset(path=data_args.script_file, name=data_args.dataset_name, data_files=data_files)
+
 
     #使用数据
     if training_args.do_train:
@@ -197,7 +197,7 @@ def main():
         return label_list
     # 看一下label的feautre是不是ClassLabel类型，已经定制好的
     if isinstance(features[label_column_name].feature, ClassLabel):
-        # label_list: ['O', 'B-PER', 'I-PER', 'B-ORG', 'I-ORG', 'B-LOC', 'I-LOC']
+        # label_list: ['O', 'B-COM', 'I-COM', 'B-EFF', 'I-EFF']
         label_list = features[label_column_name].feature.names
         # 由名称变成id格式的字典
         label_to_id = {i: i for i in range(len(label_list))}
