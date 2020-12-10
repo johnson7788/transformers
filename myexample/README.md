@@ -256,4 +256,11 @@ python msra_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_n
 ```buildoutcfg
 cd myexample
 python cosmetics_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_name cosmetic_ner --script_file data/cosmetic_ner.py --train_file dataset/cosmetic/train.txt --validation_file dataset/cosmetic/dev.txt --test_file dataset/cosmetic/test.txt --output_dir cosmetic_ner --do_train --do_eval --max_length 64 --save_total_limit 5
+12/10/2020 07:56:50 - INFO - __main__ -   ***** Eval results *****
+12/10/2020 07:56:50 - INFO - __main__ -     eval_loss = 0.058366671204566956
+12/10/2020 07:56:50 - INFO - __main__ -     eval_accuracy_score = 0.9857107355864811
+12/10/2020 07:56:50 - INFO - __main__ -     eval_precision = 0.9634809634809635
+12/10/2020 07:56:50 - INFO - __main__ -     eval_recall = 0.9763779527559056
+12/10/2020 07:56:50 - INFO - __main__ -     eval_f1 = 0.9698865858427844
+12/10/2020 07:56:50 - INFO - __main__ -     epoch = 3.0
 ```
