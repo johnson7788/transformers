@@ -1,0 +1,9269 @@
+欧	B-COM
+洲	I-COM
+水	I-COM
+青	I-COM
+冈	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+黄	B-COM
+连	I-COM
+
+香	B-COM
+精	I-COM
+
+改	B-EFF
+善	I-EFF
+眼	I-EFF
+部	I-EFF
+暗	I-EFF
+沉	I-EFF
+
+塑	B-EFF
+身	I-EFF
+塑	I-EFF
+形	I-EFF
+
+川	B-COM
+芎	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+玻	B-COM
+璃	I-COM
+
+氨	B-COM
+丁	I-COM
+三	I-COM
+醇	I-COM
+
+遮	B-COM
+瑕	I-COM
+型	I-COM
+
+鲸	B-COM
+蜡	I-COM
+硬	I-COM
+脂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+2	I-COM
+5	I-COM
+
+椰	B-COM
+油	I-COM
+酰	I-COM
+谷	I-COM
+氨	I-COM
+酸	I-COM
+钾	I-COM
+
+鞣	B-COM
+酸	I-COM
+
+羟	B-COM
+丙	I-COM
+基	I-COM
+四	I-COM
+氢	I-COM
+吡	I-COM
+喃	I-COM
+三	I-COM
+醇	I-COM
+
+D	O
+I	O
+Y	O
+面	B-COM
+膜	I-COM
+
+硬	B-COM
+脂	I-COM
+醇	I-COM
+庚	I-COM
+酸	I-COM
+酯	I-COM
+
+褐	B-COM
+煤	I-COM
+蜡	I-COM
+
+季	B-COM
+戊	I-COM
+四	I-COM
+醇	I-COM
+四	I-COM
+异	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+皮	B-EFF
+肤	I-EFF
+暗	B-EFF
+沉	I-EFF
+
+日	B-COM
+本	I-COM
+晚	I-COM
+樱	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+鳄	B-COM
+梨	I-COM
+油	I-COM
+酸	I-COM
+丁	I-COM
+酯	I-COM
+
+外	B-COM
+用	I-COM
+紫	I-COM
+
+硫	B-COM
+酸	I-COM
+钾	I-COM
+
+荔	B-COM
+枝	I-COM
+果	I-COM
+皮	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+甘	B-COM
+油	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+类	I-COM
+
+再	O
+生	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+
+二	B-COM
+甲	I-COM
+基	I-COM
+甲	I-COM
+硅	I-COM
+烷	I-COM
+基	I-COM
+化	I-COM
+硅	I-COM
+石	I-COM
+
+成	B-COM
+分	I-COM
+的	O
+产	O
+品	O
+同	O
+时	O
+食	O
+用	O
+,	O
+长	O
+期	O
+食	O
+用	O
+注	O
+意	O
+妇	O
+科	O
+检	O
+查	O
+
+月	B-COM
+桂	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+龙	B-COM
+眼	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+美	O
+宝	O
+莲	O
+定	O
+制	O
+水	B-EFF
+感	I-EFF
+粉	O
+底	O
+液	O
+柔	O
+雾	O
+
+异	B-COM
+壬	I-COM
+酸	I-COM
+异	I-COM
+癸	I-COM
+酯	I-COM
+
+无	O
+蔗	B-COM
+糖	I-COM
+吃	O
+起	O
+来	O
+没	O
+负	O
+担	O
+!	O
+
+聚	B-COM
+己	I-COM
+內	I-COM
+酯	I-COM
+
+癸	B-COM
+酸	I-COM
+酯	I-COM
+
+生	B-COM
+物	I-COM
+
+无	B-COM
+花	I-COM
+果	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+野	B-COM
+大	I-COM
+豆	I-COM
+蛋	I-COM
+白	I-COM
+
+聚	B-COM
+萘	I-COM
+磺	I-COM
+酸	I-COM
+钠	I-COM
+
+山	B-COM
+嵛	I-COM
+酸	I-COM
+酯	I-COM
+
+紫	B-COM
+茉	I-COM
+莉	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+甲	B-COM
+基	I-COM
+氯	I-COM
+异	I-COM
+噻	I-COM
+唑	I-COM
+啉	I-COM
+酮	I-COM
+
+昆	B-COM
+士	I-COM
+兰	I-COM
+果	I-COM
+油	I-COM
+
+被	O
+赵	O
+露	O
+思	O
+种	O
+草	O
+的	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+小	O
+熊	O
+
+然	O
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+
+氧	B-COM
+化	I-COM
+聚	I-COM
+异	I-COM
+丁	I-COM
+烯	I-COM
+
+大	B-COM
+豆	I-COM
+甾	I-COM
+醇	I-COM
+
+胶	B-COM
+-	I-COM
+1	I-COM
+
+广	B-COM
+西	I-COM
+沙	I-COM
+柑	I-COM
+果	I-COM
+皮	I-COM
+油	I-COM
+
+细	B-EFF
+腻	I-EFF
+肌	I-EFF
+肤	I-EFF
+
+支	B-COM
+链	I-COM
+淀	I-COM
+粉	I-COM
+
+视	B-COM
+黄	I-COM
+醇	I-COM
+乙	I-COM
+酸	I-COM
+酯	I-COM
+
+徐	B-COM
+长	I-COM
+卿	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+磷	B-COM
+脂	I-COM
+酰	I-COM
+胆	I-COM
+碱	I-COM
+
+冰	B-COM
+泉	I-COM
+
+月	B-COM
+桂	I-COM
+酰	I-COM
+水	I-COM
+解	I-COM
+蚕	I-COM
+丝	I-COM
+钠	I-COM
+
+激	B-COM
+素	I-COM
+
+搭	O
+配	O
+着	O
+小	O
+熊	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+
+胡	B-COM
+萝	I-COM
+卜	I-COM
+汁	I-COM
+
+羧	B-COM
+甲	I-COM
+基	I-COM
+
+虎	B-COM
+头	I-COM
+兰	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+癸	B-COM
+醇	I-COM
+
+肌	B-EFF
+肤	I-EFF
+奇	O
+迹	O
+之	O
+源	O
+
+薰	B-COM
+衣	I-COM
+草	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+皮	B-EFF
+肤	I-EFF
+好	O
+
+刺	B-COM
+阿	I-COM
+干	I-COM
+树	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+尿	B-COM
+囊	I-COM
+素	I-COM
+
+白	B-COM
+蔹	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+枯	B-COM
+草	I-COM
+菌	I-COM
+脂	I-COM
+肽	I-COM
+钠	I-COM
+
+代	B-COM
+醇	I-COM
+磷	I-COM
+酸	I-COM
+酯	I-COM
+
+十	B-COM
+三	I-COM
+烷	I-COM
+醇	I-COM
+新	I-COM
+戊	I-COM
+酸	I-COM
+酯	I-COM
+
+欧	B-COM
+丹	I-COM
+参	I-COM
+油	I-COM
+
+甜	B-COM
+橙	I-COM
+果	I-COM
+皮	I-COM
+粉	I-COM
+
+天	O
+然	O
+温	O
+和	O
+的	O
+深	O
+润	O
+呵	O
+护	O
+，	O
+肌	B-EFF
+肤	I-EFF
+水	B-EFF
+润	I-EFF
+丝	O
+滑	O
+
+蜗	B-COM
+牛	I-COM
+分	I-COM
+泌	I-COM
+物	I-COM
+滤	I-COM
+液	I-COM
+
+鱼	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+维	B-COM
+C	I-COM
+维	B-COM
+E	I-COM
+粉	O
+
+是	O
+葡	B-COM
+萄	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+、	O
+库	O
+拉	O
+索	O
+芦	O
+
+燕	B-COM
+麦	I-COM
+仁	I-COM
+
+野	B-COM
+生	I-COM
+芒	I-COM
+果	I-COM
+果	I-COM
+仁	I-COM
+脂	I-COM
+
+芦	B-COM
+荟	I-COM
+
+粉	B-COM
+防	I-COM
+己	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+守	B-COM
+约	I-COM
+限	I-COM
+定	I-COM
+
+巴	B-COM
+西	I-COM
+果	I-COM
+籽	I-COM
+油	I-COM
+
+黑	B-COM
+野	I-COM
+樱	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+日	B-COM
+本	I-COM
+棚	I-COM
+仓	I-COM
+粘	I-COM
+土	I-COM
+
+异	B-COM
+亮	I-COM
+氨	I-COM
+酸	I-COM
+
+羟	B-COM
+棕	I-COM
+榈	I-COM
+酰	I-COM
+二	I-COM
+氢	I-COM
+鞘	I-COM
+氨	I-COM
+醇	I-COM
+
+乳	B-COM
+酸	I-COM
+杆	I-COM
+菌	I-COM
+发	I-COM
+酵	I-COM
+溶	I-COM
+胞	I-COM
+产	I-COM
+物	I-COM
+
+山	B-COM
+梨	I-COM
+醇	I-COM
+
+乙	B-COM
+酰	I-COM
+基	I-COM
+八	I-COM
+肽	I-COM
+-	I-COM
+3	I-COM
+
+萘	B-COM
+磺	I-COM
+酸	I-COM
+钠	I-COM
+
+改	O
+善	O
+疲	B-EFF
+劳	I-EFF
+虚	O
+弱	O
+
+熟	O
+地	B-COM
+黄	I-COM
+
+小	B-COM
+米	I-COM
+椒	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+水	O
+养	O
+的	O
+玫	B-COM
+瑰	I-COM
+
+晚	B-COM
+香	I-COM
+玉	I-COM
+花	I-COM
+蜡	I-COM
+
+逆	O
+龄	O
+抗	B-EFF
+衰	I-EFF
+
+季	B-COM
+戊	I-COM
+四	I-COM
+醇	I-COM
+四	I-COM
+山	I-COM
+嵛	I-COM
+酸	I-COM
+酯	I-COM
+
+草	B-COM
+棉	I-COM
+籽	I-COM
+油	I-COM
+
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+(	O
+固	O
+体	O
+饮	O
+料	O
+)	O
+
+维	B-COM
+C	I-COM
+加	O
+维	B-COM
+E	I-COM
+双	O
+重	O
+呵	O
+护	O
+
+三	B-COM
+肉	I-COM
+豆	I-COM
+蔻	I-COM
+精	I-COM
+
+杏	B-COM
+汁	I-COM
+
+羟	B-COM
+基	I-COM
+化	I-COM
+卵	I-COM
+磷	I-COM
+脂	I-COM
+
+全	B-COM
+氟	I-COM
+异	I-COM
+丁	I-COM
+基	I-COM
+乙	I-COM
+基	I-COM
+醚	I-COM
+
+焦	B-COM
+磷	I-COM
+酸	I-COM
+四	I-COM
+钠	I-COM
+
+毛	B-COM
+叶	I-COM
+蕃	I-COM
+荔	I-COM
+枝	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+本	O
+产	O
+品	O
+使	O
+用	O
+5	O
+年	O
+根	O
+清	O
+净	O
+人	B-COM
+参	I-COM
+为	O
+原	O
+料	O
+
+辣	B-COM
+薄	I-COM
+荷	I-COM
+取	I-COM
+物	I-COM
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+月	I-COM
+桂	I-COM
+酸	I-COM
+酯	I-COM
+
+嫩	B-COM
+枝	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+甘	B-COM
+油	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+缓	B-EFF
+解	I-EFF
+干	I-EFF
+燥	I-EFF
+
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+加	O
+E	O
+
+乳	B-COM
+酸	I-COM
+菌	I-COM
+
+月	B-COM
+桂	I-COM
+酰	I-COM
+谷	I-COM
+氨	I-COM
+酸	I-COM
+钠	I-COM
+
+关	O
+键	O
+是	O
+要	O
+选	O
+对	O
+面	B-COM
+膜	I-COM
+
+滨	B-COM
+海	I-COM
+当	I-COM
+归	I-COM
+叶	I-COM
+
+视	B-COM
+黄	I-COM
+醇	I-COM
+棕	I-COM
+榈	I-COM
+酸	I-COM
+酯	I-COM
+
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+@	O
+全	O
+靠	O
+她	O
+
+库	B-COM
+拉	I-COM
+索	I-COM
+芦	I-COM
+荟	I-COM
+A	I-COM
+L	I-COM
+O	I-COM
+E	I-COM
+
+改	B-COM
+性	I-COM
+玉	I-COM
+米	I-COM
+淀	I-COM
+粉	I-COM
+
+进	O
+新	B-EFF
+陈	I-EFF
+代	I-EFF
+谢	I-EFF
+
+国	O
+胶	B-EFF
+原	I-EFF
+
+不	O
+含	O
+防	B-COM
+腐	I-COM
+剂	I-COM
+
+赋	O
+活	O
+肌	B-EFF
+肤	I-EFF
+焕	O
+发	O
+容	O
+颜	O
+
+母	B-COM
+菊	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+鸡	B-COM
+蛋	I-COM
+果	I-COM
+籽	I-COM
+油	I-COM
+
+修	B-EFF
+复	I-EFF
+
+椰	B-COM
+油	I-COM
+酰	I-COM
+胺	I-COM
+丙	I-COM
+基	I-COM
+二	I-COM
+甲	I-COM
+胺	I-COM
+
+苯	B-COM
+丙	I-COM
+氨	I-COM
+酸	I-COM
+
+硬	B-COM
+脂	I-COM
+酸	I-COM
+铵	I-COM
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+6	I-COM
+
+季	B-COM
+铵	I-COM
+盐	I-COM
+-	I-COM
+6	I-COM
+0	I-COM
+
+鲸	B-COM
+蜡	I-COM
+醇	I-COM
+磷	I-COM
+酸	I-COM
+酯	I-COM
+
+硬	B-COM
+脂	I-COM
+酰	I-COM
+乳	I-COM
+酰	I-COM
+乳	I-COM
+酸	I-COM
+钠	I-COM
+
+睡	O
+前	O
+一	O
+瓶	O
+睡	O
+好	O
+肌	B-EFF
+肤	I-EFF
+美	O
+容	O
+觉	O
+
+红	B-COM
+3	I-COM
+0	I-COM
+色	I-COM
+淀	I-COM
+
+富	B-COM
+马	I-COM
+酸	I-COM
+
+苯	B-COM
+甲	I-COM
+酸	I-COM
+钠	I-COM
+
+油	B-COM
+菜	I-COM
+籽	I-COM
+油	I-COM
+酸	I-COM
+甲	I-COM
+酯	I-COM
+发	I-COM
+酵	I-COM
+产	I-COM
+物	I-COM
+
+肉	B-COM
+豆	I-COM
+蔻	I-COM
+醚	I-COM
+二	I-COM
+聚	I-COM
+亚	I-COM
+油	I-COM
+酸	I-COM
+酯	I-COM
+
+尤	O
+其	O
+是	O
+起	O
+体	O
+内	O
+抗	B-EFF
+氧	I-EFF
+化	I-EFF
+活	O
+性	O
+较	O
+强	O
+,	O
+
+羟	B-COM
+乙	I-COM
+基	I-COM
+脲	I-COM
+
+肌	B-EFF
+肤	I-EFF
+Q	O
+弹	O
+
+烟	B-COM
+酸	I-COM
+己	I-COM
+酯	I-COM
+
+根	B-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+水	B-COM
+解	I-COM
+植	I-COM
+物	I-COM
+蛋	I-COM
+白	I-COM
+
+燕	B-COM
+麦	I-COM
+仁	I-COM
+细	I-COM
+粉	I-COM
+
+依	B-COM
+兰	I-COM
+花	I-COM
+油	I-COM
+
+氨	B-COM
+基	I-COM
+丁	I-COM
+酸	I-COM
+
+乙	B-COM
+酸	I-COM
+芳	I-COM
+樟	I-COM
+酯	I-COM
+
+黄	B-COM
+原	I-COM
+胶	I-COM
+
+次	O
+也	O
+不	O
+会	O
+厚	O
+重	O
+填	O
+充	O
+毛	B-EFF
+孔	I-EFF
+效	O
+果	O
+
+纯	B-COM
+地	I-COM
+蜡	I-COM
+
+羊	B-COM
+毛	I-COM
+脂	I-COM
+醇	I-COM
+
+丙	B-COM
+烯	I-COM
+酸	I-COM
+共	I-COM
+聚	I-COM
+物	I-COM
+
+可	B-COM
+溶	I-COM
+性	I-COM
+胶	I-COM
+原	I-COM
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+磷	I-COM
+酸	I-COM
+钾	I-COM
+
+白	B-COM
+蜂	I-COM
+蜡	I-COM
+
+蛇	B-COM
+毒	I-COM
+肽	I-COM
+
+光	B-COM
+果	I-COM
+甘	I-COM
+草	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+苯	B-COM
+氧	I-COM
+异	I-COM
+丙	I-COM
+醇	I-COM
+
+甘	B-COM
+草	I-COM
+酸	I-COM
+二	I-COM
+钾	I-COM
+
+剃	B-EFF
+须	I-EFF
+
+丁	B-COM
+香	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+洋	B-COM
+常	I-COM
+春	I-COM
+藤	I-COM
+叶	I-COM
+
+肉	B-COM
+豆	I-COM
+蔻	I-COM
+酸	I-COM
+钾	I-COM
+
+马	B-COM
+齿	I-COM
+苋	I-COM
+
+【	O
+保	O
+健	O
+功	O
+能	O
+】	O
+抗	O
+氢	B-COM
+化	I-COM
+
+大	B-COM
+豆	I-COM
+胺	I-COM
+
+水	B-COM
+解	I-COM
+仙	I-COM
+桃	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+娇	O
+雞	O
+派	O
+粉	O
+底	O
+，	O
+肌	B-EFF
+肤	I-EFF
+隐	O
+形	O
+的	O
+衣	O
+裳	O
+
+武	O
+汉	O
+名	O
+实	O
+生	B-COM
+物	I-COM
+医	O
+药	O
+科	O
+技	O
+有	O
+限	O
+责	O
+任	O
+公	O
+司	O
+
+玫	B-COM
+瑰	I-COM
+-	I-COM
+玫	I-COM
+瑰	I-COM
+盘	I-COM
+
+磷	B-COM
+酸	I-COM
+腺	I-COM
+苷	I-COM
+
+蓝	B-COM
+色	I-COM
+液	I-COM
+体	I-COM
+部	I-COM
+分	I-COM
+
+水	B-COM
+解	I-COM
+咖	I-COM
+啡	I-COM
+黄	I-COM
+葵	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+姜	B-COM
+根	I-COM
+油	I-COM
+
+玫	B-COM
+瑰	I-COM
+-	I-COM
+玫	I-COM
+瑰	I-COM
+痤	I-COM
+疮	I-COM
+
+高	O
+渗	O
+透	O
+直	O
+达	O
+肌	B-EFF
+底	I-EFF
+
+生	B-COM
+育	I-COM
+酚	I-COM
+维	I-COM
+生	I-COM
+素	I-COM
+E	I-COM
+
+玫	B-COM
+瑰	I-COM
+粉	I-COM
+水	I-COM
+晶	I-COM
+
+橄	B-COM
+榄	I-COM
+油	I-COM
+癸	I-COM
+醇	I-COM
+酯	I-COM
+类	I-COM
+
+蜂	B-COM
+胶	I-COM
+
+地	B-COM
+黄	I-COM
+
+甘	B-COM
+氨	I-COM
+酸	I-COM
+
+寡	B-COM
+肽	I-COM
+-	I-COM
+4	I-COM
+
+双	B-COM
+-	I-COM
+P	I-COM
+E	I-COM
+G	I-COM
+-	I-COM
+1	I-COM
+8	I-COM
+甲	I-COM
+基	I-COM
+醚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+烷	I-COM
+
+呵	O
+护	O
+秘	O
+密	O
+花	O
+园	O
+肌	B-EFF
+肤	I-EFF
+吹	O
+弹	O
+可	O
+破	O
+
+波	B-COM
+色	I-COM
+因	I-COM
+
+鲸	B-COM
+蜡	I-COM
+醇	I-COM
+乙	I-COM
+基	I-COM
+乙	I-COM
+酸	I-COM
+酯	I-COM
+
+水	B-EFF
+润	I-EFF
+度	O
+：	O
+
+羟	B-COM
+丙	I-COM
+基	I-COM
+双	I-COM
+棕	I-COM
+榈	I-COM
+酰	I-COM
+胺	I-COM
+
+波	B-COM
+角	I-COM
+叉	I-COM
+菜	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+蜂	B-COM
+王	I-COM
+浆	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+户	O
+外	O
+活	O
+动	O
+保	B-EFF
+湿	I-EFF
+
+大	B-COM
+豆	I-COM
+異	O
+黃	O
+酮	O
+
+葡	B-COM
+糖	I-COM
+酸	I-COM
+锰	I-COM
+
+月	B-COM
+见	I-COM
+草	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+俗	O
+称	O
+维	B-COM
+生	I-COM
+素	I-COM
+B	I-COM
+3	I-COM
+
+甘	B-COM
+牛	I-COM
+至	I-COM
+叶	I-COM
+油	I-COM
+
+氢	B-COM
+化	I-COM
+椰	I-COM
+油	I-COM
+甘	I-COM
+油	I-COM
+酯	I-COM
+类	I-COM
+
+印	B-COM
+度	I-COM
+獐	I-COM
+芽	I-COM
+菜	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+乳	B-COM
+酸	I-COM
+钙	I-COM
+
+西	B-COM
+曲	I-COM
+溴	I-COM
+铵	I-COM
+
+硬	B-COM
+脂	I-COM
+酰	I-COM
+谷	I-COM
+氨	I-COM
+酸	I-COM
+二	I-COM
+钠	I-COM
+
+梨	B-COM
+汁	I-COM
+发	I-COM
+酵	I-COM
+产	I-COM
+物	I-COM
+滤	I-COM
+液	I-COM
+
+稻	B-COM
+米	I-COM
+发	I-COM
+酵	I-COM
+产	I-COM
+物	I-COM
+滤	I-COM
+液	I-COM
+
+蚕	B-COM
+丝	I-COM
+氨	I-COM
+基	I-COM
+酸	I-COM
+类	I-COM
+
+皮	B-EFF
+肤	I-EFF
+雀	O
+斑	O
+黑	O
+斑	O
+
+水	B-EFF
+润	I-EFF
+版	O
+
+无	O
+境	O
+纤	B-COM
+长	I-COM
+倍	O
+延	O
+睫	O
+毛	O
+膏	O
+
+欧	B-COM
+洲	I-COM
+椴	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+二	B-COM
+苯	I-COM
+基	I-COM
+甲	I-COM
+硅	I-COM
+烷	I-COM
+氧	I-COM
+基	I-COM
+苯	I-COM
+基	I-COM
+聚	I-COM
+三	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+莲	B-COM
+籽	I-COM
+粉	I-COM
+
+石	B-COM
+榴	I-COM
+果	I-COM
+汁	I-COM
+
+月	B-COM
+桂	I-COM
+基	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+铵	I-COM
+羟	I-COM
+丙	I-COM
+基	I-COM
+水	I-COM
+解	I-COM
+大	I-COM
+豆	I-COM
+蛋	I-COM
+白	I-COM
+
+晒	B-EFF
+伤	I-EFF
+涂	O
+抹	O
+
+调	O
+养	O
+-	O
+修	B-EFF
+复	I-EFF
+-	O
+养	O
+护	O
+
+促	O
+进	O
+新	B-EFF
+陈	I-EFF
+代	I-EFF
+谢	I-EFF
+让	O
+美	O
+丽	O
+由	O
+内	O
+而	O
+外	O
+
+狗	B-COM
+牙	I-COM
+蔷	I-COM
+薇	I-COM
+花	I-COM
+油	I-COM
+
+厚	B-COM
+朴	I-COM
+树	I-COM
+皮	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+法	O
+国	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+
+柠	B-COM
+檬	I-COM
+籽	I-COM
+油	I-COM
+戊	I-COM
+二	I-COM
+醇	I-COM
+
+氨	B-COM
+基	I-COM
+酸	I-COM
+洁	O
+面	O
+慕	O
+斯	O
+
+茶	B-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+植	B-COM
+物	I-COM
+甾	I-COM
+醇	I-COM
+低	I-COM
+芥	I-COM
+酸	I-COM
+菜	I-COM
+子	I-COM
+油	I-COM
+甘	I-COM
+油	I-COM
+酯	I-COM
+类	I-COM
+
+透	B-COM
+明	I-COM
+质	I-COM
+酸	I-COM
+钠	I-COM
+
+檀	B-COM
+木	I-COM
+
+鲸	B-COM
+蜡	I-COM
+硬	I-COM
+脂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+3	I-COM
+3	I-COM
+
+普	B-COM
+通	I-COM
+补	I-COM
+血	I-COM
+草	I-COM
+花	I-COM
+
+肉	B-COM
+豆	I-COM
+蔻	I-COM
+酰	I-COM
+肌	I-COM
+氨	I-COM
+酸	I-COM
+钠	I-COM
+
+苯	B-COM
+乙	I-COM
+醇	I-COM
+苯	I-COM
+甲	I-COM
+酸	I-COM
+酯	I-COM
+
+肉	B-COM
+豆	I-COM
+蔻	I-COM
+酸	I-COM
+异	I-COM
+丙	I-COM
+酯	I-COM
+
+碳	B-COM
+酸	I-COM
+镁	I-COM
+
+聚	B-COM
+天	I-COM
+冬	I-COM
+氨	I-COM
+酸	I-COM
+钠	I-COM
+
+樱	B-COM
+花	I-COM
+叶	I-COM
+萃	I-COM
+取	I-COM
+物	I-COM
+
+厚	B-COM
+朴	I-COM
+
+仙	B-COM
+桃	I-COM
+仙	I-COM
+人	I-COM
+掌	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+湿	O
+，	O
+隐	O
+医	O
+肌	B-EFF
+肤	I-EFF
+瑕	O
+疵	O
+、	O
+修	O
+饰	O
+肤	O
+质	O
+，	O
+轻	B-EFF
+薄	I-EFF
+服	B-EFF
+帖	I-EFF
+无	O
+厚	O
+重	O
+感	O
+。	O
+
+丙	B-COM
+二	I-COM
+醇	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+聚	B-COM
+乙	I-COM
+烯	I-COM
+
+锦	B-COM
+纶	I-COM
+-	I-COM
+1	I-COM
+2	I-COM
+
+姜	B-COM
+黄	I-COM
+素	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+、	I-COM
+三	I-COM
+七	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+总	O
+统	O
+牌	O
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+软	O
+胶	O
+囊	O
+
+种	O
+成	B-COM
+分	I-COM
+
+白	B-COM
+芒	I-COM
+花	I-COM
+籽	I-COM
+油	I-COM
+
+氧	B-COM
+化	I-COM
+铁	I-COM
+
+大	B-COM
+蕉	I-COM
+花	I-COM
+
+凹	B-COM
+缘	I-COM
+金	I-COM
+虎	I-COM
+尾	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+乳	B-COM
+酸	I-COM
+杆	I-COM
+菌	I-COM
+发	I-COM
+酵	I-COM
+溶	I-COM
+胞	I-COM
+产	I-COM
+物	I-COM
+
+羟	B-COM
+基	I-COM
+香	I-COM
+茅	I-COM
+醛	I-COM
+
+芦	B-COM
+荟	I-COM
+
+椰	B-COM
+油	I-COM
+酰	I-COM
+两	I-COM
+性	I-COM
+基	I-COM
+乙	I-COM
+酸	I-COM
+钠	I-COM
+
+芒	B-COM
+果	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+棕	B-COM
+榈	I-COM
+酰	I-COM
+三	I-COM
+肽	I-COM
+-	I-COM
+1	I-COM
+
+香	B-COM
+菇	I-COM
+菌	I-COM
+丝	I-COM
+体	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+肾	B-COM
+茶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+抚	B-EFF
+痕	I-EFF
+
+茴	B-COM
+香	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+长	B-COM
+角	I-COM
+豆	I-COM
+胶	I-COM
+
+甜	B-COM
+橙	I-COM
+果	I-COM
+皮	I-COM
+油	I-COM
+
+磷	B-COM
+酸	I-COM
+氢	I-COM
+钙	I-COM
+
+打	B-EFF
+开	I-EFF
+皮	I-EFF
+肤	I-EFF
+通	I-EFF
+道	I-EFF
+
+夏	B-COM
+枯	I-COM
+草	I-COM
+
+滇	B-COM
+山	I-COM
+茶	I-COM
+籽	I-COM
+油	I-COM
+
+羟	B-COM
+丙	I-COM
+基	I-COM
+纤	I-COM
+维	I-COM
+素	I-COM
+
+异	B-COM
+硬	I-COM
+脂	I-COM
+醇	I-COM
+
+肉	B-COM
+豆	I-COM
+蔻	I-COM
+仁	I-COM
+油	I-COM
+
+榄	B-COM
+仁	I-COM
+树	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+m	O
+e	O
+l	O
+r	O
+o	O
+s	O
+e	O
+初	O
+榨	O
+椰	B-COM
+子	I-COM
+油	I-COM
+是	O
+物	O
+理	O
+冷	O
+榨	O
+油	O
+,	O
+难	O
+以	O
+避	O
+免	O
+有	O
+天	O
+然	O
+椰	O
+子	O
+沉	B-EFF
+淀	I-EFF
+,	O
+但	O
+
+加	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+粉	O
+8	O
+0	O
+0	O
+0	O
+m	O
+g	O
+
+聚	B-COM
+全	I-COM
+氟	I-COM
+乙	I-COM
+氧	I-COM
+基	I-COM
+甲	I-COM
+氧	I-COM
+基	I-COM
+二	I-COM
+氟	I-COM
+乙	I-COM
+基	I-COM
+
+乳	B-COM
+清	I-COM
+蛋	I-COM
+白	I-COM
+
+美	B-EFF
+白	I-EFF
+祛	I-EFF
+斑	I-EFF
+
+真	O
+滴	O
+是	O
+我	O
+吃	O
+过	O
+z	O
+u	O
+好	O
+吃	O
+的	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+了	O
+~	O
+
+紫	B-COM
+花	I-COM
+毛	I-COM
+山	I-COM
+菊	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+嫩	B-EFF
+肤	I-EFF
+
+吡	B-COM
+咯	I-COM
+烷	I-COM
+酮	I-COM
+羧	I-COM
+酸	I-COM
+
+氢	B-COM
+乙	I-COM
+酸	I-COM
+钠	I-COM
+
+防	B-COM
+腐	I-COM
+剂	I-COM
+
+生	B-COM
+育	I-COM
+酚	I-COM
+琥	I-COM
+珀	I-COM
+酸	I-COM
+酯	I-COM
+
+核	B-COM
+糖	I-COM
+核	I-COM
+酸	I-COM
+
+二	B-COM
+十	I-COM
+二	I-COM
+碳	I-COM
+六	I-COM
+烯	I-COM
+酸	I-COM
+
+茅	B-COM
+香	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+棕	B-COM
+榈	I-COM
+酰	I-COM
+五	I-COM
+肽	I-COM
+-	I-COM
+4	I-COM
+
+蚕	B-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+【	O
+配	O
+料	O
+表	O
+】	O
+驴	O
+皮	O
+、	O
+冰	O
+糖	O
+、	O
+大	B-COM
+豆	I-COM
+油	I-COM
+、	O
+黄	O
+酒	O
+
+印	B-COM
+度	I-COM
+楝	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+甲	B-COM
+基	I-COM
+二	I-COM
+异	I-COM
+丙	I-COM
+基	I-COM
+丙	I-COM
+酰	I-COM
+胺	I-COM
+
+冬	B-COM
+青	I-COM
+树	I-COM
+萃	I-COM
+取	I-COM
+
+平	B-EFF
+滑	I-EFF
+肌	I-EFF
+肤	I-EFF
+
+聚	B-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+乙	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+修	B-EFF
+正	I-EFF
+泛	I-EFF
+红	I-EFF
+及	I-EFF
+红	I-EFF
+血	I-EFF
+丝	I-EFF
+
+海	B-COM
+檀	I-COM
+木	I-COM
+籽	I-COM
+油	I-COM
+
+赤	B-COM
+豆	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+紫	O
+草	O
+根	O
+提	O
+取	O
+液	O
+、	O
+V	O
+C	O
+、	O
+V	O
+E	O
+、	O
+透	B-COM
+明	I-COM
+质	I-COM
+酸	I-COM
+钠	I-COM
+、	O
+甘	B-COM
+油	I-COM
+、	O
+芦	B-COM
+荟	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+。	O
+
+酪	B-COM
+梨	I-COM
+
+单	B-COM
+子	I-COM
+山	I-COM
+楂	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+雌	O
+激	B-COM
+素	I-COM
+制	O
+剂	O
+及	O
+其	O
+
+弱	B-EFF
+酸	I-EFF
+性	I-EFF
+
+甘	B-COM
+草	I-COM
+酸	I-COM
+钾	I-COM
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+磷	I-COM
+酸	I-COM
+酯	I-COM
+钾	I-COM
+
+油	B-COM
+醇	I-COM
+油	I-COM
+酸	I-COM
+酯	I-COM
+
+美	O
+颜	O
+抗	B-EFF
+氧	I-EFF
+化	I-EFF
+
+活	O
+性	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+肽	O
+
+成	B-COM
+分	I-COM
+
+喝	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+粉	O
+前	O
+
+欧	B-COM
+蓍	I-COM
+草	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+氧	B-COM
+化	I-COM
+玉	I-COM
+米	I-COM
+油	I-COM
+
+鲸	B-COM
+蜡	I-COM
+硬	I-COM
+脂	I-COM
+醇	I-COM
+异	I-COM
+壬	I-COM
+酸	I-COM
+酯	I-COM
+
+丁	B-COM
+香	I-COM
+花	I-COM
+油	I-COM
+
+霍	B-COM
+霍	I-COM
+巴	I-COM
+脂	I-COM
+
+罗	B-COM
+汉	I-COM
+柏	I-COM
+枝	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+欧	B-COM
+刺	I-COM
+柏	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+齐	O
+南	O
+体	O
+恒	O
+健	O
+生	B-COM
+物	I-COM
+一	O
+公	O
+司	O
+
+搭	O
+配	O
+自	O
+带	O
+葫	O
+芦	O
+形	O
+海	O
+绵	O
+蛋	O
+带	O
+来	O
+一	O
+场	O
+盛	O
+大	O
+的	O
+水	B-EFF
+感	I-EFF
+裸	B-EFF
+妆	I-EFF
+新	O
+体	O
+验	O
+！	O
+
+丙	B-COM
+烯	I-COM
+酸	I-COM
+酯	I-COM
+类	I-COM
+共	I-COM
+聚	I-COM
+物	I-COM
+铵	I-COM
+
+温	O
+和	O
+祛	O
+除	O
+角	B-EFF
+质	I-EFF
+溶	O
+解	O
+黑	B-EFF
+头	I-EFF
+白	B-EFF
+头	I-EFF
+
+二	B-COM
+P	I-COM
+P	I-COM
+G	I-COM
+-	I-COM
+2	I-COM
+
+荷	B-COM
+荷	I-COM
+巴	I-COM
+油	I-COM
+
+没	B-COM
+药	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+肤	B-EFF
+色	I-EFF
+暗	B-EFF
+沉	I-EFF
+
+葡	B-COM
+萄	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+聚	B-COM
+丙	I-COM
+烯	I-COM
+酸	I-COM
+]	I-COM
+
+己	B-COM
+二	I-COM
+酸	I-COM
+酯	I-COM
+
+【	O
+主	O
+要	O
+成	B-COM
+分	I-COM
+】	O
+:	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+、	O
+生	B-COM
+物	I-COM
+素	I-COM
+、	O
+维	B-COM
+生	I-COM
+素	I-COM
+A	I-COM
+、	O
+
+来	B-COM
+檬	I-COM
+果	I-COM
+皮	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+苯	B-COM
+甲	I-COM
+醇	I-COM
+
+加	O
+入	O
+冰	O
+精	O
+、	O
+蜂	B-COM
+蜜	I-COM
+等	O
+调	O
+味	O
+
+氢	B-COM
+化	I-COM
+蓖	I-COM
+麻	I-COM
+油	I-COM
+
+纤	B-EFF
+体	I-EFF
+
+氢	B-COM
+化	I-COM
+松	I-COM
+脂	I-COM
+酸	I-COM
+甲	I-COM
+酯	I-COM
+
+二	B-COM
+葡	I-COM
+糖	I-COM
+基	I-COM
+棓	I-COM
+酸	I-COM
+
+授	O
+权	O
+期	O
+间	O
+自	O
+:	O
+2	O
+0	O
+2	O
+0	O
+年	O
+1	O
+月	O
+1	O
+日	O
+-	B-COM
+2	I-COM
+0	I-COM
+2	O
+0	O
+年	O
+1	O
+2	O
+月	O
+3	O
+1	O
+日	O
+
+鱼	B-EFF
+尾	I-EFF
+纹	I-EFF
+
+菊	B-COM
+粉	I-COM
+
+库	B-COM
+拉	I-COM
+索	I-COM
+芦	I-COM
+荟	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+眼	O
+部	O
+卸	B-EFF
+妆	I-EFF
+液	O
+】	O
+
+猕	B-COM
+猴	I-COM
+桃	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+药	B-COM
+用	I-COM
+婆	I-COM
+婆	I-COM
+纳	I-COM
+花	I-COM
+
+留	O
+住	O
+肌	B-EFF
+肤	I-EFF
+永	O
+恒	O
+之	O
+美	O
+
+二	B-COM
+氢	I-COM
+神	I-COM
+经	I-COM
+鞘	I-COM
+氨	I-COM
+醇	I-COM
+
+微	B-COM
+晶	I-COM
+蜡	I-COM
+
+硫	B-COM
+酸	I-COM
+钠	I-COM
+
+滋	B-EFF
+润	I-EFF
+滋	I-EFF
+养	I-EFF
+
+海	B-COM
+带	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+木	B-COM
+瓜	I-COM
+蛋	I-COM
+白	I-COM
+酶	I-COM
+
+谷	B-COM
+胱	I-COM
+甘	I-COM
+肽	I-COM
+
+氨	B-COM
+基	I-COM
+酸	I-COM
+表	O
+面	O
+处	O
+理	O
+*	O
+的	O
+遮	B-EFF
+瑕	I-EFF
+因	O
+子	O
+及	O
+色	O
+彩	O
+
+莲	B-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+三	B-COM
+油	I-COM
+精	I-COM
+
+水	O
+坊	O
+玉	O
+润	O
+焕	B-EFF
+白	I-EFF
+柔	B-EFF
+肤	I-EFF
+水	O
+
+蔓	B-COM
+生	I-COM
+盘	I-COM
+叶	I-COM
+忍	I-COM
+冬	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+油	B-COM
+菜	I-COM
+籽	I-COM
+油	I-COM
+
+蔬	B-COM
+食	I-COM
+埃	I-COM
+塔	I-COM
+棕	I-COM
+果	I-COM
+油	I-COM
+
+修	B-EFF
+复	I-EFF
+,	O
+保	O
+护	O
+,	O
+改	O
+善	O
+肌	B-EFF
+肤	I-EFF
+
+北	B-COM
+美	I-COM
+圆	I-COM
+柏	I-COM
+油	I-COM
+
+6	O
+汤	O
+臣	O
+倍	O
+健	O
+所	O
+使	O
+用	O
+的	O
+P	O
+E	O
+P	O
+T	O
+A	O
+N	O
+胶	B-EFF
+原	I-EFF
+
+孔	B-COM
+雀	I-COM
+石	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+源	O
+自	O
+法	O
+国	O
+，	O
+提	B-EFF
+亮	I-EFF
+肤	B-EFF
+色	I-EFF
+，	O
+修	B-EFF
+护	I-EFF
+肌	B-EFF
+肤	I-EFF
+
+酵	B-COM
+母	I-COM
+菌	I-COM
+
+可	B-COM
+可	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+软	O
+胶	O
+囊	O
+
+酸	B-COM
+豆	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+香	B-COM
+附	I-COM
+子	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+善	O
+维	O
+莱	O
+牌	O
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+
+芝	B-COM
+麻	I-COM
+芽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+糖	B-COM
+原	I-COM
+
+乙	B-COM
+烯	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+交	I-COM
+联	I-COM
+聚	I-COM
+合	I-COM
+物	I-COM
+
+数	O
+据	O
+摘	O
+取	O
+京	O
+东	O
+商	O
+智	O
+:	O
+医	O
+疗	O
+保	O
+健	O
+一	O
+营	O
+养	O
+健	O
+康	O
+2	O
+0	O
+2	O
+0	O
+年	O
+2	O
+月	O
+-	B-COM
+2	I-COM
+0	I-COM
+2	O
+0	O
+年	O
+7	O
+月	O
+
+泛	B-COM
+內	I-COM
+酯	I-COM
+
+三	B-COM
+异	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+异	I-COM
+丙	I-COM
+氧	I-COM
+钛	I-COM
+盐	I-COM
+
+熬	B-EFF
+夜	I-EFF
+急	I-EFF
+救	I-EFF
+,	O
+补	B-EFF
+充	I-EFF
+胶	I-EFF
+原	I-EFF
+蛋	I-EFF
+白	I-EFF
+
+茅	B-COM
+香	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+对	O
+抗	B-EFF
+初	I-EFF
+老	I-EFF
+焕	O
+活	O
+肌	B-EFF
+肤	I-EFF
+
+番	B-COM
+茄	I-COM
+果	I-COM
+
+玫	B-COM
+瑰	I-COM
+花	I-COM
+粉	I-COM
+
+极	O
+速	O
+祛	B-EFF
+痘	I-EFF
+光	O
+般	O
+速	O
+度	O
+
+磷	B-COM
+酸	I-COM
+氢	I-COM
+二	I-COM
+钾	I-COM
+
+黑	B-EFF
+色	I-EFF
+素	I-EFF
+
+无	B-COM
+荧	I-COM
+光	I-COM
+剂	I-COM
+
+氨	B-COM
+甲	I-COM
+基	I-COM
+丙	I-COM
+二	I-COM
+醇	I-COM
+
+氧	B-COM
+化	I-COM
+铁	I-COM
+类	I-COM
+C	I-COM
+I	I-COM
+7	I-COM
+7	I-COM
+4	I-COM
+9	I-COM
+9	I-COM
+]	I-COM
+
+三	B-COM
+四	I-COM
+甲	I-COM
+基	I-COM
+羟	I-COM
+基	I-COM
+哌	I-COM
+啶	I-COM
+醇	I-COM
+柠	I-COM
+檬	I-COM
+酸	I-COM
+盐	I-COM
+
+鳄	B-COM
+梨	I-COM
+油	I-COM
+酸	I-COM
+丁	I-COM
+酯	I-COM
+
+二	B-COM
+丁	I-COM
+基	I-COM
+羟	I-COM
+基	I-COM
+甲	I-COM
+苯	I-COM
+
+三	B-COM
+色	I-COM
+堇	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+氨	B-COM
+基	I-COM
+酸	I-COM
+
+欧	B-COM
+洲	I-COM
+椴	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+枸	B-COM
+杞	I-COM
+子	O
+:	O
+
+三	B-COM
+三	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+基	I-COM
+硅	I-COM
+乙	I-COM
+基	I-COM
+聚	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+聚	B-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+交	I-COM
+联	I-COM
+聚	I-COM
+合	I-COM
+物	I-COM
+-	I-COM
+3	I-COM
+
+.	O
+给	O
+细	O
+胞	O
+提	O
+供	O
+能	O
+量	O
+，	O
+使	O
+肌	B-EFF
+肤	I-EFF
+变	O
+年	O
+轻	O
+
+乙	B-COM
+酰	I-COM
+化	I-COM
+
+抗	B-COM
+坏	I-COM
+血	I-COM
+酸	I-COM
+葡	I-COM
+糖	I-COM
+苷	I-COM
+维	I-COM
+生	I-COM
+素	I-COM
+C	I-COM
+衍	I-COM
+生	I-COM
+物	I-COM
+
+修	B-COM
+饰	I-COM
+泛	I-COM
+红	I-COM
+
+枸	B-COM
+杞	I-COM
+子	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+磷	I-COM
+酸	I-COM
+酯	I-COM
+
+无	B-COM
+防	I-COM
+腐	I-COM
+剂	I-COM
+无	I-COM
+香	I-COM
+精	I-COM
+香	I-COM
+料	I-COM
+
+硬	B-COM
+脂	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+聚	B-COM
+乙	I-COM
+二	I-COM
+醇	I-COM
+-	I-COM
+7	I-COM
+M	I-COM
+
+软	B-COM
+骨	I-COM
+素	I-COM
+硫	I-COM
+酸	I-COM
+钠	I-COM
+
+香	B-COM
+橼	I-COM
+果	I-COM
+油	I-COM
+
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+5	O
+2	O
+8	O
+毫	O
+克	O
+全	O
+部	O
+来	O
+源	O
+于	O
+针	O
+叶	O
+樱	O
+桃	O
+
+苹	B-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+丝	B-COM
+瓜	I-COM
+果	I-COM
+
+兴	B-COM
+安	I-COM
+悬	I-COM
+钩	I-COM
+子	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+羟	B-COM
+基	I-COM
+十	I-COM
+一	I-COM
+酸	I-COM
+
+锯	B-COM
+叶	I-COM
+棕	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+8	I-COM
+
+氢	B-COM
+化	I-COM
+橄	I-COM
+榄	I-COM
+油	I-COM
+不	I-COM
+皂	I-COM
+化	I-COM
+物	I-COM
+
+二	B-COM
+聚	I-COM
+羟	I-COM
+基	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+忍	B-COM
+冬	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+蕴	O
+含	O
+抗	B-EFF
+衰	I-EFF
+老	O
+因	O
+子	O
+
+氯	B-COM
+氧	I-COM
+化	I-COM
+铋	I-COM
+
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+、	O
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+、	O
+维	O
+生	O
+素	O
+钙	O
+、	O
+维	O
+生	O
+素	O
+D	O
+、	O
+
+椰	B-COM
+油	I-COM
+酸	I-COM
+乙	I-COM
+基	I-COM
+己	I-COM
+酯	I-COM
+
+熬	B-EFF
+夜	I-EFF
+刷	O
+手	O
+机	O
+
+β	O
+-	O
+烟	B-COM
+酰	I-COM
+胺	I-COM
+单	O
+核	O
+苷	O
+酸	O
+(	O
+N	O
+M	O
+N	O
+)	O
+
+定	B-EFF
+型	I-EFF
+造	I-EFF
+型	I-EFF
+
+烟	B-COM
+酰	I-COM
+胺	I-COM
+雪	O
+颜	O
+亮	O
+肤	O
+套	O
+装	O
+
+强	B-EFF
+韧	I-EFF
+肌	I-EFF
+底	I-EFF
+
+水	B-COM
+解	I-COM
+欧	I-COM
+洲	I-COM
+李	I-COM
+
+芍	B-COM
+药	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+胆	B-COM
+甾	I-COM
+醇	I-COM
+油	I-COM
+酸	I-COM
+酯	I-COM
+
+磺	B-COM
+酸	I-COM
+
+全	B-COM
+氟	I-COM
+萘	I-COM
+烷	I-COM
+
+「	O
+B	O
+.	O
+A	O
+抗	B-EFF
+糖	I-EFF
+丸	O
+」	O
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+硫	I-COM
+酸	I-COM
+酯	I-COM
+钠	I-COM
+
+硫	B-COM
+酸	I-COM
+镁	I-COM
+
+西	O
+红	B-COM
+花	I-COM
+
+啤	B-COM
+酒	I-COM
+花	I-COM
+孢	I-COM
+子	I-COM
+叶	I-COM
+球	I-COM
+
+防	B-EFF
+汗	I-EFF
+
+鲜	B-COM
+姜	I-COM
+
+亚	B-COM
+乙	I-COM
+烯	I-COM
+基	I-COM
+二	I-COM
+氯	I-COM
+共	I-COM
+聚	I-COM
+物	I-COM
+
+可	B-COM
+可	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+二	B-COM
+聚	I-COM
+季	I-COM
+戊	I-COM
+四	I-COM
+醇	I-COM
+三	I-COM
+-	I-COM
+聚	I-COM
+羟	I-COM
+基	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+抵	O
+抗	B-EFF
+糖	I-EFF
+化	O
+
+十	B-COM
+油	I-COM
+酸	I-COM
+酯	I-COM
+
+葡	B-COM
+糖	I-COM
+酸	I-COM
+钙	I-COM
+
+烟	B-COM
+酰	I-COM
+胺	I-COM
+腺	I-COM
+嘌	I-COM
+呤	I-COM
+二	I-COM
+核	I-COM
+苷	I-COM
+酸	I-COM
+
+印	B-COM
+度	I-COM
+簕	I-COM
+竹	I-COM
+茎	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+着	B-COM
+色	I-COM
+剂	I-COM
+
+吴	B-COM
+茱	I-COM
+萸	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+酵	B-COM
+母	I-COM
+发	I-COM
+酵	I-COM
+产	I-COM
+物	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+丁	B-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+乙	I-COM
+氧	I-COM
+丙	I-COM
+醇	I-COM
+磷	I-COM
+酸	I-COM
+酯	I-COM
+
+山	B-COM
+茶	I-COM
+花	I-COM
+萃	I-COM
+取	I-COM
+物	I-COM
+
+白	B-COM
+桦	I-COM
+树	I-COM
+皮	I-COM
+
+盐	B-COM
+生	I-COM
+杜	I-COM
+氏	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+铁	B-COM
+皮	I-COM
+石	I-COM
+斛	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+藻	B-COM
+酸	I-COM
+钙	I-COM
+
+十	B-COM
+一	I-COM
+烷	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+1	I-COM
+1	I-COM
+
+细	B-COM
+小	I-COM
+裸	I-COM
+藻	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+杀	B-EFF
+菌	I-EFF
+
+白	B-COM
+藜	I-COM
+芦	I-COM
+醇	I-COM
+
+樟	B-COM
+树	I-COM
+树	I-COM
+皮	I-COM
+油	I-COM
+
+二	B-COM
+月	I-COM
+桂	I-COM
+酰	I-COM
+胺	I-COM
+谷	I-COM
+氨	I-COM
+酰	I-COM
+胺	I-COM
+赖	I-COM
+氨	I-COM
+酸	I-COM
+钠	I-COM
+
+医	O
+药	O
+级	O
+无	B-COM
+添	I-COM
+加	I-COM
+
+芫	B-COM
+荽	I-COM
+果	I-COM
+油	I-COM
+
+多	O
+种	O
+氨	B-COM
+基	I-COM
+酸	I-COM
++	O
+石	O
+榴	O
+酚	O
+
+勃	B-COM
+那	I-COM
+特	I-COM
+螺	I-COM
+旋	I-COM
+藻	I-COM
+粉	I-COM
+
+送	O
+兰	O
+蔻	O
+小	O
+黑	O
+瓶	O
+精	B-COM
+华	I-COM
+液	I-COM
+7	O
+
+椰	B-COM
+油	I-COM
+酰	I-COM
+两	I-COM
+性	I-COM
+基	I-COM
+乙	I-COM
+酸	I-COM
+钠	I-COM
+
+虫	B-COM
+草	I-COM
+
+颜	O
+,	O
+舒	B-EFF
+缓	I-EFF
+炎	O
+症	O
+,	O
+守	O
+护	O
+女	O
+性	O
+健	O
+康	O
+,	O
+二	O
+者	O
+搭	O
+配	O
+服	O
+用	O
+,	O
+由	O
+内	O
+而	O
+外	O
+绽	O
+放	O
+女	O
+神	O
+姿	O
+态	O
+。	O
+
+灵	B-COM
+香	I-COM
+草	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+羧	B-COM
+甲	I-COM
+基	I-COM
+
+椰	B-COM
+油	I-COM
+酰	I-COM
+基	I-COM
+苹	I-COM
+果	I-COM
+氨	I-COM
+基	I-COM
+酸	I-COM
+钠	I-COM
+
+【	O
+功	O
+效	O
+成	B-COM
+分	I-COM
+及	O
+含	O
+量	O
+每	O
+粒	O
+含	O
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+5	O
+0	O
+.	O
+0	O
+m	O
+g	O
+
+三	B-COM
+叶	I-COM
+木	I-COM
+通	I-COM
+茎	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+协	O
+助	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+运	O
+作	O
+,	O
+
+聚	B-COM
+甘	I-COM
+油	I-COM
+山	I-COM
+梨	I-COM
+醇	I-COM
+
+二	B-COM
+硬	I-COM
+脂	I-COM
+基	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+氯	I-COM
+化	I-COM
+铵	I-COM
+
+小	B-COM
+麦	I-COM
+胚	I-COM
+芽	I-COM
+
+聚	B-COM
+全	I-COM
+氟	I-COM
+甲	I-COM
+基	I-COM
+异	I-COM
+丙	I-COM
+基	I-COM
+醚	I-COM
+
+燕	B-COM
+窝	I-COM
+
+山	B-COM
+梨	I-COM
+坦	I-COM
+棕	I-COM
+榈	I-COM
+酸	I-COM
+酯	I-COM
+
+龙	B-COM
+胆	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+防	B-EFF
+脱	I-EFF
+发	I-EFF
+
+锯	B-COM
+叶	I-COM
+棕	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+鲸	B-COM
+蜡	I-COM
+硬	I-COM
+脂	I-COM
+醇	I-COM
+山	I-COM
+嵛	I-COM
+酸	I-COM
+酯	I-COM
+
+【	O
+食	O
+用	O
+方	O
+法	O
+】	O
+将	O
+一	O
+袋	O
+本	O
+晶	O
+投	O
+入	O
+到	O
+1	O
+5	O
+0	O
+m	O
+-	B-COM
+2	I-COM
+0	I-COM
+0	O
+m	O
+温	O
+水	O
+中	O
+,	O
+待	O
+完	O
+全	O
+溶	O
+解	O
+即	O
+可	O
+服	O
+用	O
+
+摄	O
+入	O
+动	O
+物	O
+激	B-COM
+素	I-COM
+
+淡	B-COM
+竹	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+荔	B-COM
+枝	I-COM
+果	I-COM
+皮	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+胃	O
+溃	O
+疡	O
+的	O
+人	O
+是	O
+绝	O
+对	O
+可	O
+以	O
+吃	O
+椰	B-COM
+子	I-COM
+油	I-COM
+的	O
+。	O
+6	O
+0	O
+%	O
+的	O
+胃	O
+溃	O
+疡	O
+是	O
+由	O
+细	O
+菌	O
+感	O
+染	O
+引	O
+
+三	B-COM
+甲	I-COM
+基	I-COM
+戊	I-COM
+二	I-COM
+醇	I-COM
+
+寡	B-COM
+肽	I-COM
+-	I-COM
+2	I-COM
+
+聚	B-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+-	I-COM
+2	I-COM
+
+连	B-COM
+翘	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+-	O
+1	O
+0	O
+m	O
+g	O
+
+深	O
+层	O
+保	B-EFF
+湿	I-EFF
+
+酸	B-COM
+酯	I-COM
+类	I-COM
+
+二	B-COM
+胜	I-COM
+肽	I-COM
+
+橙	B-COM
+皮	I-COM
+
+聚	B-COM
+丁	I-COM
+二	I-COM
+醇	I-COM
+-	I-COM
+8	I-COM
+
+红	B-COM
+2	I-COM
+8	I-COM
+色	I-COM
+淀	I-COM
+
+维	B-COM
+生	I-COM
+素	I-COM
+B	I-COM
+
+柠	B-COM
+檬	I-COM
+果	I-COM
+皮	I-COM
+粉	I-COM
+
+齿	B-COM
+瓣	I-COM
+延	I-COM
+胡	I-COM
+索	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+霍	B-COM
+霍	I-COM
+巴	I-COM
+油	I-COM
+酸	I-COM
+异	I-COM
+丙	I-COM
+酯	I-COM
+
+硅	B-COM
+酸	I-COM
+铝	I-COM
+钙	I-COM
+钠	I-COM
+
+皂	B-COM
+皮	I-COM
+树	I-COM
+
+硬	B-COM
+脂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+2	I-COM
+1	I-COM
+
+红	O
+参	O
+及	O
+苹	B-COM
+果	I-COM
+为	O
+原	O
+料	O
+
+皮	B-EFF
+肤	I-EFF
+暗	O
+黄	O
+
+【	O
+辅	O
+料	O
+】	O
+大	B-COM
+豆	I-COM
+油	I-COM
+明	B-COM
+胶	I-COM
+纯	O
+化	O
+水	O
+,	O
+甘	B-COM
+油	I-COM
+
+合	B-COM
+成	I-COM
+氟	I-COM
+金	I-COM
+云	I-COM
+母	I-COM
+
+素	B-COM
+方	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+红	B-COM
+石	I-COM
+榴	I-COM
+
+不	O
+含	O
+有	O
+动	O
+物	O
+雌	O
+激	B-COM
+素	I-COM
+
+羟	B-COM
+基	I-COM
+积	I-COM
+雪	I-COM
+草	I-COM
+酸	I-COM
+
+聚	B-COM
+甘	I-COM
+油	I-COM
+-	I-COM
+1	I-COM
+0	I-COM
+月	I-COM
+桂	I-COM
+酸	I-COM
+酯	I-COM
+
+提	B-EFF
+升	I-EFF
+气	I-EFF
+质	I-EFF
+
+住	O
+肌	B-EFF
+肤	I-EFF
+水	B-EFF
+分	I-EFF
+
+含	O
+原	O
+花	B-COM
+青	I-COM
+素	I-COM
+
+色	B-COM
+素	I-COM
+沉	O
+看	O
+
+甲	B-COM
+基	I-COM
+丙	I-COM
+烯	I-COM
+酸	I-COM
+铵	I-COM
+共	I-COM
+聚	I-COM
+物	I-COM
+
+姜	B-COM
+黄	I-COM
+
+木	B-COM
+醋	I-COM
+杆	I-COM
+菌	I-COM
+
+六	B-COM
+松	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+山	B-COM
+金	I-COM
+车	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+缓	O
+解	O
+更	O
+年	O
+期	O
+,	O
+气	B-EFF
+色	I-EFF
+好	O
+
+古	B-COM
+巴	I-COM
+香	I-COM
+胶	I-COM
+树	I-COM
+树	I-COM
+脂	I-COM
+
+扁	B-COM
+叶	I-COM
+香	I-COM
+果	I-COM
+兰	I-COM
+果	I-COM
+水	I-COM
+
+双	B-COM
+-	I-COM
+山	I-COM
+嵛	I-COM
+醇	I-COM
+
+月	B-COM
+桂	I-COM
+二	I-COM
+醇	I-COM
+醚	I-COM
+
+月	B-COM
+桂	I-COM
+酰	I-COM
+胺	I-COM
+
+甘	B-COM
+油	I-COM
+二	I-COM
+油	I-COM
+酸	I-COM
+酯	I-COM
+
+在	O
+肌	B-EFF
+肤	I-EFF
+表	O
+面	O
+形	O
+成	O
+锁	B-EFF
+水	I-EFF
+膜	O
+，	O
+再	O
+
+辛	B-COM
+甘	I-COM
+醇	I-COM
+
+的	O
+血	O
+橙	B-COM
+提	I-COM
+取	I-COM
+物	I-COM
+;	O
+硅	O
+1	O
+6	O
+4	O
+毫	O
+克	O
+:	O
+
+加	O
+胶	B-EFF
+原	I-EFF
+白	O
+粉	O
+8	O
+0	O
+0	O
+0	O
+m	O
+g	O
+
+美	O
+颜	O
+抗	B-EFF
+皱	I-EFF
+
+椰	B-COM
+油	I-COM
+酰	I-COM
+精	I-COM
+氨	I-COM
+酸	I-COM
+乙	I-COM
+酯	I-COM
+盐	I-COM
+
+无	B-COM
+羊	I-COM
+毛	I-COM
+脂	I-COM
+
+【	O
+保	O
+健	O
+功	O
+能	O
+】	O
+祛	B-EFF
+黄	I-EFF
+褐	O
+斑	O
+
+聚	B-COM
+丙	I-COM
+基	I-COM
+硅	I-COM
+倍	I-COM
+半	I-COM
+氧	I-COM
+烷	I-COM
+
+辣	B-COM
+椒	I-COM
+红	I-COM
+
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+、	I-COM
+E	I-COM
+
+椰	B-COM
+油	I-COM
+酸	I-COM
+
+娑	B-COM
+罗	I-COM
+双	I-COM
+树	I-COM
+籽	I-COM
+脂	I-COM
+
+霍	B-COM
+霍	I-COM
+巴	I-COM
+油	I-COM
+
+产	B-COM
+碱	I-COM
+杆	I-COM
+菌	I-COM
+多	I-COM
+糖	I-COM
+类	I-COM
+
+糖	B-COM
+脂	I-COM
+
+每	O
+瓶	O
+含	O
+5	O
+0	O
+0	O
+0	O
+毫	O
+克	O
+鱼	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+
+欧	B-COM
+锦	I-COM
+葵	I-COM
+花	I-COM
+
+羧	B-COM
+酸	I-COM
+钠	I-COM
+
+放	O
+大	O
+自	O
+我	O
+焕	B-EFF
+白	I-EFF
+力	O
+
+软	B-COM
+木	I-COM
+树	I-COM
+皮	I-COM
+
+聚	B-COM
+乙	I-COM
+烯	I-COM
+醇	I-COM
+交	I-COM
+联	I-COM
+聚	I-COM
+合	I-COM
+物	I-COM
+
+本	O
+品	O
+是	O
+以	O
+鱼	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+粉	O
+、	O
+L	O
+抗	B-COM
+坏	I-COM
+血	I-COM
+酸	I-COM
+(	O
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+)	O
+、	O
+D	O
+-	O
+a	O
+-	O
+生	B-COM
+育	I-COM
+酚	I-COM
+(	O
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+)	O
+、	O
+D	O
+-	O
+甘	B-COM
+露	I-COM
+糖	I-COM
+醇	I-COM
+为	O
+主	O
+要	O
+原	O
+料	O
+制	O
+成	O
+的	O
+保	O
+健	O
+食	O
+
+向	B-COM
+日	I-COM
+葵	I-COM
+籽	I-COM
+饼	I-COM
+
+薄	B-COM
+荷	I-COM
+酮	I-COM
+甘	I-COM
+油	I-COM
+缩	I-COM
+酮	I-COM
+
+广	B-COM
+藿	I-COM
+香	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+功	O
+效	O
+成	B-COM
+分	I-COM
+及	O
+含	O
+量	O
+:	O
+每	O
+1	O
+0	O
+0	O
+g	O
+含	O
+:	O
+钙	O
+5	O
+.	O
+2	O
+8	O
+g	O
+、	O
+铁	O
+0	O
+.	O
+3	O
+g	O
+、	O
+原	O
+花	O
+
+月	B-COM
+桂	I-COM
+基	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+铵	I-COM
+羟	I-COM
+丙	I-COM
+基	I-COM
+水	I-COM
+解	I-COM
+大	I-COM
+豆	I-COM
+蛋	I-COM
+白	I-COM
+
+延	B-EFF
+缓	I-EFF
+衰	I-EFF
+老	I-EFF
+的	O
+步	O
+伐	O
+
+龙	B-COM
+胆	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+丙	B-COM
+二	I-COM
+醇	I-COM
+月	I-COM
+桂	I-COM
+酸	I-COM
+酯	I-COM
+
+西	B-COM
+班	I-COM
+牙	I-COM
+藓	I-COM
+苔	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+抗	B-EFF
+雾	I-EFF
+霾	I-EFF
+
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+抚	O
+平	O
+皱	O
+纹	O
+延	B-EFF
+缓	I-EFF
+衰	I-EFF
+老	I-EFF
+
+茵	B-COM
+陈	I-COM
+蒿	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+水	B-EFF
+润	I-EFF
+呵	O
+护	O
+
+丙	B-COM
+烯	I-COM
+酰	I-COM
+基	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+牛	I-COM
+磺	I-COM
+酸	I-COM
+钠	I-COM
+交	I-COM
+联	I-COM
+聚	I-COM
+合	I-COM
+物	I-COM
+
+芦	B-COM
+笋	I-COM
+
+莲	B-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+卸	B-EFF
+妆	I-EFF
+
+调	O
+理	O
+养	O
+颜	O
+·	O
+祛	B-EFF
+黄	I-EFF
+褐	O
+斑	O
+
+密	B-COM
+罗	I-COM
+木	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+聚	B-COM
+丙	I-COM
+烯	I-COM
+酸	I-COM
+铵	I-COM
+
+甘	B-COM
+油	I-COM
+醇	I-COM
+醚	I-COM
+-	I-COM
+2	I-COM
+5	I-COM
+
+水	B-COM
+解	I-COM
+透	I-COM
+明	I-COM
+质	I-COM
+酸	I-COM
+
+补	O
+气	O
+丸	O
+(	O
+蜂	B-COM
+王	I-COM
+浆	I-COM
+、	O
+红	O
+参	O
+、	O
+刺	O
+五	O
+加	O
+)	O
+、	O
+补	O
+水	O
+丸	O
+(	O
+灵	B-COM
+芝	I-COM
+、	O
+
+甜	B-COM
+菜	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+比	O
+原	O
+花	B-COM
+青	I-COM
+素	I-COM
+
+三	B-COM
+氟	I-COM
+乙	I-COM
+酰	I-COM
+三	I-COM
+肽	I-COM
+-	I-COM
+2	I-COM
+
+荔	B-COM
+枝	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+荔	B-COM
+枝	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+香	B-COM
+附	I-COM
+子	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+抗	B-EFF
+菌	I-EFF
+
+大	B-COM
+果	I-COM
+越	I-COM
+桔	I-COM
+籽	I-COM
+
+十	B-COM
+八	I-COM
+碳	I-COM
+烯	I-COM
+
+库	B-COM
+拉	I-COM
+索	I-COM
+芦	I-COM
+荟	I-COM
+
+果	B-COM
+酸	I-COM
+
+胶	B-EFF
+原	I-EFF
+新	O
+生	O
+透	O
+亮	O
+美	O
+肌	O
+
+富	O
+含	O
+胶	B-EFF
+原	I-EFF
+8	O
+0	O
+0	O
+0	O
+m	O
+g	O
+/	O
+瓶	O
+
+长	B-COM
+角	I-COM
+豆	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+香	B-COM
+蜂	I-COM
+花	I-COM
+叶	I-COM
+油	I-COM
+
+桂	B-COM
+竹	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+聚	B-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+-	I-COM
+5	I-COM
+
+石	B-COM
+香	I-COM
+薷	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+甘	B-COM
+草	I-COM
+酸	I-COM
+钾	I-COM
+
+地	B-COM
+茶	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+醇	B-COM
+富	I-COM
+马	I-COM
+酸	I-COM
+酯	I-COM
+
+大	B-COM
+豆	I-COM
+卵	I-COM
+磷	I-COM
+脂	I-COM
+
+滇	B-COM
+黄	I-COM
+精	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+【	O
+配	O
+料	O
+表	O
+】	O
+水	B-COM
+解	I-COM
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+粉	O
+(	O
+6	O
+0	O
+%	O
+)	O
+酵	O
+母	O
+粉	O
+、	O
+木	B-COM
+糖	I-COM
+醇	I-COM
+
+当	B-COM
+归	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+小	B-COM
+连	I-COM
+翘	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+乙	B-COM
+基	I-COM
+肉	I-COM
+桂	I-COM
+醛	I-COM
+
+二	B-COM
+羟	I-COM
+铝	I-COM
+氨	I-COM
+基	I-COM
+乙	I-COM
+酸	I-COM
+盐	I-COM
+
+二	B-COM
+裂	I-COM
+酵	I-COM
+母	I-COM
+发	I-COM
+酵	I-COM
+产	I-COM
+物	I-COM
+溶	I-COM
+胞	I-COM
+物	I-COM
+
+薄	B-COM
+荷	I-COM
+油	I-COM
+
+虎	B-COM
+杖	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+水	B-EFF
+油	I-EFF
+平	I-EFF
+衡	I-EFF
+
+金	B-COM
+盏	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+海	B-COM
+藻	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+海	B-COM
+盐	I-COM
+
+乙	B-COM
+二	I-COM
+胺	I-COM
+四	I-COM
+乙	I-COM
+酸	I-COM
+
+蚕	B-COM
+丝	I-COM
+氨	I-COM
+基	I-COM
+酸	I-COM
+类	I-COM
+
+硬	B-COM
+脂	I-COM
+酰	I-COM
+谷	I-COM
+氨	I-COM
+酸	I-COM
+钠	I-COM
+
+玫	B-COM
+瑰	I-COM
+
+枣	B-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+聚	B-COM
+乙	I-COM
+烯	I-COM
+亚	I-COM
+胺	I-COM
+-	I-COM
+1	I-COM
+5	I-COM
+0	I-COM
+0	I-COM
+
+藜	B-COM
+藜	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+矿	B-COM
+物	I-COM
+海	I-COM
+盐	I-COM
+
+棕	B-COM
+榈	I-COM
+油	I-COM
+氨	I-COM
+基	I-COM
+丙	I-COM
+二	I-COM
+醇	I-COM
+酯	I-COM
+类	I-COM
+
+异	B-COM
+鲸	I-COM
+蜡	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+2	I-COM
+5	I-COM
+
+酵	B-COM
+母	I-COM
+菌	I-COM
+溶	I-COM
+胞	I-COM
+物	I-COM
+
+阿	B-COM
+魏	I-COM
+酸	I-COM
+
+番	B-COM
+石	I-COM
+榴	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+鲸	B-COM
+蜡	I-COM
+醇	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+臻	O
+敏	O
+舒	B-EFF
+缓	I-EFF
+液	O
+
+真	O
+实	O
+的	O
+挪	O
+威	O
+深	O
+海	O
+鳕	O
+鱼	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+
+【	O
+功	O
+效	O
+成	O
+份	O
+及	O
+含	O
+量	O
+】	O
+:	O
+每	O
+粒	O
+含	O
+:	O
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+8	O
+.	O
+1	O
+6	O
+m	O
+g	O
+
+烫	B-EFF
+后	I-EFF
+护	I-EFF
+卷	I-EFF
+
+紫	B-COM
+薇	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+葡	B-COM
+萄	I-COM
+皮	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+高	O
+效	O
+抗	B-EFF
+氧	I-EFF
+化	I-EFF
+
+欧	B-COM
+洲	I-COM
+赤	I-COM
+松	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+桃	B-COM
+汁	I-COM
+
+三	B-COM
+色	I-COM
+堇	I-COM
+V	I-COM
+I	I-COM
+O	I-COM
+L	I-COM
+A	I-COM
+
+养	O
+成	B-COM
+分	I-COM
+
+巨	B-COM
+藻	I-COM
+蛋	I-COM
+白	I-COM
+
+水	B-COM
+解	I-COM
+胶	I-COM
+原	I-COM
+
+东	B-COM
+当	I-COM
+归	I-COM
+A	I-COM
+N	I-COM
+G	I-COM
+E	I-COM
+L	I-COM
+I	I-COM
+C	I-COM
+A	I-COM
+
+十	B-COM
+三	I-COM
+烷	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+6	I-COM
+
+硬	B-COM
+脂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+3	I-COM
+0	I-COM
+
+酯	B-COM
+类	I-COM
+
+氢	B-COM
+化	I-COM
+二	I-COM
+聚	I-COM
+亚	I-COM
+油	I-COM
+醇	I-COM
+碳	I-COM
+酸	I-COM
+酯	I-COM
+
+让	O
+肌	B-EFF
+肤	I-EFF
+睡	O
+个	O
+好	O
+觉	O
+
+高	O
+光	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+
+植	B-COM
+酸	I-COM
+钠	I-COM
+
+姜	B-COM
+黄	I-COM
+
+欧	B-COM
+洲	I-COM
+赤	I-COM
+松	I-COM
+球	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+给	O
+肌	B-EFF
+肤	I-EFF
+新	O
+生	O
+的	O
+机	O
+会	O
+
+盐	B-COM
+肤	I-COM
+木	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+欧	B-COM
+洲	I-COM
+越	I-COM
+桔	I-COM
+籽	I-COM
+油	I-COM
+
+麝	B-COM
+香	I-COM
+草	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+鱼	B-COM
+子	I-COM
+-	I-COM
+鱼	I-COM
+子	I-COM
+精	I-COM
+华	I-COM
+-	I-COM
+鱼	I-COM
+子	I-COM
+眼	I-COM
+霜	I-COM
+-	I-COM
+鱼	I-COM
+子	I-COM
+酱	I-COM
+眼	I-COM
+霜	I-COM
+-	I-COM
+鱼	I-COM
+子	I-COM
+酱	I-COM
+精	I-COM
+华	I-COM
+水	I-COM
+
+戊	B-COM
+二	I-COM
+醇	I-COM
+
+枇	B-COM
+杷	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+原	O
+创	O
+美	B-EFF
+白	I-EFF
+配	O
+方	O
+「	O
+S	O
+k	O
+i	O
+n	O
+A	O
+x	O
+2	O
+」	O
+
+羟	B-COM
+乙	I-COM
+基	I-COM
+乙	I-COM
+基	I-COM
+纤	I-COM
+维	I-COM
+素	I-COM
+
+卡	B-COM
+萨	I-COM
+蒙	I-COM
+纳	I-COM
+姜	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+红	B-COM
+茶	I-COM
+
+新	B-COM
+疆	I-COM
+紫	I-COM
+草	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+柔	B-COM
+珠	I-COM
+
+甘	B-COM
+油	I-COM
+二	I-COM
+油	I-COM
+酸	I-COM
+酯	I-COM
+
+葡	B-COM
+萄	I-COM
+汁	I-COM
+
+来	B-COM
+檬	I-COM
+汁	I-COM
+
+维	B-COM
+生	I-COM
+素	I-COM
+B	I-COM
+3	I-COM
+
+素	B-COM
+方	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+亚	B-COM
+麻	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+欧	B-COM
+芹	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+丙	B-COM
+酮	I-COM
+酸	I-COM
+
+榅	B-COM
+桲	I-COM
+果	I-COM
+汁	I-COM
+
+肉	B-COM
+碱	I-COM
+
+葡	B-COM
+糖	I-COM
+酸	I-COM
+钠	I-COM
+
+乳	B-COM
+霜	I-COM
+
+库	B-COM
+拉	I-COM
+索	I-COM
+芦	I-COM
+荟	I-COM
+叶	I-COM
+粉	I-COM
+
+维	B-COM
+A	I-COM
+
+深	O
+海	O
+精	B-COM
+华	I-COM
+补	O
+水	O
+套	O
+装	O
+系	O
+列	O
+
+涂	O
+痘	B-EFF
+印	I-EFF
+
+视	B-COM
+黄	I-COM
+醇	I-COM
+
+毛	B-COM
+蕊	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+焦	B-COM
+糖	I-COM
+色	I-COM
+
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+
+六	B-COM
+胜	I-COM
+肽	I-COM
+
+桂	B-COM
+花	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+柳	B-COM
+兰	I-COM
+花	I-COM
+
+绿	B-COM
+豆	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+磷	B-COM
+脂	I-COM
+酰	I-COM
+胆	I-COM
+碱	I-COM
+
+多	O
+种	O
+维	O
+生	O
+素	O
+多	O
+种	O
+矿	B-COM
+物	I-COM
+质	I-COM
+片	O
+
+冬	B-COM
+虫	I-COM
+夏	I-COM
+草	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+绿	B-COM
+茶	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+兰	B-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+搭	O
+配	O
+葡	B-COM
+萄	I-COM
+籽	I-COM
+效	O
+果	O
+更	O
+佳	O
+
+健	O
+功	O
+能	O
+祛	B-EFF
+黄	I-EFF
+褐	O
+斑	O
+
+香	B-COM
+榧	I-COM
+
+太	B-COM
+阳	I-COM
+花	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+水	B-EFF
+油	I-EFF
+平	I-EFF
+衡	I-EFF
+
+罗	B-COM
+布	I-COM
+斯	I-COM
+塔	I-COM
+咖	I-COM
+啡	I-COM
+树	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+天	B-COM
+然	I-COM
+菇	I-COM
+茎	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+乙	B-COM
+二	I-COM
+醇	I-COM
+二	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+二	B-COM
+裂	I-COM
+酵	I-COM
+母	I-COM
+
+棕	B-COM
+榈	I-COM
+酰	I-COM
+三	I-COM
+肽	I-COM
+-	I-COM
+5	I-COM
+
+印	B-COM
+度	I-COM
+簕	I-COM
+竹	I-COM
+根	I-COM
+茎	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+添	O
+加	O
+球	O
+型	O
+粉	O
+末	O
+触	O
+感	O
+丝	O
+滑	O
+自	O
+然	O
+贴	O
+合	O
+肌	B-EFF
+肤	I-EFF
+纹	O
+理	O
+
+甲	B-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+蔺	B-COM
+花	I-COM
+香	I-COM
+茅	I-COM
+油	I-COM
+
+葡	B-COM
+萄	I-COM
+籽	I-COM
+
+甲	B-COM
+胄	I-COM
+木	I-COM
+槿	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+小	B-COM
+烛	I-COM
+树	I-COM
+蜡	I-COM
+
+【	O
+保	O
+健	O
+功	O
+能	O
+】	O
+美	O
+容	O
+(	O
+祛	B-EFF
+黄	I-EFF
+褐	O
+斑	O
+
+料	O
+】	O
+木	B-COM
+糖	I-COM
+醇	I-COM
+、	O
+丹	O
+凤	O
+牡	B-COM
+丹	I-COM
+花	O
+、	O
+红	B-COM
+石	I-COM
+榴	I-COM
+粉	O
+、	O
+雨	O
+生	O
+红	O
+球	O
+藻	O
+、	O
+蛙	O
+鱼	O
+
+鲸	B-COM
+蜡	I-COM
+醇	I-COM
+蓖	I-COM
+麻	I-COM
+醇	I-COM
+酸	I-COM
+酯	I-COM
+
+羊	B-COM
+毛	I-COM
+甾	I-COM
+醇	I-COM
+混	I-COM
+合	I-COM
+酯	I-COM
+
+墨	B-COM
+角	I-COM
+藻	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+丙	B-COM
+二	I-COM
+醇	I-COM
+二	I-COM
+辛	I-COM
+酸	I-COM
+酯	I-COM
+
+美	B-EFF
+白	I-EFF
+抗	B-EFF
+糖	I-EFF
+
+本	O
+品	O
+是	O
+以	O
+葡	B-COM
+萄	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+、	O
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+、	O
+葵	O
+花	O
+籽	B-COM
+油	I-COM
+、	O
+蜂	O
+
+深	B-COM
+海	I-COM
+植	I-COM
+物	I-COM
+萃	I-COM
+取	I-COM
+物	I-COM
+
+蔗	B-COM
+糖	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+佛	B-COM
+手	I-COM
+柑	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+多	B-COM
+花	I-COM
+黄	I-COM
+精	I-COM
+根	I-COM
+茎	I-COM
+
+阻	O
+断	O
+色	B-COM
+素	I-COM
+合	B-COM
+成	I-COM
+
+油	O
+皮	O
+亲	O
+妈	O
+（	O
+柔	B-COM
+雾	I-COM
+型	I-COM
+）	O
+
+糖	B-COM
+类	I-COM
+水	I-COM
+解	I-COM
+物	I-COM
+
+9	O
+5	O
+%	O
+葡	B-COM
+萄	I-COM
+多	O
+酚	O
+
+白	B-COM
+池	I-COM
+花	I-COM
+籽	I-COM
+油	I-COM
+
+稻	B-COM
+糠	I-COM
+油	I-COM
+
+清	B-EFF
+洁	I-EFF
+
+番	B-COM
+茄	I-COM
+红	I-COM
+素	I-COM
+
+姜	B-COM
+黄	I-COM
+素	I-COM
+
+偏	B-COM
+磷	I-COM
+酸	I-COM
+钠	I-COM
+
+黑	B-EFF
+色	I-EFF
+素	I-EFF
+
+顺	B-EFF
+滑	I-EFF
+
+红	B-COM
+木	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+季	B-COM
+铵	I-COM
+盐	I-COM
+-	I-COM
+2	I-COM
+2	I-COM
+
+二	B-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+鲸	B-COM
+蜡	I-COM
+醇	I-COM
+棕	I-COM
+榈	I-COM
+酸	I-COM
+酯	I-COM
+
+掌	B-COM
+叶	I-COM
+树	I-COM
+P	I-COM
+A	I-COM
+L	I-COM
+M	I-COM
+A	I-COM
+R	I-COM
+I	I-COM
+A	I-COM
+
+余	B-COM
+甘	I-COM
+子	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+晒	B-EFF
+后	I-EFF
+修	I-EFF
+护	I-EFF
+
+硼	B-COM
+硅	I-COM
+酸	I-COM
+钛	I-COM
+钙	I-COM
+
+脂	B-COM
+酸	I-COM
+
+葡	B-COM
+糖	I-COM
+基	I-COM
+橙	I-COM
+皮	I-COM
+苷	I-COM
+
+酸	B-COM
+酯	I-COM
+类	I-COM
+
+上	O
+海	O
+中	O
+邦	O
+斯	O
+瑞	O
+生	B-COM
+物	I-COM
+药	O
+业	O
+技	O
+术	O
+有	O
+限	O
+公	O
+司	O
+
+红	B-COM
+色	I-COM
+液	I-COM
+体	I-COM
+水	I-COM
+
+甘	B-COM
+油	I-COM
+-	I-COM
+2	I-COM
+
+聚	B-COM
+癸	I-COM
+烯	I-COM
+
+甘	B-COM
+油	I-COM
+磷	I-COM
+酸	I-COM
+钠	I-COM
+
+针	O
+对	O
+6	O
+大	O
+肌	B-EFF
+肤	I-EFF
+问	O
+题	O
+皱	O
+纹	O
+干	B-EFF
+燥	I-EFF
+、	O
+暗	B-EFF
+沉	I-EFF
+、	O
+毛	B-EFF
+孔	I-EFF
+粗	O
+大	O
+、	O
+细	B-EFF
+纹	I-EFF
+”	O
+吸	O
+收	O
+力	O
+差	O
+
+药	B-COM
+蜀	I-COM
+葵	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+甜	B-COM
+橙	I-COM
+果	I-COM
+皮	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+癸	B-COM
+基	I-COM
+噁	I-COM
+唑	I-COM
+烷	I-COM
+酮	I-COM
+
+维	B-COM
+生	I-COM
+素	I-COM
+甲	I-COM
+酸	I-COM
+
+苯	B-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+保	O
+护	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+不	O
+流	O
+失	O
+
+欧	B-COM
+洲	I-COM
+椴	I-COM
+木	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+水	B-COM
+解	I-COM
+牛	I-COM
+奶	I-COM
+蛋	I-COM
+白	I-COM
+
+澳	O
+洲	O
+深	O
+海	O
+鳕	O
+鱼	O
+皮	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+低	O
+聚	O
+肽	O
+
+到	O
+手	O
+:	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+肽	O
+*	O
+5	O
+盒	O
+
+氯	B-COM
+二	I-COM
+甲	I-COM
+酚	I-COM
+
+相	O
+当	O
+于	O
+1	O
+5	O
+0	O
+M	O
+G	O
+原	O
+花	B-COM
+青	I-COM
+素	I-COM
+
+无	B-COM
+活	I-COM
+性	I-COM
+剂	I-COM
+
+谷	B-COM
+氨	I-COM
+酸	I-COM
+
+硫	O
+辛	B-COM
+酸	I-COM
+是	O
+一	O
+程	O
+
+氢	B-COM
+氧	I-COM
+化	I-COM
+铬	I-COM
+绿	I-COM
+
+焕	B-COM
+颜	I-COM
+肽	I-COM
+
+苯	B-COM
+丙	I-COM
+醇	I-COM
+
+保	O
+健	O
+功	O
+能	O
+祛	B-EFF
+黄	I-EFF
+褐	O
+斑	O
+
+润	B-COM
+肤	I-COM
+剂	I-COM
+
+温	B-COM
+州	I-COM
+蜜	I-COM
+柑	I-COM
+果	I-COM
+皮	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+苯	B-COM
+乙	I-COM
+醇	I-COM
+
+深	O
+入	O
+肌	B-EFF
+底	I-EFF
+美	B-EFF
+白	I-EFF
+淡	O
+斑	O
+
+脱	B-COM
+氧	I-COM
+植	I-COM
+烷	I-COM
+三	I-COM
+醇	I-COM
+基	I-COM
+棕	I-COM
+榈	I-COM
+酰	I-COM
+胺	I-COM
+
+地	B-COM
+黄	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+聚	B-COM
+丙	I-COM
+二	I-COM
+醇	I-COM
+-	I-COM
+7	I-COM
+
+拯	O
+救	O
+熬	B-EFF
+夜	I-EFF
+肌	O
+
+肌	B-COM
+醇	I-COM
+
+乳	B-COM
+化	I-COM
+剂	I-COM
+
+聚	B-COM
+甘	I-COM
+油	I-COM
+-	I-COM
+5	I-COM
+
+不	O
+会	O
+引	O
+起	O
+刺	O
+痛	O
+及	O
+红	B-EFF
+血	I-EFF
+丝	I-EFF
+，	O
+内	O
+含	O
+含	O
+丰	O
+富	O
+抗	B-EFF
+氧	I-EFF
+化	I-EFF
+分	O
+子	O
+维	O
+他	O
+命	O
+C	O
+，	O
+提	O
+升	O
+肌	B-EFF
+肤	I-EFF
+抵	O
+抗	O
+力	O
+及	O
+修	B-EFF
+护	I-EFF
+肌	O
+肤	O
+，	O
+驱	O
+走	O
+肤	B-EFF
+色	I-EFF
+暗	O
+哑	O
+，	O
+
+竹	B-COM
+叶	I-COM
+花	I-COM
+椒	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+硬	B-COM
+脂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+2	I-COM
+0	I-COM
+
+二	B-COM
+肽	I-COM
+-	I-COM
+2	I-COM
+
+第	O
+1	O
+阶	O
+段	O
+“	O
+水	B-EFF
+润	I-EFF
+
+欧	B-COM
+洲	I-COM
+稻	I-COM
+槎	I-COM
+菜	I-COM
+花	I-COM
+
+小	B-COM
+麦	I-COM
+胚	I-COM
+芽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+碳	B-COM
+酸	I-COM
+钠	I-COM
+
+多	B-COM
+肽	I-COM
+-	I-COM
+1	I-COM
+
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+粉	O
+固	O
+
+匙	B-COM
+羹	I-COM
+藤	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+底	O
+、	O
+隔	B-EFF
+离	I-EFF
+霜	O
+及	O
+保	O
+养	O
+
+葡	B-COM
+萄	I-COM
+果	I-COM
+水	I-COM
+
+陶	B-EFF
+瓷	I-EFF
+肌	I-EFF
+
+火	B-COM
+把	I-COM
+莲	I-COM
+花	I-COM
+蜜	I-COM
+
+薰	B-COM
+衣	I-COM
+草	I-COM
+花	I-COM
+
+西	B-COM
+曲	I-COM
+溴	I-COM
+铵	I-COM
+
+亚	B-COM
+铁	I-COM
+氰	I-COM
+化	I-COM
+铁	I-COM
+铵	I-COM
+C	I-COM
+I	I-COM
+
+酵	B-COM
+母	I-COM
+菌	I-COM
+多	I-COM
+肽	I-COM
+类	I-COM
+
+-	B-COM
+2	I-COM
+-	I-COM
+羟	I-COM
+基	I-COM
+丙	I-COM
+烷	I-COM
+
+印	B-COM
+尼	I-COM
+姜	I-COM
+科	I-COM
+植	I-COM
+物	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+属	O
+天	O
+然	O
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+。	O
+E	O
+v	O
+e	O
+r	O
+y	O
+s	O
+i	O
+n	O
+g	O
+l	O
+e	O
+c	O
+o	O
+n	O
+t	O
+a	O
+i	O
+n	O
+s	O
+
+碳	B-COM
+酸	I-COM
+氢	I-COM
+钠	I-COM
+
+蔷	B-COM
+薇	I-COM
+花	I-COM
+油	I-COM
+
+柚	B-COM
+果	I-COM
+皮	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+意	B-COM
+大	I-COM
+利	I-COM
+腊	I-COM
+菊	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+链	B-COM
+烷	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+2	I-COM
+3	I-COM
+
+合	B-COM
+成	I-COM
+小	I-COM
+烛	I-COM
+树	I-COM
+蜡	I-COM
+
+鲸	B-COM
+蜡	I-COM
+基	I-COM
+三	I-COM
+乙	I-COM
+基	I-COM
+铵	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+中	B-COM
+肋	I-COM
+骨	I-COM
+条	I-COM
+藻	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+橄	B-COM
+榄	I-COM
+果	I-COM
+油	I-COM
+
+大	B-COM
+花	I-COM
+可	I-COM
+可	I-COM
+树	I-COM
+籽	I-COM
+脂	I-COM
+
+日	O
+本	O
+A	O
+X	O
+X	O
+Z	O
+I	O
+A	O
+晓	O
+姿	O
+A	O
+G	O
+抗	B-EFF
+糖	I-EFF
+口	O
+服	O
+液	O
+
+修	B-EFF
+复	I-EFF
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+2	I-COM
+
+欧	B-COM
+锦	I-COM
+葵	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+白	O
+肌	B-COM
+酸	I-COM
+大	B-COM
+米	I-COM
+肽	O
+复	O
+合	O
+莓	O
+果	O
+汁	O
+
+马	B-COM
+铃	I-COM
+薯	I-COM
+果	I-COM
+肉	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+三	B-COM
+羟	I-COM
+基	I-COM
+硬	I-COM
+脂	I-COM
+精	I-COM
+
+蜂	B-COM
+胶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+水	B-COM
+杨	I-COM
+酸	I-COM
+异	I-COM
+癸	I-COM
+酯	I-COM
+
+香	B-COM
+双	I-COM
+扇	I-COM
+草	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+炭	B-COM
+黑	I-COM
+
+牛	B-COM
+奶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+色	B-COM
+淀	I-COM
+
+二	B-COM
+氧	I-COM
+化	I-COM
+钛	I-COM
+C	I-COM
+I	I-COM
+7	I-COM
+7	I-COM
+8	I-COM
+9	I-COM
+1	I-COM
+]	I-COM
+
+石	B-COM
+斛	I-COM
+兰	I-COM
+
+抚	B-EFF
+纹	I-EFF
+
+刺	B-COM
+海	I-COM
+门	I-COM
+冬	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+苯	B-COM
+乙	I-COM
+醇	I-COM
+苯	I-COM
+甲	I-COM
+酸	I-COM
+酯	I-COM
+
+氯	B-COM
+化	I-COM
+物	I-COM
+
+羟	B-COM
+乙	I-COM
+磺	I-COM
+酸	I-COM
+钠	I-COM
+
+山	B-COM
+茶	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+纹	O
+，	O
+对	O
+黑	B-EFF
+眼	I-EFF
+圈	I-EFF
+、	O
+眼	O
+袋	O
+有	O
+神	O
+奇	O
+的	O
+作	O
+用	O
+。	O
+
+服	B-EFF
+帖	I-EFF
+
+聚	B-COM
+山	I-COM
+梨	I-COM
+醇	I-COM
+酯	I-COM
+-	I-COM
+2	I-COM
+0	I-COM
+
+红	B-COM
+2	I-COM
+7	I-COM
+
+枯	B-COM
+草	I-COM
+菌	I-COM
+脂	I-COM
+肽	I-COM
+钠	I-COM
+
+棕	B-COM
+榈	I-COM
+仁	I-COM
+油	I-COM
+
+鳢	B-COM
+肠	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+嫩	B-COM
+枝	I-COM
+油	I-COM
+
+麦	B-COM
+芽	I-COM
+糖	I-COM
+
+B	O
+.	O
+A	O
+T	O
+A	O
+B	O
+L	O
+E	O
+T	O
+抗	B-EFF
+糖	I-EFF
+丸	O
+
+堂	O
+牌	O
+天	O
+然	O
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+阳	O
+
+抗	B-EFF
+糖	I-EFF
+饮	O
+
+茉	B-COM
+莉	I-COM
+花	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+马	B-COM
+齿	I-COM
+苋	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+聚	B-COM
+季	I-COM
+铵	I-COM
+盐	I-COM
+-	I-COM
+4	I-COM
+
+覆	B-COM
+盆	I-COM
+子	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+总	B-COM
+状	I-COM
+升	I-COM
+麻	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+二	B-COM
+苯	I-COM
+酮	I-COM
+-	I-COM
+5	I-COM
+
+针	B-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+三	B-COM
+乙	I-COM
+氧	I-COM
+基	I-COM
+辛	I-COM
+基	I-COM
+硅	I-COM
+烷	I-COM
+
+穗	B-COM
+檀	I-COM
+香	I-COM
+木	I-COM
+油	I-COM
+
+聚	B-COM
+氨	I-COM
+酯	I-COM
+-	I-COM
+1	I-COM
+4	I-COM
+
+聚	B-COM
+季	I-COM
+铵	I-COM
+盐	I-COM
+-	I-COM
+4	I-COM
+3	I-COM
+
+绿	B-COM
+本	I-COM
+甘	I-COM
+油	I-COM
+醚	I-COM
+
+产	O
+品	O
+(	O
+4	O
+0	O
+0	O
+-	B-COM
+8	I-COM
+1	O
+8	O
+-	O
+2	O
+8	O
+8	O
+8	O
+
+异	B-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+癸	I-COM
+酯	I-COM
+
+紧	B-EFF
+致	I-EFF
+毛	B-EFF
+孔	I-EFF
+，	O
+达	O
+到	O
+水	B-EFF
+油	I-EFF
+平	I-EFF
+衡	I-EFF
+
+无	B-EFF
+粉	I-EFF
+感	I-EFF
+
+硬	B-COM
+脂	I-COM
+醇	I-COM
+丙	I-COM
+烯	I-COM
+酸	I-COM
+酯	I-COM
+
+栄	O
+養	O
+成	B-COM
+分	I-COM
+表	O
+示	O
+2	O
+粒	O
+(	O
+0	O
+.	O
+4	O
+5	O
+g	O
+)	O
+当	O
+
+玉	B-COM
+米	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+朝	B-COM
+鲜	I-COM
+当	I-COM
+归	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+向	B-COM
+日	I-COM
+葵	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+己	B-COM
+基	I-COM
+癸	I-COM
+醇	I-COM
+乙	I-COM
+基	I-COM
+己	I-COM
+酸	I-COM
+酯	I-COM
+
+牛	B-COM
+奶	I-COM
+脂	I-COM
+质	I-COM
+
+迷	B-COM
+迭	I-COM
+香	I-COM
+花	I-COM
+
+苦	B-COM
+参	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+重	O
+抗	B-EFF
+糖	I-EFF
+力	O
+
+水	B-COM
+解	I-COM
+米	I-COM
+糠	I-COM
+蛋	I-COM
+白	I-COM
+
+聚	B-COM
+丙	I-COM
+烯	I-COM
+酸	I-COM
+]	I-COM
+
+浅	B-COM
+金	I-COM
+色	I-COM
+
+蜂	B-COM
+胶	I-COM
+
+抗	B-COM
+坏	I-COM
+血	I-COM
+酸	I-COM
+棕	I-COM
+榈	I-COM
+酸	I-COM
+酯	I-COM
+磷	I-COM
+酸	I-COM
+酯	I-COM
+三	I-COM
+钠	I-COM
+
+聚	B-COM
+丙	I-COM
+烯	I-COM
+
+聚	B-COM
+酰	I-COM
+亚	I-COM
+胺	I-COM
+-	I-COM
+1	I-COM
+
+锦	B-COM
+纶	I-COM
+-	I-COM
+1	I-COM
+2	I-COM
+
+皮	B-COM
+肤	I-COM
+调	I-COM
+理	I-COM
+剂	I-COM
+
+祛	B-EFF
+痘	I-EFF
+
+丙	B-COM
+烯	I-COM
+酰	I-COM
+胺	I-COM
+
+与	O
+众	O
+不	O
+同	O
+的	O
+大	B-COM
+豆	I-COM
+
+胆	B-COM
+甾	I-COM
+醇	I-COM
+己	I-COM
+基	I-COM
+二	I-COM
+氨	I-COM
+基	I-COM
+甲	I-COM
+酸	I-COM
+酯	I-COM
+支	I-COM
+链	I-COM
+淀	I-COM
+粉	I-COM
+
+亮	O
+白	O
+滋	B-EFF
+润	I-EFF
+精	B-COM
+华	I-COM
+液	I-COM
+
+泛	B-EFF
+红	I-EFF
+
+水	B-COM
+解	I-COM
+蜂	I-COM
+王	I-COM
+浆	I-COM
+蛋	I-COM
+白	I-COM
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+2	I-COM
+5	I-COM
+
+绿	B-COM
+荆	I-COM
+树	I-COM
+花	I-COM
+蜡	I-COM
+
+氢	B-COM
+化	I-COM
+
+羟	B-COM
+苯	I-COM
+乙	I-COM
+酯	I-COM
+
+聚	B-COM
+全	I-COM
+氟	I-COM
+乙	I-COM
+氧	I-COM
+基	I-COM
+甲	I-COM
+氧	I-COM
+基	I-COM
+二	I-COM
+氟	I-COM
+乙	I-COM
+基	I-COM
+
+燕	B-COM
+窝	I-COM
+
+野	B-COM
+续	I-COM
+断	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+蔗	B-COM
+糖	I-COM
+肉	I-COM
+豆	I-COM
+蔻	I-COM
+酸	I-COM
+酯	I-COM
+
+姜	B-COM
+黄	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+促	O
+进	O
+皮	B-EFF
+肤	I-EFF
+重	O
+建	O
+自	O
+然	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+
+二	B-COM
+乙	I-COM
+烯	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+二	B-COM
+乙	I-COM
+酰	I-COM
+基	I-COM
+波	I-COM
+尔	I-COM
+定	I-COM
+碱	I-COM
+
+海	B-COM
+棠	I-COM
+果	I-COM
+籽	I-COM
+油	I-COM
+
+美	O
+容	O
+(	O
+祛	B-EFF
+黄	I-EFF
+褐	O
+斑	O
+)	O
+
+抗	B-COM
+菌	I-COM
+剂	I-COM
+
+香	B-COM
+榧	I-COM
+
+刺	B-COM
+云	I-COM
+实	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+洋	B-COM
+蔷	I-COM
+薇	I-COM
+花	I-COM
+蜡	I-COM
+
+聚	B-COM
+己	I-COM
+內	I-COM
+酯	I-COM
+
+牡	B-COM
+蛎	I-COM
+壳	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+苯	B-COM
+乙	I-COM
+烯	I-COM
+
+欧	B-COM
+洲	I-COM
+水	I-COM
+青	I-COM
+冈	I-COM
+芽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+乙	B-COM
+基	I-COM
+己	I-COM
+酯	I-COM
+
+大	B-COM
+果	I-COM
+越	I-COM
+桔	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+红	B-COM
+2	I-COM
+8	I-COM
+色	I-COM
+淀	I-COM
+
+加	O
+快	O
+新	B-EFF
+陈	I-EFF
+代	I-EFF
+谢	I-EFF
+
+水	B-COM
+解	I-COM
+羽	I-COM
+扇	I-COM
+豆	I-COM
+蛋	I-COM
+白	I-COM
+
+甘	B-COM
+油	I-COM
+葡	I-COM
+糖	I-COM
+苷	I-COM
+
+。	O
+【	O
+主	O
+要	O
+原	O
+料	O
+】	O
+葡	B-COM
+萄	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+、	O
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+、	O
+葵	O
+花	O
+籽	B-COM
+油	I-COM
+、	O
+蜂	O
+
+户	O
+外	O
+日	O
+晒	O
+皮	B-EFF
+肤	I-EFF
+粗	B-EFF
+糙	I-EFF
+
+质	O
+地	O
+水	B-EFF
+润	I-EFF
+，	O
+轻	B-EFF
+薄	I-EFF
+透	B-EFF
+气	I-EFF
+，	O
+轻	O
+摸	O
+肌	B-EFF
+肤	I-EFF
+，	O
+柔	O
+摸	O
+出	O
+水	O
+
+葡	B-COM
+萄	I-COM
+叶	I-COM
+铁	I-COM
+线	I-COM
+莲	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+白	B-COM
+柳	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+的	O
+多	O
+种	O
+护	O
+肤	O
+精	B-COM
+华	I-COM
+，	O
+其	O
+具	O
+有	O
+无	O
+比	O
+精	O
+纯	O
+、	O
+稳	O
+定	O
+、	O
+活	O
+性	O
+无	O
+限	O
+保	O
+留	O
+的	O
+特	O
+性	O
+，	O
+同	O
+时	O
+再	O
+结	O
+合	O
+多	O
+
+乙	B-COM
+基	I-COM
+己	I-COM
+基	I-COM
+三	I-COM
+嗪	I-COM
+酮	I-COM
+
+凝	O
+润	O
+·	O
+修	B-EFF
+护	I-EFF
+·	O
+透	O
+亮	O
+
+鹰	B-COM
+爪	I-COM
+豆	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+想	O
+要	O
+美	B-EFF
+白	I-EFF
+人	O
+群	O
+
+脱	B-COM
+乙	I-COM
+酰	I-COM
+壳	I-COM
+多	I-COM
+糖	I-COM
+
+银	B-COM
+杏	I-COM
+叶	I-COM
+
+血	B-COM
+满	I-COM
+草	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+海	B-COM
+巴	I-COM
+戟	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+聚	B-COM
+丙	I-COM
+烯	I-COM
+酰	I-COM
+基	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+牛	I-COM
+磺	I-COM
+酸	I-COM
+钠	I-COM
+
+薄	B-COM
+荷	I-COM
+氧	I-COM
+基	I-COM
+丙	I-COM
+二	I-COM
+醇	I-COM
+
+聚	B-COM
+氨	I-COM
+酯	I-COM
+-	I-COM
+1	I-COM
+5	I-COM
+
+葡	B-COM
+糖	I-COM
+氧	I-COM
+化	I-COM
+酶	I-COM
+
+山	B-COM
+嵛	I-COM
+酸	I-COM
+酯	I-COM
+
+胎	B-COM
+盘	I-COM
+素	I-COM
+*	O
+4	O
+瓶	O
+
+养	O
+出	O
+红	O
+润	O
+好	O
+气	B-EFF
+色	I-EFF
+
+柔	B-EFF
+顺	I-EFF
+
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+肽	O
+、	O
+鱼	O
+弹	B-COM
+性	I-COM
+蛋	I-COM
+白	I-COM
+肽	O
+
+氨	B-COM
+甲	I-COM
+环	I-COM
+酸	I-COM
+
+秀	O
+发	O
+健	O
+康	O
+U	O
+P	O
+!	O
+肌	B-EFF
+肤	I-EFF
+年	O
+轻	O
+力	O
+U	O
+F	O
+
+何	B-COM
+首	I-COM
+乌	I-COM
+
+聚	B-COM
+酰	I-COM
+胺	I-COM
+-	I-COM
+8	I-COM
+
+胡	B-COM
+椒	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+桃	B-COM
+金	I-COM
+娘	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+牛	B-COM
+油	I-COM
+果	I-COM
+树	I-COM
+籽	I-COM
+饼	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+巴	B-COM
+西	I-COM
+莓	I-COM
+精	I-COM
+华	I-COM
+
+柠	B-COM
+檬	I-COM
+果	I-COM
+皮	I-COM
+油	I-COM
+
+乌	B-COM
+药	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+水	B-COM
+解	I-COM
+透	I-COM
+明	I-COM
+质	I-COM
+酸	I-COM
+钠	I-COM
+
+二	B-COM
+十	I-COM
+酸	I-COM
+酯	I-COM
+
+丙	B-COM
+基	I-COM
+三	I-COM
+甲	I-COM
+基	I-COM
+氯	I-COM
+化	I-COM
+铵	I-COM
+丙	I-COM
+烯	I-COM
+酰	I-COM
+胺	I-COM
+
+酒	B-COM
+糟	I-COM
+
+麝	B-COM
+香	I-COM
+草	I-COM
+酚	I-COM
+三	I-COM
+甲	I-COM
+氧	I-COM
+基	I-COM
+肉	I-COM
+桂	I-COM
+酸	I-COM
+酯	I-COM
+
+气	B-EFF
+色	I-EFF
+差	I-EFF
+
+赖	B-COM
+氨	I-COM
+酸	I-COM
+
+燕	B-COM
+麦	I-COM
+A	I-COM
+V	I-COM
+E	I-COM
+N	I-COM
+A	I-COM
+
+意	B-COM
+大	I-COM
+利	I-COM
+甘	I-COM
+蓝	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+鲸	B-COM
+蜡	I-COM
+醇	I-COM
+棕	I-COM
+榈	I-COM
+酸	I-COM
+酯	I-COM
+
+硬	B-COM
+脂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+2	I-COM
+5	I-COM
+
+聚	B-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+醇	I-COM
+交	I-COM
+联	I-COM
+聚	I-COM
+合	I-COM
+物	I-COM
+
+吡	B-COM
+硫	I-COM
+鎓	I-COM
+锌	I-COM
+
+十	B-COM
+二	I-COM
+碳	I-COM
+烯	I-COM
+
+巴	B-COM
+西	I-COM
+莓	I-COM
+果	I-COM
+
+洋	B-COM
+甘	I-COM
+菊	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+支	O
+持	O
+结	O
+缔	O
+组	O
+织	O
+和	O
+皮	B-EFF
+肤	I-EFF
+的	O
+健	O
+康	O
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+乳	I-COM
+酸	I-COM
+酯	I-COM
+
+氨	B-COM
+丙	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+去	B-EFF
+痘	I-EFF
+印	I-EFF
+
+棓	B-COM
+酸	I-COM
+
+原	O
+料	O
+:	O
+D	O
+-	O
+-	O
+醋	B-COM
+酸	I-COM
+生	B-COM
+育	I-COM
+酚	I-COM
+
+肌	B-EFF
+肤	I-EFF
+持	O
+水	O
+度	O
+
+内	O
+服	O
+外	O
+用	O
+焕	O
+活	O
+你	O
+的	O
+肌	B-EFF
+肤	I-EFF
+
+葡	B-COM
+萄	I-COM
+糖	I-COM
+
+甘	B-COM
+油	I-COM
+二	I-COM
+异	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+油	B-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+1	I-COM
+0	I-COM
+
+三	B-COM
+肽	I-COM
+-	I-COM
+1	I-COM
+
+玉	B-COM
+兰	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+鲸	B-COM
+蜡	I-COM
+硬	I-COM
+脂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+1	I-COM
+2	I-COM
+
+聚	B-COM
+氨	I-COM
+酯	I-COM
+-	I-COM
+1	I-COM
+4	I-COM
+
+双	B-COM
+咪	I-COM
+唑	I-COM
+烷	I-COM
+基	I-COM
+脲	I-COM
+
+金	O
+装	O
+抗	B-EFF
+糖	I-EFF
+新	O
+纪	O
+元	O
+
+补	O
+充	O
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+
+金	B-COM
+樱	I-COM
+子	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+库	B-COM
+拉	I-COM
+索	I-COM
+芦	I-COM
+荟	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+山	B-COM
+梨	I-COM
+坦	I-COM
+月	I-COM
+桂	I-COM
+酸	I-COM
+酯	I-COM
+
+告	O
+诉	O
+你	O
+肌	B-EFF
+肤	I-EFF
+亮	O
+白	O
+的	O
+秘	O
+密	O
+
+硅	B-COM
+烷	I-COM
+醇	I-COM
+
+红	B-COM
+2	I-COM
+7	I-COM
+
+丁	B-COM
+二	I-COM
+醇	I-COM
+椰	I-COM
+油	I-COM
+酸	I-COM
+酯	I-COM
+
+仙	B-COM
+人	I-COM
+掌	I-COM
+果	I-COM
+精	I-COM
+华	I-COM
+
+金	B-COM
+盏	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+塔	B-COM
+希	I-COM
+提	I-COM
+栀	I-COM
+子	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+海	O
+洋	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+
+香	B-COM
+桃	I-COM
+木	I-COM
+油	I-COM
+
+聚	B-COM
+乙	I-COM
+烯	I-COM
+醇	I-COM
+
+天	O
+然	O
+珊	B-COM
+瑚	I-COM
+粉	I-COM
+
+羟	B-COM
+基	I-COM
+肉	I-COM
+桂	I-COM
+酸	I-COM
+
+脱	B-COM
+羧	I-COM
+肌	I-COM
+肽	I-COM
+
+人	B-COM
+参	I-COM
+籽	I-COM
+油	I-COM
+
+非	B-COM
+洲	I-COM
+吊	I-COM
+灯	I-COM
+树	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+香	B-COM
+橼	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+鲸	B-COM
+蜡	I-COM
+硬	I-COM
+脂	I-COM
+醇	I-COM
+乙	I-COM
+基	I-COM
+己	I-COM
+酸	I-COM
+酯	I-COM
+
+异	B-COM
+鲸	I-COM
+蜡	I-COM
+醇	I-COM
+硬	I-COM
+脂	I-COM
+酰	I-COM
+氧	I-COM
+基	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+山	B-COM
+梨	I-COM
+醇	I-COM
+
+眼	B-EFF
+纹	I-EFF
+
+巴	B-COM
+巴	I-COM
+苏	I-COM
+籽	I-COM
+油	I-COM
+甘	I-COM
+油	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+8	I-COM
+
+不	B-COM
+含	I-COM
+香	I-COM
+精	I-COM
+香	I-COM
+料	I-COM
+
+组	B-COM
+氨	I-COM
+酸	I-COM
+
+氧	B-COM
+化	I-COM
+铬	I-COM
+绿	I-COM
+
+婴	B-EFF
+儿	I-EFF
+可	I-EFF
+用	I-EFF
+
+红	B-COM
+球	I-COM
+姜	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+二	B-COM
+甲	I-COM
+基	I-COM
+丙	I-COM
+烯	I-COM
+酰	I-COM
+胺	I-COM
+
+北	B-COM
+美	I-COM
+金	I-COM
+镂	I-COM
+梅	I-COM
+水	I-COM
+
+本	O
+品	O
+是	O
+以	O
+冻	O
+干	O
+鹿	O
+胎	O
+盘	O
+粉	O
+、	O
+冬	O
+虫	O
+夏	O
+草	O
+、	O
+枸	B-COM
+杞	I-COM
+子	O
+、	O
+
+梅	B-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+也	O
+会	O
+用	O
+一	O
+勺	O
+椰	B-COM
+子	I-COM
+油	I-COM
++	O
+半	O
+勺	O
+姜	B-COM
+黄	I-COM
+粉	O
+搅	O
+拌	O
+均	O
+匀	O
+先	O
+一	O
+
+棕	B-COM
+榈	I-COM
+酸	I-COM
+异	I-COM
+丙	I-COM
+酯	I-COM
+
+胶	B-EFF
+原	I-EFF
+遇	O
+见	O
+蔓	O
+越	O
+
+康	B-COM
+普	I-COM
+茶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+头	B-EFF
+皮	I-EFF
+修	I-EFF
+护	I-EFF
+
+姜	B-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+覆	B-COM
+盆	I-COM
+子	I-COM
+叶	I-COM
+蜡	I-COM
+
+辛	B-COM
+基	I-COM
+十	I-COM
+二	I-COM
+醇	I-COM
+肉	I-COM
+豆	I-COM
+蔻	I-COM
+酸	I-COM
+酯	I-COM
+
+月	B-COM
+桂	I-COM
+基	I-COM
+P	I-COM
+E	I-COM
+G	I-COM
+-	I-COM
+9	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+乙	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+益	O
+牌	O
+叶	B-COM
+黄	I-COM
+素	I-COM
+咀	O
+嚼	O
+片	O
+
+羊	B-COM
+栖	I-COM
+菜	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+积	B-COM
+雪	I-COM
+草	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+糊	B-COM
+精	I-COM
+异	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+叔	B-COM
+丁	I-COM
+基	I-COM
+氢	I-COM
+醌	I-COM
+
+鸟	B-COM
+嘌	I-COM
+呤	I-COM
+
+扁	B-COM
+叶	I-COM
+香	I-COM
+果	I-COM
+兰	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+牛	B-COM
+奶	I-COM
+脂	I-COM
+质	I-COM
+
+华	O
+,	O
+相	O
+当	O
+于	O
+干	O
+葡	B-COM
+萄	I-COM
+籽	I-COM
+1	O
+2	O
+g	O
+
+硫	B-COM
+胺	I-COM
+素	I-COM
+二	I-COM
+磷	I-COM
+酸	I-COM
+盐	I-COM
+
+主	O
+要	O
+原	O
+科	O
+】	O
+同	O
+枸	B-COM
+杞	I-COM
+子	O
+炙	O
+黄	O
+,	O
+白	O
+芍	O
+龙	O
+眼	O
+肉	O
+酸	O
+枣	O
+仁	O
+大	O
+枣	O
+
+二	B-COM
+氧	I-COM
+化	I-COM
+钛	I-COM
+C	I-COM
+I	I-COM
+
+阿	B-COM
+魏	I-COM
+酸	I-COM
+
+辛	B-COM
+基	I-COM
+
+水	B-COM
+解	I-COM
+小	I-COM
+麦	I-COM
+淀	I-COM
+粉	I-COM
+
+通	B-EFF
+透	I-EFF
+
+西	B-COM
+班	I-COM
+牙	I-COM
+鼠	I-COM
+尾	I-COM
+草	I-COM
+籽	I-COM
+油	I-COM
+
+抗	B-COM
+坏	I-COM
+血	I-COM
+酸	I-COM
+维	I-COM
+生	I-COM
+素	I-COM
+C	I-COM
+
+聚	B-COM
+异	I-COM
+戊	I-COM
+烯	I-COM
+
+椰	B-COM
+油	I-COM
+
+亚	B-COM
+铁	I-COM
+氰	I-COM
+化	I-COM
+铁	I-COM
+
+淡	O
+细	B-EFF
+纹	I-EFF
+
+顺	B-EFF
+滑	I-EFF
+
+双	B-COM
+-	I-COM
+乙	I-COM
+烯	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+皱	B-COM
+波	I-COM
+角	I-COM
+叉	I-COM
+菜	I-COM
+
+促	O
+进	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+再	O
+生	O
+
+从	O
+根	O
+源	O
+补	O
+充	O
+精	O
+血	O
+-	O
+滋	B-EFF
+润	I-EFF
+后	O
+较	O
+快	O
+调	O
+理	O
+
+烷	B-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+3	I-COM
+
+柚	B-COM
+果	I-COM
+皮	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+苯	B-COM
+基	I-COM
+乙	I-COM
+烯	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+交	I-COM
+联	I-COM
+聚	I-COM
+合	I-COM
+物	I-COM
+
+皮	B-EFF
+肤	I-EFF
+的	O
+更	O
+新	O
+周	O
+期	O
+为	O
+2	O
+8	O
+天	O
+,	O
+所	O
+以	O
+连	O
+续	O
+吃	O
+2	O
+8	O
+天	O
+以	O
+上	O
+效	O
+果	O
+更	O
+佳	O
+
+美	B-EFF
+白	I-EFF
+
+水	B-COM
+合	I-COM
+硅	I-COM
+石	I-COM
+
+聚	B-COM
+丙	I-COM
+烯	I-COM
+酰	I-COM
+基	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+牛	I-COM
+磺	I-COM
+酸	I-COM
+钠	I-COM
+
+椰	B-COM
+油	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+硫	I-COM
+酸	I-COM
+酯	I-COM
+钠	I-COM
+
+突	B-COM
+厥	I-COM
+蔷	I-COM
+薇	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+氢	B-COM
+化	I-COM
+棉	I-COM
+籽	I-COM
+油	I-COM
+
+清	O
+除	O
+自	O
+由	O
+基	O
+,	O
+抗	B-EFF
+氧	I-EFF
+化	I-EFF
+焕	B-EFF
+白	I-EFF
+肌	B-EFF
+肤	I-EFF
+。	O
+
+变	B-COM
+色	I-COM
+鸢	I-COM
+尾	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+1	O
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+·	O
+抑	B-EFF
+制	I-EFF
+黑	I-EFF
+色	I-EFF
+素	I-EFF
+生	O
+成	O
+
+P	O
+E	O
+P	O
+T	O
+A	O
+N	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+全	O
+球	O
+销	O
+售	O
+总	O
+监	O
+
+石	B-COM
+榴	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+小	B-COM
+核	I-COM
+菌	I-COM
+胶	I-COM
+
+修	B-EFF
+饰	I-EFF
+发	I-EFF
+际	I-EFF
+
+异	B-COM
+鲸	I-COM
+蜡	I-COM
+醇	I-COM
+
+辅	B-COM
+酶	I-COM
+Q	I-COM
+1	I-COM
+0	I-COM
+
+-	B-COM
+3	I-COM
+0	I-COM
+烷	I-COM
+基	I-COM
+丙	I-COM
+烯	I-COM
+酸	I-COM
+酯	I-COM
+交	I-COM
+联	I-COM
+聚	I-COM
+合	I-COM
+物	I-COM
+
+【	O
+经	O
+销	O
+商	O
+】	O
+济	O
+南	O
+体	O
+恒	O
+健	O
+生	B-COM
+物	I-COM
+工	O
+程	O
+有	O
+限	O
+公	O
+司	O
+
+紫	B-COM
+云	I-COM
+英	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+白	B-COM
+千	I-COM
+层	I-COM
+油	I-COM
+
+氢	B-COM
+化	I-COM
+橄	I-COM
+榄	I-COM
+油	I-COM
+硬	I-COM
+脂	I-COM
+醇	I-COM
+酯	I-COM
+类	I-COM
+
+椰	B-COM
+油	I-COM
+酰	I-COM
+基	I-COM
+谷	I-COM
+氨	I-COM
+酸	I-COM
+
+质	O
+地	O
+轻	B-EFF
+薄	I-EFF
+
+葡	B-COM
+萄	I-COM
+籽	I-COM
+精	B-COM
+华	I-COM
+
+失	B-COM
+水	I-COM
+山	I-COM
+梨	I-COM
+醇	I-COM
+全	I-COM
+油	I-COM
+酸	I-COM
+酯	I-COM
+
+玉	B-COM
+竹	I-COM
+根	I-COM
+茎	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+夏	B-COM
+雪	I-COM
+片	I-COM
+莲	I-COM
+鳞	I-COM
+茎	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+冰	O
+糖	O
+燕	B-COM
+窝	I-COM
+
+蔗	B-COM
+糖	I-COM
+二	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+每	O
+粒	O
+含	O
+1	O
+9	O
+G	O
+葡	B-COM
+萄	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+味	O
+限	O
+:	O
+外	O
+下	B-COM
+部	I-COM
+記	O
+
+姜	B-COM
+黄	I-COM
+根	I-COM
+茎	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+约	O
+占	O
+皮	B-EFF
+肤	I-EFF
+
+鲸	B-COM
+蜡	I-COM
+硬	I-COM
+脂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+2	I-COM
+0	I-COM
+
+淡	B-COM
+竹	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+胡	B-COM
+萝	I-COM
+卜	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+薄	B-COM
+荷	I-COM
+叶	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+藻	B-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+车	B-COM
+前	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+金	B-COM
+甲	I-COM
+豆	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+月	B-COM
+桂	I-COM
+醇	I-COM
+聚	I-COM
+醚	I-COM
+-	I-COM
+1	I-COM
+0	I-COM
+
+丁	B-COM
+二	I-COM
+醇	I-COM
+共	I-COM
+聚	I-COM
+物	I-COM
+
+韩	O
+霜	O
+玫	B-COM
+瑰	I-COM
+晶	O
+润	O
+护	O
+肤	O
+系	O
+列	O
+
+黄	B-COM
+6	I-COM
+色	I-COM
+淀	I-COM
+C	I-COM
+I	I-COM
+1	I-COM
+5	I-COM
+9	I-COM
+8	I-COM
+5	I-COM
+
+清	B-EFF
+洁	I-EFF
+
+辅	B-COM
+酶	I-COM
+Q	I-COM
+1	I-COM
+0	I-COM
+
+红	B-COM
+芒	I-COM
+柄	I-COM
+花	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+乙	B-COM
+烯	I-COM
+基	I-COM
+聚	I-COM
+
+i	O
+S	O
+D	O
+G	O
+雪	O
+白	O
+粒	O
+美	B-EFF
+白	I-EFF
+丸	O
+
+结	B-COM
+冷	I-COM
+胶	I-COM
+
+司	B-COM
+拉	I-COM
+氯	I-COM
+铵	I-COM
+膨	I-COM
+润	I-COM
+土	I-COM
+
+印	O
+尼	O
+进	O
+口	O
+燕	B-COM
+窝	I-COM
+
+阔	B-COM
+叶	I-COM
+椴	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+脱	B-COM
+氧	I-COM
+核	I-COM
+糖	I-COM
+核	I-COM
+酸	I-COM
+
+日	B-COM
+本	I-COM
+百	I-COM
+脉	I-COM
+根	I-COM
+根	I-COM
+瘤	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+B	O
+族	O
+维	O
+生	O
+素	O
+、	O
+钙	O
+铁	O
+锌	O
+等	O
+矿	B-COM
+物	I-COM
+质	I-COM
+
+茚	B-COM
+共	I-COM
+聚	I-COM
+物	I-COM
+
+柠	B-COM
+檬	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+甘	B-COM
+醇	I-COM
+酸	I-COM
+钠	I-COM
+
+硼	B-COM
+硅	I-COM
+酸	I-COM
+铝	I-COM
+钙	I-COM
+
+肌	B-EFF
+肤	I-EFF
+问	O
+题	O
+始	O
+终	O
+没	O
+有	O
+改	O
+善	O
+的	O
+人	O
+
+5	O
+、	O
+卵	O
+巢	O
+保	O
+养	O
+组	O
+合	O
+：	O
+玫	B-COM
+瑰	I-COM
+精	O
+油	O
+、	O
+茉	O
+莉	O
+精	O
+油	O
+、	O
+天	O
+竺	O
+葵	O
+精	O
+油	O
+、	O
+洋	B-COM
+甘	I-COM
+菊	I-COM
+精	O
+油	O
+
+瓷	B-COM
+白	I-COM
+色	I-COM
+
+二	B-COM
+氧	I-COM
+化	I-COM
+钛	I-COM
+C	I-COM
+I	I-COM
+
+芦	B-COM
+笋	I-COM
+
+蜂	B-COM
+蜡	I-COM
+
+聚	B-COM
+氨	I-COM
+酯	I-COM
+-	I-COM
+3	I-COM
+5	I-COM
+
+浪	O
+漫	O
+法	O
+国	O
+的	O
+抗	B-EFF
+氧	I-EFF
+化	I-EFF
+力	O
+
+玫	B-COM
+瑰	I-COM
+果	I-COM
+油	I-COM
+
+水	B-EFF
+分	I-EFF
+流	I-EFF
+失	I-EFF
+
+氢	B-COM
+化	I-COM
+橄	I-COM
+榄	I-COM
+油	I-COM
+酸	I-COM
+乙	I-COM
+基	I-COM
+己	I-COM
+酯	I-COM
+
+甘	B-COM
+油	I-COM
+三	I-COM
+异	I-COM
+硬	I-COM
+脂	I-COM
+酸	I-COM
+酯	I-COM
+
+滋	B-EFF
+养	I-EFF
+修	B-EFF
+护	I-EFF
+肌	B-EFF
+肤	I-EFF
+，	O
+赋	O
+予	O
+肌	O
+肤	O
+水	B-EFF
+润	I-EFF
+力	O
+
+硫	B-COM
+磺	I-COM
+
+三	B-COM
+月	I-COM
+桂	I-COM
+精	I-COM
+
+皮	B-EFF
+肤	I-EFF
+通	I-EFF
+道	I-EFF
+
+银	B-COM
+耳	I-COM
+子	I-COM
+实	I-COM
+体	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+三	B-COM
+乙	I-COM
+氧	I-COM
+基	I-COM
+甲	I-COM
+硅	I-COM
+烷	I-COM
+基	I-COM
+乙	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+乙	I-COM
+基	I-COM
+己	I-COM
+基	I-COM
+聚	I-COM
+二	I-COM
+甲	I-COM
+基	I-COM
+硅	I-COM
+氧	I-COM
+烷	I-COM
+
+番	B-COM
+木	I-COM
+瓜	I-COM
+果	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+水	B-COM
+仙	I-COM
+鳞	I-COM
+茎	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+碳	B-COM
+酸	I-COM
+钾	I-COM
+
+肉	B-COM
+豆	I-COM
+蔻	I-COM
+醇	I-COM
+醚	I-COM
+二	I-COM
+聚	I-COM
+亚	I-COM
+油	I-COM
+酸	I-COM
+酯	I-COM
+
+椰	B-COM
+油	I-COM
+酸	I-COM
+钠	I-COM
+
+活	B-COM
+泉	I-COM
+水	I-COM
+
+欧	B-COM
+洲	I-COM
+椴	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+粟	B-COM
+米	I-COM
+粉	I-COM
+
+碳	B-COM
+酸	I-COM
+二	I-COM
+甲	I-COM
+酯	I-COM
+共	I-COM
+聚	I-COM
+物	I-COM
+
+线	O
+血	O
+酸	O
+)	O
+、	O
+天	O
+然	O
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+、	O
+
+。	O
+授	O
+权	O
+期	O
+限	O
+:	O
+2	O
+0	O
+2	O
+0	O
+年	O
+1	O
+月	O
+1	O
+日	O
+-	B-COM
+2	I-COM
+0	I-COM
+2	O
+0	O
+年	O
+1	O
+2	O
+月	O
+3	O
+1	O
+日	O
+
+夏	B-COM
+雪	I-COM
+片	I-COM
+莲	I-COM
+鳞	I-COM
+茎	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+大	B-COM
+麦	I-COM
+籽	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+升	O
+级	O
+配	O
+方	O
+,	O
+加	O
+入	O
+包	O
+衣	O
+维	B-COM
+生	I-COM
+素	I-COM
+C	I-COM
+和	O
+天	O
+然	O
+维	B-COM
+生	I-COM
+素	I-COM
+E	I-COM
+,	O
+与	O
+胶	B-EFF
+原	I-EFF
+蛋	I-COM
+白	I-COM
+相	O
+辅	O
+相	O
+成	O
+
+红	B-COM
+曲	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+姜	B-COM
+黄	I-COM
+根	I-COM
+油	I-COM
+
+硅	B-COM
+酸	I-COM
+铝	I-COM
+锌	I-COM
+银	I-COM
+铵	I-COM
+
+动	B-COM
+物	I-COM
+胎	I-COM
+盘	I-COM
+蛋	I-COM
+白	I-COM
+
+【	O
+主	O
+要	O
+原	O
+料	O
+】	O
+黄	O
+芪	O
+、	O
+乌	O
+鸡	O
+、	O
+女	O
+贞	O
+子	O
+、	O
+川	O
+芎	O
+、	O
+香	O
+附	O
+、	O
+枸	B-COM
+杞	I-COM
+子	O
+、	O
+
+聚	B-COM
+季	I-COM
+铵	I-COM
+盐	I-COM
+-	I-COM
+6	I-COM
+7	I-COM
+
+马	B-COM
+齿	I-COM
+苋	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+月	B-COM
+桂	I-COM
+基	I-COM
+聚	I-COM
+甘	I-COM
+油	I-COM
+-	I-COM
+3	I-COM
+
+西	B-COM
+曲	I-COM
+氯	I-COM
+铵	I-COM
+
+清	O
+透	O
+肌	B-EFF
+肤	I-EFF
+
+红	B-COM
+景	I-COM
+天	I-COM
+
+水	B-COM
+杨	I-COM
+酸	I-COM
+-	I-COM
+水	I-COM
+杨	I-COM
+酸	I-COM
+面	I-COM
+膜	I-COM
+-	I-COM
+水	I-COM
+杨	I-COM
+酸	I-COM
+棉	I-COM
+片	I-COM
+
+聚	B-COM
+合	I-COM
+草	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+羟	B-COM
+基	I-COM
+辛	I-COM
+酸	I-COM
+
+蜀	B-COM
+葵	I-COM
+花	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
+白	B-COM
+兰	I-COM
+叶	I-COM
+油	I-COM
+
+谷	B-COM
+精	I-COM
+草	I-COM
+花	I-COM
+
+过	B-EFF
+敏	I-EFF
+急	I-EFF
+救	I-EFF
+
+澳	B-COM
+洲	I-COM
+坚	I-COM
+果	I-COM
+籽	I-COM
+油	I-COM
+
+葡	B-COM
+萄	I-COM
+根	I-COM
+提	I-COM
+取	I-COM
+物	I-COM
+
