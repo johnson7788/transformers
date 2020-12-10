@@ -165,3 +165,4 @@ tags
 .pre-commit*
 .DS_Store
 *.lock
+myexample/dataset/

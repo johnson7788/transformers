@@ -212,6 +212,7 @@ optional arguments:
                         first epochs and batches to get to the same training
                         data.
 ```
+
 # 测试英文Conll2003的效果， 默认3个epoch
 ```buildoutcfg
 python conll2003_run_ner.py --model_name_or_path bert-base-uncased --dataset_name conll2003 --output_dir conll-ner --do_train --do_eval --save_total_limit 5
@@ -228,6 +229,13 @@ python conll2003_run_ner.py --model_name_or_path bert-base-uncased --dataset_nam
 ```buildoutcfg
 cd myexample
 python msra_run_ner.py --model_name_or_path bert-base-chinese --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128 --save_total_limit 5
+12/10/2020 06:11:51 - INFO - __main__ -   ***** Eval results *****
+12/10/2020 06:11:51 - INFO - __main__ -     eval_loss = 0.03320741653442383
+12/10/2020 06:11:51 - INFO - __main__ -     eval_accuracy_score = 0.9937063237924316
+12/10/2020 06:11:51 - INFO - __main__ -     eval_precision = 0.9424219910846954
+12/10/2020 06:11:51 - INFO - __main__ -     eval_recall = 0.9494760479041916
+12/10/2020 06:11:51 - INFO - __main__ -     eval_f1 = 0.9459358687546606
+12/10/2020 06:11:51 - INFO - __main__ -     epoch = 3.0
 ```
 
 # 使用MacBERT的效果,最大序列长度128, 默认3个epoch
