@@ -361,9 +361,9 @@ def main():
                     logger.info(f"  {key} = {value}")
                     writer.write(f"{key} = {value}\n")
 
-    # Predict
+    #
     if training_args.do_predict:
-        logger.info("*** Predict ***")
+        logger.info("*** 预测 ***")
 
         test_dataset = tokenized_datasets["test"]
         predictions, labels, metrics = trainer.predict(test_dataset)
@@ -382,7 +382,7 @@ def main():
                     logger.info(f"  {key} = {value}")
                     writer.write(f"{key} = {value}\n")
 
-        # Save predictions
+        # 保存评估结果
         output_test_predictions_file = os.path.join(training_args.output_dir, "test_predictions.txt")
         if trainer.is_world_process_zero():
             with open(output_test_predictions_file, "w") as writer:
