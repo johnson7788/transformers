@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 from flask import Flask, request, jsonify, abort
 import numpy as np
-from datasets import ClassLabel, load_dataset
+from datasets import ClassLabel, load_dataset, Dataset
 from seqeval.metrics import accuracy_score, f1_score, precision_score, recall_score
 
 import transformers
@@ -31,10 +31,13 @@ logger = logging.getLogger(__name__)
 class ModelArguments:
     """
     Arguments pertaining to which model/config/tokenizer we are going to fine-tune from.
+
+     --output_dir cosmetic_ner --do_predict --max_length 64
+
     """
 
     model_name_or_path: str = field(
-        metadata={"help": "Path to pretrained model or model identifier from huggingface.co/models"}
+        default="cosmetic_ner",metadata={"help": "Path to pretrained model or model identifier from huggingface.co/models"}
     )
     config_name: Optional[str] = field(
         default=None, metadata={"help": "Pretrained config name or path if not the same as model_name"}
@@ -126,19 +129,17 @@ def api():
     Returns:
 
     """
-    parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
-    model_args, data_args, training_args = parser.parse_args_into_dataclasses()
+    jsonres = request.get_json()
+    test_data = jsonres.get('data',None)
+    parser = HfArgumentParser((ModelArguments, DataTrainingArguments))
+    model_args, data_args = parser.parse_args_into_dataclasses()
+    training_args = TrainingArguments(output_dir="cosmetic_ner",do_predict=True)
 
-    data_files = {}
-    if data_args.train_file is not None:
-        data_files["train"] = data_args.train_file
-    if data_args.validation_file is not None:
-        data_files["validation"] = data_args.validation_file
-    if data_args.test_file is not None:
-        data_files["test"] = data_args.test_file
-    datasets = load_dataset(path=data_args.script_file, name=data_args.dataset_name, data_files=data_files)
+    test_dict = {'tokens':[[token for token in line] for line in test_data]}
+    datasets = Dataset.from_dict(test_dict)
 
     text_column_name = "tokens"
+    label_list = ['O', 'B-COM', 'I-COM', 'B-EFF', 'I-EFF']
 
     num_labels = 5
 
@@ -181,7 +182,7 @@ def api():
  'pos_tags' = {list: 2} [[22, 42, 16, 21, 35, 37, 16, 21, 7], [22, 22]]
  'tokens' = {list: 2} [['EU', 'rejects', 'German', 'call', 'to', 'boycott', 'British', 'lamb', '.'], ['Peter', 'Blackburn']]
         Returns:
-
+        {'input_ids': [[101, 4649, 2244, 102], [101, 6208, 4658, 2094, 3723, 102]], 'token_type_ids': [[0, 0, 0, 0], [0, 0, 0, 0, 0, 0]], 'attention_mask': [[1, 1, 1, 1], [1, 1, 1, 1, 1, 1]], 'labels': [[-100, 3, 4, -100], [-100, 1, 2, 2, 2, -100]]}
         """
         # 对单条样本的examples的tokens字段，即文本字段进行tokenizer
         tokenized_inputs = tokenizer(
@@ -192,31 +193,8 @@ def api():
             # 我们使用此参数是因为数据集中的文本是单词列表(每个单词带有标签)
             is_split_into_words=True,
         )
-        labels = []
-        for i, label in enumerate(examples[label_column_name]):
-            # 对每条样本进行处理， label 是列表[3, 0, 7, 0, 0, 0, 7, 0, 0]
-            word_ids = tokenized_inputs.word_ids(batch_index=i)
-            # word_ids: [None, 0, 1, 2, 3, 4, 5, 6, 7, 8, None]
-            previous_word_idx = None
-            label_ids = []
-            for word_idx in word_ids:
-                # 特殊token的单词ID为None的。 我们将label设置为-100，以便在损失函数中自动将其忽略
-                if word_idx is None:
-                    label_ids.append(-100)
-                # 我们为每个单词的第一个token设置label。
-                elif word_idx != previous_word_idx:
-                    label_ids.append(label_to_id[label[word_idx]])
-                # 对于单词中的其他token，我们根据label_all_tokens标志将label设置为当前label或-100。
-                # 这里是对token中不是ner的部分，给label，默认给的-100
-                else:
-                    label_ids.append(label_to_id[label[word_idx]] if data_args.label_all_tokens else -100)
-                previous_word_idx = word_idx
-
-            labels.append(label_ids)
-        # 最终labels是一个列表
-        # {list: 11}[-100, 3, 0, 7, 0, 0, 0, 7, 0, 0, -100]
-        # {list: 4}[-100, 1, 2, -100]
-        tokenized_inputs["labels"] = labels
+        print(f"\n样本是{examples}")
+        print(f"一个batch的tokenized_inputs,{tokenized_inputs}")
         return tokenized_inputs
     #处理数据，用map函数
     tokenized_datasets = datasets.map(
@@ -242,38 +220,104 @@ def api():
     #
     if training_args.do_predict:
         logger.info("*** 预测 ***")
+        test_dataset = tokenized_datasets
+        predictions = trainer.predict(test_dataset)
+        predictions = np.argmax(predictions.predictions, axis=2)
 
-        test_dataset = tokenized_datasets["test"]
-        predictions, labels, metrics = trainer.predict(test_dataset)
-        predictions = np.argmax(predictions, axis=2)
-
-        # Remove ignored index (special tokens)
+        # 是一个嵌套列表，子列表是label的名字, 去掉prediction的第一个和最后一个元素CLS, SEP
         true_predictions = [
-            [label_list[p] for (p, l) in zip(prediction, label) if l != -100]
-            for prediction, label in zip(predictions, labels)
+            [label_list[p] for p in prediction[1:-1]]
+            for prediction in predictions
         ]
+        # 去掉padding的长度
+        text_tokens = test_dict['tokens']
+        predicts = [prediction[:len(token)] for token, prediction in zip(text_tokens, true_predictions)]
+        results = extract_words(text=test_dict['tokens'], predicts=predicts)
 
-        output_test_results_file = os.path.join(training_args.output_dir, "test_results.txt")
-        if trainer.is_world_process_zero():
-            with open(output_test_results_file, "w") as writer:
-                for key, value in metrics.items():
-                    logger.info(f"  {key} = {value}")
-                    writer.write(f"{key} = {value}\n")
-
-        # 保存评估结果
-        output_test_predictions_file = os.path.join(training_args.output_dir, "test_predictions.txt")
-        if trainer.is_world_process_zero():
-            with open(output_test_predictions_file, "w") as writer:
-                for prediction in true_predictions:
-                    writer.write(" ".join(prediction) + "\n")
-
-    return results
+    return jsonify(results)
 
 
+def extract_words(text, predicts):
+    """
+    Args:
+        text: 空格分隔的文本组成的列表
+        predicts: 预测标签
+
+    Returns:
+
+    """
+    def towords(text, nertag):
+        """
+        把label或者pridict还原成单词
+        返回一个列表，列表中子列表，子列表中包含keywrod
+        Args:
+            text:
+            nertag:
+
+        Returns:
+        """
+        eff_words = []
+        com_words = []
+        for line_list, tag_list in zip(text,nertag):
+            #每行的功效词和成分词
+            line_eff_words = []
+            line_com_words = []
+            #一个单词，把每个字都加进来，临时存储
+            one_words = ""
+            for idx, every_tag in enumerate(tag_list):
+                #对应的字
+                word = line_list[idx]
+                if every_tag == "O":
+                    if one_words and idx !=0:
+                        # 如果是O，并且one_words由内容，需要判断上一个词是什么词，并且判断one_words是什么词，是EFF还是COM类型
+                        # idx等于0时肯定不用
+                        last_tag = tag_list[idx - 1]
+                        if last_tag.endswith("COM"):
+                            #说明one_words里面是成分类,否则是成分类，因为我们就2种类别
+                            line_com_words.append(one_words)
+                        else:
+                            line_eff_words.append(one_words)
+                        #重置one_words
+                        one_words = ""
+                #说明2个关键词挨着了，需要把旧词保存
+                if every_tag == "B-COM":
+                    #把旧的保存
+                    if one_words:
+                        #把字和功效都加进去
+                        line_com_words.append(one_words)
+                    #加入新的
+                    one_words = word
+                if every_tag == "I-COM":
+                    one_words += word
+                #处理EFF词
+                if every_tag == "B-EFF":
+                    #把旧的保存
+                    if one_words:
+                        #把字和功效都加进去
+                        line_eff_words.append(one_words)
+                    #加入新的
+                    one_words = word
+                if every_tag == "I-EFF":
+                    one_words += word
+            #处理最后一个词
+            if one_words:
+                # 把词加进去， 判断最后一个tag是什么
+                last_tag = tag_list[-1]
+                if last_tag.endswith("COM"):
+                    # 说明one_words里面是成分类,否则是成分类，因为我们就2种类别
+                    line_com_words.append(one_words)
+                else:
+                    line_eff_words.append(one_words)
+            #每行的结果，加入列表
+            eff_words.append(" ".join(line_eff_words))
+            com_words.append(" ".join(line_com_words))
+        return eff_words, com_words
+
+    predict_eff_words, predict_com_words = towords(text,predicts)
+    print("各个长度")
+    print(len(text),len(predicts),len(predict_com_words),len(predict_eff_words))
+    result = {'text':text, 'predicts':predicts, '预测标签的功效词':predict_eff_words,'预测标签成分词':predict_com_words}
+    return result
 if __name__ == "__main__":
-    test_data = ['百亿高活性酵素', 'REPAIRESKIN', '维稳修护', '二裂酵母', '水杨酰植物鞘氨醇', 'BOOSTSKIN', '促进肌肤更新', '木瓜蛋白酶', '轻乙基嗪乙烷磺酸', '*欧莱雅实验室数据', '根据木瓜蛋白酶的添加量和分子量计算得出']
     app.run(host='0.0.0.0', port=6000, debug=True, threaded=True)
-    """
-    --model_name_or_path cosmetic_ner --dataset_name cosmetic_ner --script_file data/cosmetic_ner.py --train_file dataset/cosmetic/train.txt --validation_file dataset/cosmetic/dev.txt --test_file dataset/cosmetic/test.txt --output_dir cosmetic_ner --do_predict --max_length 64
-    """
 

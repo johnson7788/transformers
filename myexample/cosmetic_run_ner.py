@@ -257,7 +257,7 @@ def main():
  'pos_tags' = {list: 2} [[22, 42, 16, 21, 35, 37, 16, 21, 7], [22, 22]]
  'tokens' = {list: 2} [['EU', 'rejects', 'German', 'call', 'to', 'boycott', 'British', 'lamb', '.'], ['Peter', 'Blackburn']]
         Returns:
-
+        {'input_ids': [[101, 4649, 2244, 102], [101, 6208, 4658, 2094, 3723, 102]], 'token_type_ids': [[0, 0, 0, 0], [0, 0, 0, 0, 0, 0]], 'attention_mask': [[1, 1, 1, 1], [1, 1, 1, 1, 1, 1]], 'labels': [[-100, 3, 4, -100], [-100, 1, 2, 2, 2, -100]]}
         """
         # 对单条样本的examples的tokens字段，即文本字段进行tokenizer
         tokenized_inputs = tokenizer(
@@ -293,6 +293,7 @@ def main():
         # {list: 11}[-100, 3, 0, 7, 0, 0, 0, 7, 0, 0, -100]
         # {list: 4}[-100, 1, 2, -100]
         tokenized_inputs["labels"] = labels
+        print(f"一个batch的tokenized_inputs,{tokenized_inputs}")
         return tokenized_inputs
     #处理数据，用map函数
     tokenized_datasets = datasets.map(
