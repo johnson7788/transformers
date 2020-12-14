@@ -166,3 +166,4 @@ tags
 .DS_Store
 *.lock
 *.bin
+myexample/cosmetic_ner/
