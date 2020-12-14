@@ -44,3 +44,4 @@ tqdm>=4.27
 unidic>=1.0.2
 unidic_lite>=1.0.7
 uvicorn
+transformers==4.0.1

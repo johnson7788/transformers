@@ -319,5 +319,5 @@ def extract_words(text, predicts):
     result = {'text':text, 'predicts':predicts, '预测标签的功效词':predict_eff_words,'预测标签成分词':predict_com_words}
     return result
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=6000, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=5001, debug=True, threaded=True)
 
