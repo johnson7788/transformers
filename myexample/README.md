@@ -265,5 +265,8 @@ python cosmetics_run_ner.py --model_name_or_path hfl/chinese-macbert-base --data
 12/10/2020 07:56:50 - INFO - __main__ -     epoch = 3.0
 
 #使用已经训练好的模型做预测
-python cosmetics_run_ner.py --model_name_or_path cosmetic_ner --dataset_name cosmetic_ner --script_file data/cosmetic_ner.py --train_file dataset/cosmetic/train.txt --validation_file dataset/cosmetic/dev.txt --test_file dataset/cosmetic/test.txt --output_dir cosmetic_ner --do_predict --max_length 64 
+python cosmetics_run_ner.py --model_name_or_path cosmetic_ner --dataset_name cosmetic_ner --script_file data/cosmetic_ner.py --train_file dataset/cosmetic/train.txt --validation_file dataset/cosmetic/dev.txt --test_file dataset/cosmetic/test.txt --output_dir cosmetic_ner --do_predict --max_length 64
+
+#flask api接口
+cosmetic_run_ner_predict_api.py
 ```
