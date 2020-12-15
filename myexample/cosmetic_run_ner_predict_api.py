@@ -309,14 +309,14 @@ def extract_words(text, predicts):
                 else:
                     line_eff_words.append(one_words)
             #每行的结果，加入列表
-            eff_words.append(" ".join(line_eff_words))
-            com_words.append(" ".join(line_com_words))
+            eff_words.append(";".join(line_eff_words))
+            com_words.append(";".join(line_com_words))
         return eff_words, com_words
 
     predict_eff_words, predict_com_words = towords(text,predicts)
     print("各个长度")
     print(len(text),len(predicts),len(predict_com_words),len(predict_eff_words))
-    result = {'text':text, 'predicts':predicts, '预测标签的功效词':predict_eff_words,'预测标签成分词':predict_com_words}
+    result = {'text':text, 'predicts':predicts, '功效词':predict_eff_words,'成分词':predict_com_words}
     return result
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, debug=True, threaded=True)
