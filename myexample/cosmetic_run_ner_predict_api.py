@@ -7,9 +7,7 @@ from typing import Optional
 from flask import Flask, request, jsonify, abort
 import numpy as np
 from datasets import ClassLabel, load_dataset, Dataset
-from seqeval.metrics import accuracy_score, f1_score, precision_score, recall_score
 
-import transformers
 from transformers import (
     AutoConfig,
     AutoModelForTokenClassification,
@@ -21,7 +19,6 @@ from transformers import (
     TrainingArguments,
     set_seed,
 )
-from transformers.trainer_utils import is_main_process
 
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
@@ -120,7 +117,6 @@ class DataTrainingArguments:
                 assert extension in ["csv", "json", "txt"], "`validation_file` should be a csv or a json file."
         self.task_name = self.task_name.lower()
 
-
 @app.route("/api", methods=['POST'])
 def api():
     """
@@ -131,11 +127,15 @@ def api():
     """
     jsonres = request.get_json()
     test_data = jsonres.get('data',None)
+    results = do_predict(test_data)
+    return jsonify(results)
+
+def do_predict(test_data):
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments))
     model_args, data_args = parser.parse_args_into_dataclasses()
-    training_args = TrainingArguments(output_dir="cosmetic_ner",do_predict=True)
+    training_args = TrainingArguments(output_dir="cosmetic_ner", do_predict=True)
 
-    test_dict = {'tokens':[[token for token in line] for line in test_data]}
+    test_dict = {'tokens': [[token for token in line] for line in test_data]}
     datasets = Dataset.from_dict(test_dict)
 
     text_column_name = "tokens"
@@ -148,8 +148,8 @@ def api():
     config = AutoConfig.from_pretrained(
         model_args.config_name if model_args.config_name else model_args.model_name_or_path,
         num_labels=num_labels,
-        finetuning_task=data_args.task_name,    #ner
-        cache_dir=model_args.cache_dir,        #None
+        finetuning_task=data_args.task_name,  # ner
+        cache_dir=model_args.cache_dir,  # None
     )
     tokenizer = AutoTokenizer.from_pretrained(
         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
@@ -196,7 +196,8 @@ def api():
         print(f"\n样本是{examples}")
         print(f"一个batch的tokenized_inputs,{tokenized_inputs}")
         return tokenized_inputs
-    #处理数据，用map函数
+
+    # 处理数据，用map函数
     tokenized_datasets = datasets.map(
         tokenize_and_align_labels,
         batched=True,
@@ -215,7 +216,7 @@ def api():
         data_collator=data_collator,
     )
 
-    #评估模型
+    # 评估模型
     results = {}
     #
     if training_args.do_predict:
@@ -233,9 +234,7 @@ def api():
         text_tokens = test_dict['tokens']
         predicts = [prediction[:len(token)] for token, prediction in zip(text_tokens, true_predictions)]
         results = extract_words(text=test_dict['tokens'], predicts=predicts)
-
-    return jsonify(results)
-
+    return results
 
 def extract_words(text, predicts):
     """
@@ -319,5 +318,5 @@ def extract_words(text, predicts):
     result = {'text':text, 'predicts':predicts, '功效词':predict_eff_words,'成分词':predict_com_words}
     return result
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=23319, debug=True, threaded=True)
 
