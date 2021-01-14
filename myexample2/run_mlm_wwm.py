@@ -181,25 +181,25 @@ def main():
         f"Process rank: {training_args.local_rank}, device: {training_args.device}, n_gpu: {training_args.n_gpu}"
         + f"distributed training: {bool(training_args.local_rank != -1)}, 16-bits training: {training_args.fp16}"
     )
-    # Set the verbosity to info of the Transformers logger (on main process only):
+    # 将logger verbosity设置为 info(仅在main上):
     if is_main_process(training_args.local_rank):
         transformers.utils.logging.set_verbosity_info()
         transformers.utils.logging.enable_default_handler()
         transformers.utils.logging.enable_explicit_format()
     logger.info("Training/evaluation parameters %s", training_args)
 
-    # Set seed before initializing model.
+    # 在初始化模型之前设置种子。
     set_seed(training_args.seed)
 
-    # Get the datasets: you can either provide your own CSV/JSON/TXT training and evaluation files (see below)
-    # or just provide the name of one of the public datasets available on the hub at https://huggingface.co/datasets/
-    # (the dataset will be downloaded automatically from the datasets Hub).
+    # 获取数据集：您可以提供自己的CSV / JSON / TXT训练和评估文件(请参见下文)
+    # 或仅提供位于hub的可用公共数据集之一的名称，网址为  https://huggingface.co/datasets/
+    # (该数据集将自动从数据集中心下载)。
     #
-    # For CSV/JSON files, this script will use the column called 'text' or the first column if no column called
-    # 'text' is found. You can easily tweak this behavior (see below).
+    # 对于CSV / JSON文件，此脚本将使用名为'text'的列或如果未找到名为'text'的列的第一列。
+    # 您可以轻松调整此行为(请参见下文)。
     #
-    # In distributed training, the load_dataset function guarantee that only one local process can concurrently
-    # download the dataset.
+    # 在分布式训练中，load_dataset函数可确保只有一个local进程可以同时下载数据集。
+    #
     data_files = {}
     if data_args.train_file is not None:
         data_files["train"] = data_args.train_file
@@ -208,15 +208,16 @@ def main():
     extension = data_args.train_file.split(".")[-1]
     if extension == "txt":
         extension = "text"
-    datasets = load_dataset(extension, data_files=data_files)
+    # datasets = load_dataset(path=extension, data_files=data_files)
+    datasets = load_dataset(path="data/text.py", data_files=data_files)
     # See more about loading any type of standard or custom dataset (from files, python dict, pandas DataFrame, etc) at
     # https://huggingface.co/docs/datasets/loading_datasets.html.
 
-    # Load pretrained model and tokenizer
+    # 加载 pretrained model and tokenizer
     #
-    # Distributed training:
-    # The .from_pretrained methods guarantee that only one local process can concurrently
-    # download model & vocab.
+    # 分布式训练 training:
+    # .from_pretrained方法可确保只有一个local进程可以同时下载模型和vocab
+    # 加载模型的配置
     if model_args.config_name:
         config = AutoConfig.from_pretrained(model_args.config_name, cache_dir=model_args.cache_dir)
     elif model_args.model_name_or_path:
@@ -224,7 +225,7 @@ def main():
     else:
         config = CONFIG_MAPPING[model_args.model_type]()
         logger.warning("You are instantiating a new config instance from scratch.")
-
+    #加载tokenizer
     if model_args.tokenizer_name:
         tokenizer = AutoTokenizer.from_pretrained(
             model_args.tokenizer_name, cache_dir=model_args.cache_dir, use_fast=model_args.use_fast_tokenizer
@@ -235,10 +236,10 @@ def main():
         )
     else:
         raise ValueError(
-            "You are instantiating a new tokenizer from scratch. This is not supported by this script."
-            "You can do it from another script, save it, and load it from here, using --tokenizer_name."
+            "您正在从头实例化一个新的tokenizer。 此脚本不支持此功能。 "
+            "您可以使用其它脚本进行--tokenizer_name保存，并从此处使用和加载。 "
         )
-
+    #加载模型，或者随机初始化模型
     if model_args.model_name_or_path:
         model = AutoModelForMaskedLM.from_pretrained(
             model_args.model_name_or_path,
@@ -247,13 +248,13 @@ def main():
             cache_dir=model_args.cache_dir,
         )
     else:
-        logger.info("Training new model from scratch")
+        logger.info("从头scratch开始训练一个新的模型")
         model = AutoModelForMaskedLM.from_config(config)
-
+    #可以根据字典重新调整嵌入层的大小, 如果单词表大小不变，embedding也不变, [old_vocab_size, 768] ---> [new_vocab_size, 768]
     model.resize_token_embeddings(len(tokenizer))
 
-    # Preprocessing the datasets.
-    # First we tokenize all the texts.
+    # 预处理数据集
+    # 首先，我们所有文本分词。
     if training_args.do_train:
         column_names = datasets["train"].column_names
     else:

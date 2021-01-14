@@ -143,7 +143,8 @@ python examples/contrib/run_chinese_ref.py \
 第2个样本的bert的token对应的子词的后半部分的位置的最终的ref_id: [2, 4, 7, 8, 11, 14]
 ```
 
-然后，您可以像这样运行脚本： 
+
+然后，您可以像这样运行脚本，会自动根据字典大小重新调整嵌入层的大小： 
 
 ```bash
 python run_mlm_wwm.py \
@@ -156,7 +157,7 @@ python run_mlm_wwm.py \
     --do_eval \
     --output_dir output
 
-继续训练
+方法1： 续训练
 python run_mlm_wwm.py \
 --model_name_or_path
 rbt3
@@ -170,7 +171,7 @@ data/ref.txt
 --output_dir
 output
 
-scratch 重新训练
+方法2： scratch 重新训练
 python run_mlm_wwm.py \
 --model_type
 roberta
