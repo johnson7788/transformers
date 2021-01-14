@@ -167,3 +167,4 @@ tags
 *.lock
 *.bin
 myexample/cosmetic_ner/
+myexample2/ltp_small
