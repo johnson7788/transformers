@@ -27,4 +27,5 @@ def rbt3():
     tokenizer.save_pretrained('rbt3')
 
 if __name__ == '__main__':
-    rbt3()
+    robera()
+    # rbt3()

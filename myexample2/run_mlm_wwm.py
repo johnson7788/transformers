@@ -146,13 +146,13 @@ def add_chinese_references(dataset, ref_file):
 
 
 def main():
-    # See all possible arguments in src/transformers/training_args.py
-    # or by passing the --help flag to this script.
-    # We now keep distinct sets of args, for a cleaner separation of concerns.
+    # 更多参数请查看  in src/transformers/training_args.py
+    # 或通过--help查看
+    # 现在，我们保留了不同的参数集，以使关注点更加清晰。
 
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
     if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
-        # If we pass only one argument to the script and it's the path to a json file,
+        # 如果我们仅将一个参数传递给脚本，并且它是json文件的路径，
         # let's parse it to get our arguments.
         model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
     else:

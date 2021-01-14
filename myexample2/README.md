@@ -155,6 +155,37 @@ python run_mlm_wwm.py \
     --do_train \
     --do_eval \
     --output_dir output
+
+继续训练
+python run_mlm_wwm.py \
+--model_name_or_path
+rbt3
+--tokenizer_name
+bert_model
+--train_file
+data/demo.txt
+--train_ref_file
+data/ref.txt
+--do_train
+--output_dir
+output
+
+scratch 重新训练
+python run_mlm_wwm.py \
+--model_type
+roberta
+--config_name
+rbt3/roberta
+--tokenizer_name
+rbt3/roberta
+--train_file
+data/demo.txt
+--train_ref_file
+data/ref.txt
+--do_train
+--output_dir
+output
+
 ```
 
 **Note:** 在TPU上，您应该标记`--pad_to_max_length`以确保所有批次的长度都相同。 
