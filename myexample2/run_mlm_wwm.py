@@ -61,81 +61,78 @@ class ModelArguments:
     model_name_or_path: Optional[str] = field(
         default=None,
         metadata={
-            "help": "The model checkpoint for weights initialization."
-            "Don't set if you want to train a model from scratch."
+            "help": "初始化模型的checkpoint的权重文件，如果不设置，就相当于scratch，重新训练一个模型"
         },
     )
     model_type: Optional[str] = field(
         default=None,
-        metadata={"help": "If training from scratch, pass a model type from the list: " + ", ".join(MODEL_TYPES)},
+        metadata={"help": "如果重新训练一个scratch，必须传入一个模型的类型: " + ", ".join(MODEL_TYPES)},
     )
     config_name: Optional[str] = field(
-        default=None, metadata={"help": "Pretrained config name or path if not the same as model_name"}
+        default=None, metadata={"help": "预训练模型的配置文件或路径，如果不和model_name一样的话"}
     )
     tokenizer_name: Optional[str] = field(
-        default=None, metadata={"help": "Pretrained tokenizer name or path if not the same as model_name"}
+        default=None, metadata={"help": "预训练模型的tokenizer文件或路径，如果不和model_name一样的话"}
     )
     cache_dir: Optional[str] = field(
         default=None,
-        metadata={"help": "Where do you want to store the pretrained models downloaded from huggingface.co"},
+        metadata={"help": "cache_dir， 下载huggingface.co模型的缓存目录"},
     )
     use_fast_tokenizer: bool = field(
         default=True,
-        metadata={"help": "Whether to use one of the fast tokenizer (backed by the tokenizers library) or not."},
+        metadata={"help": "是否使用fast tokenizer"},
     )
 
 
 @dataclass
 class DataTrainingArguments:
     """
-    Arguments pertaining to what data we are going to input our model for training and eval.
+    关于要输入哪些数据以供我们的模型进行训练和评估的参数。
     """
 
-    train_file: Optional[str] = field(default=None, metadata={"help": "The input training data file (a text file)."})
+    train_file: Optional[str] = field(default=None, metadata={"help": "输入的训练数据文件(text文本文件)。 "})
     validation_file: Optional[str] = field(
         default=None,
-        metadata={"help": "An optional input evaluation data file to evaluate the perplexity on (a text file)."},
+        metadata={"help": "可选，评估数据文件，用于评估困惑度(文本文件)。"},
     )
     train_ref_file: Optional[str] = field(
         default=None,
-        metadata={"help": "An optional input train ref data file for whole word masking in Chinese."},
+        metadata={"help": "用于中文全词masking的可选输入Train ref数据文件。"},
     )
     validation_ref_file: Optional[str] = field(
         default=None,
-        metadata={"help": "An optional input validation ref data file for whole word masking in Chinese."},
+        metadata={"help": "用于中文全词masking的可选输入验证参考数据文件。 "},
     )
     overwrite_cache: bool = field(
-        default=False, metadata={"help": "Overwrite the cached training and evaluation sets"}
+        default=False, metadata={"help": "覆盖缓存的训练和评估集"}
     )
     max_seq_length: Optional[int] = field(
         default=None,
         metadata={
-            "help": "The maximum total input sequence length after tokenization. Sequences longer "
-            "than this will be truncated. Default to the max input length of the model."
+            "help": "tokenizer后的最大总输入序列长度。 更长的序列将被截断。 默认为模型的最大输入长度。 "
         },
     )
     preprocessing_num_workers: Optional[int] = field(
         default=None,
-        metadata={"help": "The number of processes to use for the preprocessing."},
+        metadata={"help": "用于预处理的进程数。 "},
     )
     mlm_probability: float = field(
-        default=0.15, metadata={"help": "Ratio of tokens to mask for masked language modeling loss"}
+        default=0.15, metadata={"help": "MLM 语言模型的Mask token概率"}
     )
     pad_to_max_length: bool = field(
         default=False,
         metadata={
-            "help": "Whether to pad all samples to `max_seq_length`. "
-            "If False, will pad the samples dynamically when batching to the maximum length in the batch."
+            "help": "是否将所有样本填充到“max_seq_length”。 如果为False，则在批次中的按照最大长度的样本动态填充。"
         },
     )
 
     def __post_init__(self):
         if self.train_file is not None:
             extension = self.train_file.split(".")[-1]
-            assert extension in ["csv", "json", "txt"], "`train_file` should be a csv, a json or a txt file."
+            assert extension in ["csv", "json", "txt"], "`train_file` 仅支持 csv, a json or a txt file."
         if self.validation_file is not None:
             extension = self.validation_file.split(".")[-1]
-            assert extension in ["csv", "json", "txt"], "`validation_file` should be a csv, a json or a txt file."
+            assert extension in ["csv", "json", "txt"], "`validation_file` 仅支持 csv, a json or a txt file."
 
 
 def add_chinese_references(dataset, ref_file):

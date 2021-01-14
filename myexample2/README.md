@@ -108,7 +108,7 @@ python run_mlm_wwm.py \
     --output_dir /tmp/test-mlm-wwm
 ```
 
-对于中文模型，我们需要生成一个参考文件(需要ltp库)，因为它是在字符级别tokenized的。 
+对于中文模型，我们需要生成一个子词的后半部分的关联文件(需要ltp库)，因为它是在字符级别tokenized的。 
 
 **Q :** 为什么要参考文件？ 
 
@@ -120,38 +120,41 @@ python run_mlm_wwm.py \
 
 **A :** 
 因为最知名的中文WWM BERT是HIT的[Chinese-BERT-wwm](https://github.com/ymcui/Chinese-BERT-wwm)。它在像CLUE(Chinese GLUE)。 他们使用LTP，所以如果我们要微调他们的模型，我们需要LTP。 
-http://ltp.ai/, 下载ltp的模型文件, 下载路径： https://github.com/HIT-SCIR/ltp/blob/master/MODELS.md
+http://ltp.ai/, 下载ltp的模型文件, 下载路径： https://github.com/HIT-SCIR/ltp/blob/master/MODELS.md，可以不用下载，直接用名称指定，如下示例
 
 现在LTP仅在`transformers == 3.2.0`上才能很好地工作。 因此，我们不会将其添加到requirements.txt。
 您需要使用此版本的Transformers创建一个单独的环境，
-以运行将创建参考文件的`run_chinese_ref.py`脚本。 
+以运行将创建子词的后半部分的关联文件的`run_chinese_ref.py`脚本。 
 该脚本在`examples/contrib`中。 在适当的环境中后，请运行以下命令： 
 
 ```bash
-export TRAIN_FILE=/path/to/dataset/wiki.train.raw
-export LTP_RESOURCE=/path/to/ltp/tokenizer
-export BERT_RESOURCE=/path/to/bert/tokenizer
-export SAVE_PATH=/path/to/data/ref.txt
 
 python examples/contrib/run_chinese_ref.py \
-    --file_name=path_to_train_or_eval_file \
-    --ltp=path_to_ltp_tokenizer \
-    --bert=path_to_bert_tokenizer \
-    --save_path=path_to_reference_file
+    --file_name=data/demo.txt \
+    --ltp=small \
+    --bert=bert-base-chinese \
+    --save_path=data/ref.txt
+
+输出类似:
+第2个样本是: 吸收效果：等价位小 性价比还行
+第2个样本的ltp分词后结果: ['还行', '性价', '吸收', '等价位', '效果']
+第2个样本的bert toknizer后结果: [101, 1429, 3119, 3126, 3362, 8038, 5023, 817, 855, 2207, 2595, 817, 3683, 6820, 6121, 102]
+第2个样本的bert toknizer被ltp的全词处理后的结果: ['[CLS]', '吸', '##收', '效', '##果', '：', '等', '##价', '##位', '小', '性', '##价', '比', '还', '##行', '[SEP]']
+第2个样本的bert的token对应的子词的后半部分的位置的最终的ref_id: [2, 4, 7, 8, 11, 14]
 ```
 
 然后，您可以像这样运行脚本： 
 
 ```bash
 python run_mlm_wwm.py \
-    --model_name_or_path roberta-base \
-    --train_file path_to_train_file \
+    --model_name_or_path hfl/chinese-roberta-wwm-ext \
+    --train_file data/demo.txt \
     --validation_file path_to_validation_file \
-    --train_ref_file path_to_train_chinese_ref_file \
+    --train_ref_file data/ref.txt \
     --validation_ref_file path_to_validation_chinese_ref_file \
     --do_train \
     --do_eval \
-    --output_dir /tmp/test-mlm-wwm
+    --output_dir output
 ```
 
 **Note:** 在TPU上，您应该标记`--pad_to_max_length`以确保所有批次的长度都相同。 
