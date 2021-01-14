@@ -342,10 +342,10 @@ class DataCollatorForWholeWordMask(DataCollatorForLanguageModeling):
                 token = self.tokenizer._convert_id_to_token(id)
                 ref_tokens.append(token)
 
-            # For Chinese tokens, we need extra inf to mark sub-word, e.g [喜,欢]-> [喜，##欢]
+            #对于中文，如果存在chinese_ref，说明要mask全词 , e.g [喜,欢]-> [喜，##欢]
             if "chinese_ref" in e:
                 ref_pos = tolist(e["chinese_ref"])
-                len_seq = e["input_ids"].size(0)
+                len_seq = len(e["input_ids"])
                 for i in range(len_seq):
                     if i in ref_pos:
                         ref_tokens[i] = "##" + ref_tokens[i]
@@ -358,7 +358,10 @@ class DataCollatorForWholeWordMask(DataCollatorForLanguageModeling):
         """
         Get 0/1 labels for masked tokens with whole word mask proxy
         """
-
+        # input_tokens： ['[CLS]', '好', '##用', '，', '买', '##买', '##买', '##买', '##买', '##买', '##买', '##买', '?', '?', '[SEP]']
+        #全词mask时的示例cand_indexes： [[1, 2], [3], [4, 5, 6, 7, 8, 9, 10, 11], [12], [13]]
+        # covered_indexes： {3, 12}
+        # mask_labels： [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
         cand_indexes = []
         for (i, token) in enumerate(input_tokens):
             if token == "[CLS]" or token == "[SEP]":
@@ -393,6 +396,7 @@ class DataCollatorForWholeWordMask(DataCollatorForLanguageModeling):
 
         assert len(covered_indexes) == len(masked_lms)
         mask_labels = [1 if i in covered_indexes else 0 for i in range(len(input_tokens))]
+
         return mask_labels
 
     def mask_tokens(self, inputs: torch.Tensor, mask_labels: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:

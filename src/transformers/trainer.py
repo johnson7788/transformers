@@ -354,7 +354,7 @@ class Trainer:
         signature = inspect.signature(self.model.forward)
         signature_columns = list(signature.parameters.keys())
         # Labels may be named label or label_ids, the default data collator handles that.
-        signature_columns += ["label", "label_ids"]
+        signature_columns += ["label", "label_ids", "chinese_ref"]
         columns = [k for k in signature_columns if k in dataset.column_names]
         ignored_columns = list(set(dataset.column_names) - set(signature_columns))
         dset_description = "" if description is None else f"in the {description} set "
@@ -595,7 +595,7 @@ class Trainer:
         # Data loader and number of training steps
         train_dataloader = self.get_train_dataloader()
 
-        # Setting up training control variables:
+        # Setting up training control variables,设置模型的训练的参数，epochs，steps等:
         # number of training epochs: num_train_epochs
         # number of training steps per epoch: num_update_steps_per_epoch
         # total number of training steps to execute: max_steps

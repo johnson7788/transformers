@@ -136,6 +136,15 @@ class DataTrainingArguments:
 
 
 def add_chinese_references(dataset, ref_file):
+    """
+    加入chinese_ref这列，到数据集
+    Args:
+        dataset: 处理完成的数据集， 包括3列数据dict_keys(['attention_mask', 'input_ids', 'token_type_ids',])
+        ref_file: 对应的中文全词的子词的引用文件
+
+    Returns:
+    dict_keys(['attention_mask', 'input_ids', 'token_type_ids', 'chinese_ref'])
+    """
     with open(ref_file, "r", encoding="utf-8") as f:
         refs = [json.loads(line) for line in f.read().splitlines() if (len(line) > 0 and not line.isspace())]
     assert len(dataset) == len(refs)
@@ -252,22 +261,29 @@ def main():
         model = AutoModelForMaskedLM.from_config(config)
     #可以根据字典重新调整嵌入层的大小, 如果单词表大小不变，embedding也不变, [old_vocab_size, 768] ---> [new_vocab_size, 768]
     model.resize_token_embeddings(len(tokenizer))
-
     # 预处理数据集
     # 首先，我们所有文本分词。
     if training_args.do_train:
+        # eg: column_names: ['text']
         column_names = datasets["train"].column_names
     else:
         column_names = datasets["validation"].column_names
+    # eg text_column_name: text
     text_column_name = "text" if "text" in column_names else column_names[0]
-
+    # padding的方式
     padding = "max_length" if data_args.pad_to_max_length else False
-
     def tokenize_function(examples):
-        # Remove empty lines
+        """
+        处理2条数据的数据
+        Args:
+            examples: {'text': ['古龙洗发水，洗完头发不干燥、也不容易油、不痒，味道持久，非常柔顺，而且泡泡很容易冲洗干净泡沫非常细腻，洗后头发很滑很顺，洗了之后就头发很蓬松，很香，而且我洗了是没有头皮屑的', '老用户了，一直在用满婷，感觉对控痘控油效果挺好的']}
+        Returns:
+            返回包括一个batch的数据的， dict_keys(['input_ids', 'token_type_ids', 'attention_mask'])
+        """
         examples["text"] = [line for line in examples["text"] if len(line) > 0 and not line.isspace()]
-        return tokenizer(examples["text"], padding=padding, truncation=True, max_length=data_args.max_seq_length)
-
+        newexample = tokenizer(examples["text"], padding=padding, truncation=True, max_length=data_args.max_seq_length)
+        return newexample
+    #处理数据
     tokenized_datasets = datasets.map(
         tokenize_function,
         batched=True,
@@ -276,16 +292,17 @@ def main():
         load_from_cache_file=not data_args.overwrite_cache,
     )
 
-    # Add the chinese references if provided
+    # 添加中文引用(如果提供的话) ，训练集的全词引用
     if data_args.train_ref_file is not None:
         tokenized_datasets["train"] = add_chinese_references(tokenized_datasets["train"], data_args.train_ref_file)
-    if data_args.valid_ref_file is not None:
+    #验证集的全词引用
+    if data_args.validation_ref_file is not None:
         tokenized_datasets["validation"] = add_chinese_references(
             tokenized_datasets["validation"], data_args.validation_ref_file
         )
 
-    # Data collator
-    # This one will take care of randomly masking the tokens.
+    # Data collator, 输入模型前的数据处理器
+    # 这将进行随机masked 全词的token，具体mask全词的方式，请进入函数查看
     data_collator = DataCollatorForWholeWordMask(tokenizer=tokenizer, mlm_probability=data_args.mlm_probability)
 
     # Initialize our Trainer
@@ -300,18 +317,21 @@ def main():
 
     # Training
     if training_args.do_train:
+        logger.info("*** 开始训练模型 ***")
+        #model_path加载模型的optimizer/scheduler路径， 需要有optimizer.pt和scheduler.pt文件在路径下，否则会初始化
         model_path = (
             model_args.model_name_or_path
             if (model_args.model_name_or_path is not None and os.path.isdir(model_args.model_name_or_path))
             else None
         )
         trainer.train(model_path=model_path)
-        trainer.save_model()  # Saves the tokenizer too for easy upload
+        #保存训练好的模型到output目录
+        trainer.save_model(output_dir=training_args.output_dir)  # Saves the tokenizer too for easy upload
 
-    # Evaluation
+    # 评估
     results = {}
     if training_args.do_eval:
-        logger.info("*** Evaluate ***")
+        logger.info("*** 开始评估模型 ***")
 
         eval_output = trainer.evaluate()
 
