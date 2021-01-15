@@ -152,12 +152,13 @@ python run_mlm_wwm.py \
     --train_file data/demo.txt \
     --validation_file path_to_validation_file \
     --train_ref_file data/ref.txt \
+    --remove_unused_columns
     --validation_ref_file path_to_validation_chinese_ref_file \
     --do_train \
     --do_eval \
     --output_dir output
 
-方法1: 继续训练，注意不要让src/transfromers/trainer.py 的Trainer的_remove_unused_columns函数移除chinese_ref列，需要更改signature_columns += ["label", "label_ids", "chinese_ref"]
+方法1: 继续训练，注意不要让src/transfromers/trainer.py 的Trainer的_remove_unused_columns函数移除chinese_ref列, 需要使用TrainingArguments中的设为False，不要移除，remove_unused_columns，
 这样才能对匹配到DataCollatorForWholeWordMask, 的判断语句if "chinese_ref" in e:
 还需更改接下来的一行 len_seq = e["input_ids"].size(0) 为 len_seq = len(e["input_ids"])
 python run_mlm_wwm.py \
