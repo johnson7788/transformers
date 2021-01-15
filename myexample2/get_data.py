@@ -9,13 +9,13 @@
 
 from read_hive import get_distinct_content
 
-def get_txt(savefile='data/demo.txt'):
+def get_txt(data, savefile='data/demo.txt'):
     """
     Args:
+        data:
         savefile: 保存到txt，每行一个文本
     Returns:
     """
-    data = get_distinct_content(number=5000, ptime_keyword=None)
     data_list = data['content'].tolist()
     with open(savefile, 'w', encoding='utf-8') as file:
         for once in data_list:
@@ -23,4 +23,5 @@ def get_txt(savefile='data/demo.txt'):
     print(f'保存文件成功{savefile}')
 
 if __name__ == '__main__':
-    get_txt()
+    data = get_distinct_content(number=-1, ptime_keyword=None, not_cache=True, save_cache=False)
+    get_txt(data=data, savefile='data/newbig.txt')

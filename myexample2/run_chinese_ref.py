@@ -167,6 +167,32 @@ def main(args):
         f.writelines(data)
     print(f"保存所有{len(data)}条数据的映射关系到文件{args.save_path}")
 
+def thread_main(args):
+    from functools import partial
+    from multiprocessing import Pool
+    from tqdm import tqdm
+    # For Chinese (Ro)Bert, the best result is from : RoBERTa-wwm-ext (https://github.com/ymcui/Chinese-BERT-wwm)
+    # 如果要微调这些模型，则必须使用相同的tokenizer  : LTP (https://github.com/HIT-SCIR/ltp)
+    with open(args.file_name, "r", encoding="utf-8") as f:
+        data = f.readlines()
+    print(f'开始处理数据,共有{len(data)}条')
+    data = [line.strip() for line in data if len(line) > 0 and not line.isspace()]  # avoid delimiter like '\u2029'
+    print(f"开始加载ltp和bert的tokenizer模型")
+    ltp_tokenizer = LTP(path=args.ltp)  # faster in GPU device
+    bert_tokenizer = BertTokenizer.from_pretrained(args.bert)
+    newdata = [data[i:i + 100] for i in range(0, len(data), 100)]
+    #准备映射关系
+    with Pool(processes=2) as p:
+        # partial_clean 是封装一下函数
+        partial_clean = partial(prepare_ref, ltp_tokenizer=ltp_tokenizer, bert_tokenizer=bert_tokenizer)
+        # chunksize8，就是数据分成8份
+        ref_ids_nest = list(tqdm(p.imap(partial_clean, newdata, chunksize=8), desc="开始处理数据"))
+    ref_ids = [ref for nest in ref_ids_nest for ref in nest]
+    #保存映射关系
+    with open(args.save_path, "w", encoding="utf-8") as f:
+        data = [json.dumps(ref) + "\n" for ref in ref_ids]
+        f.writelines(data)
+    print(f"保存所有{len(data)}条数据的映射关系到文件{args.save_path}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="准备中文参考")
@@ -184,3 +210,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     main(args)
+    # thread_main(args)
