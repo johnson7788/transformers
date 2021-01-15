@@ -161,19 +161,7 @@ python run_mlm_wwm.py \
 方法1: 继续训练，注意不要让src/transfromers/trainer.py 的Trainer的_remove_unused_columns函数移除chinese_ref列, 需要使用TrainingArguments中的设为False，不要移除，--no_remove_unused_columns，
 这样才能对匹配到src/transformers/data/data_collator.py 的 DataCollatorForWholeWordMask, 的判断语句if "chinese_ref" in e:
 还需更改接下来的一行 len_seq = e["input_ids"].size(0) 为 len_seq = len(e["input_ids"])
-python run_mlm_wwm.py \
---model_name_or_path
-rbt3
---tokenizer_name
-bert_model
---no_remove_unused_columns
---train_file
-data/demo.txt
---train_ref_file
-data/ref.txt
---do_train
---output_dir
-output
+python run_mlm_wwm.py --model_name_or_path rbt3 --tokenizer_name bert_model --no_remove_unused_columns --max_seq_length 128 --pad_to_max_length --train_file data/demo.txt --train_ref_file data/ref.txt --do_train --output_dir output
 
 方法2： scratch 重新训练
 python run_mlm_wwm.py \
@@ -182,7 +170,9 @@ roberta
 --config_name
 rbt3/roberta
 --tokenizer_name
---no_remove_unused_columns
+--no_remove_unused_columns 
+--max_seq_length 128 
+--pad_to_max_length
 rbt3/roberta
 --train_file
 data/demo.txt
