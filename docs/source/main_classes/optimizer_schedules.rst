@@ -43,6 +43,10 @@ Schedules
 Learning Rate Schedules (Pytorch)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. autoclass:: transformers.SchedulerType
+
+.. autofunction:: transformers.get_scheduler
+
 .. autofunction:: transformers.get_constant_schedule
 
 
@@ -73,6 +77,10 @@ Learning Rate Schedules (Pytorch)
 .. image:: /imgs/warmup_linear_schedule.png
     :target: /imgs/warmup_linear_schedule.png
     :alt:
+
+
+.. autofunction:: transformers.get_polynomial_decay_schedule_with_warmup
+
 
 Warmup (TensorFlow)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

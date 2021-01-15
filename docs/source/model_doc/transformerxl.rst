@@ -87,11 +87,13 @@ TransfoXLLMHeadModel
 .. autoclass:: transformers.TransfoXLLMHeadModel
     :members: forward
 
+
 TransfoXLForSequenceClassification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. autoclass:: transformers.TransfoXLForSequenceClassification
     :members: forward
+
 
 TFTransfoXLModel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -105,3 +107,18 @@ TFTransfoXLLMHeadModel
 
 .. autoclass:: transformers.TFTransfoXLLMHeadModel
     :members: call
+
+
+TFTransfoXLForSequenceClassification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: transformers.TFTransfoXLForSequenceClassification
+    :members: call
+
+
+Internal Layers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: transformers.AdaptiveEmbedding
+
+.. autoclass:: transformers.TFAdaptiveEmbedding

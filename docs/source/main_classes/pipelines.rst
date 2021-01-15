@@ -34,6 +34,7 @@ There are two categories of pipeline abstractions to be aware about:
     - :class:`~transformers.TranslationPipeline`
     - :class:`~transformers.ZeroShotClassificationPipeline`
     - :class:`~transformers.Text2TextGenerationPipeline`
+    - :class:`~transformers.TableQuestionAnsweringPipeline`
 
 The pipeline abstraction
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,8 +74,9 @@ FillMaskPipeline
 NerPipeline
 =======================================================================================================================
 
-This class is an alias of the :class:`~transformers.TokenClassificationPipeline` defined below. Please refer to that
-pipeline for documentation and usage examples.
+.. autoclass:: transformers.NerPipeline
+
+See :class:`~transformers.TokenClassificationPipeline` for all details.
 
 QuestionAnsweringPipeline
 =======================================================================================================================
@@ -89,6 +91,13 @@ SummarizationPipeline
 .. autoclass:: transformers.SummarizationPipeline
     :special-members: __call__
     :members:
+
+TableQuestionAnsweringPipeline
+=======================================================================================================================
+
+.. autoclass:: transformers.TableQuestionAnsweringPipeline
+    :special-members: __call__
+
 
 TextClassificationPipeline
 =======================================================================================================================
@@ -115,6 +124,13 @@ TokenClassificationPipeline
 =======================================================================================================================
 
 .. autoclass:: transformers.TokenClassificationPipeline
+    :special-members: __call__
+    :members:
+
+TranslationPipeline
+=======================================================================================================================
+
+.. autoclass:: transformers.TranslationPipeline
     :special-members: __call__
     :members:
 

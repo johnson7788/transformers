@@ -163,6 +163,7 @@ tags
 
 # pre-commit
 .pre-commit*
+<<<<<<< HEAD
 .DS_Store
 *.lock
 *.bin
@@ -171,3 +172,8 @@ myexample2/ltp_small
 myexample2/data
 myexample2/rbt3/
 myexample2/roberta_model/
+=======
+
+# .lock
+*.lock
+>>>>>>> DataCollatorForWholeWordMask_Bug
