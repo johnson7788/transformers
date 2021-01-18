@@ -1,7 +1,7 @@
 import argparse
 import json
 from typing import List
-
+from tqdm import tqdm
 from ltp import LTP
 from transformers import BertTokenizer
 
@@ -94,11 +94,12 @@ def prepare_ref(lines: List[str], ltp_tokenizer: LTP, bert_tokenizer: BertTokeni
 
     """
     ltp_res = []
-    # 每次处理100行
+    # 每次处理100行，batch_size等于100,
+    batch_size = 10000
     print(f"开始用ltp模型进行分词处理...")
-    for i in range(0, len(lines), 100):
+    for i in tqdm(range(0, len(lines), batch_size)):
         #调用ltp进行分词
-        res = ltp_tokenizer.seg(lines[i : i + 100])[0]
+        res = ltp_tokenizer.seg(lines[i : i + batch_size])[0]
         #过滤出分词后都是中文的部分
         res = [get_chinese_word(r) for r in res]
         #加到ltp_res
@@ -108,8 +109,8 @@ def prepare_ref(lines: List[str], ltp_tokenizer: LTP, bert_tokenizer: BertTokeni
     #bert也进行tokenizer， 每次处理100行
     print(f"开始用bert tokenizer模型进行token处理...")
     bert_res = []
-    for i in range(0, len(lines), 100):
-        res = bert_tokenizer(lines[i : i + 100], add_special_tokens=True, truncation=True, max_length=512)
+    for i in tqdm(range(0, len(lines), batch_size)):
+        res = bert_tokenizer(lines[i : i + batch_size], add_special_tokens=True, truncation=True, max_length=512)
         bert_res.extend(res["input_ids"])
     # eg: bert_res [ [101, 5439, 4500, 2787, 749, 8024, 671, 4684, 1762, 4500, 4007, 2051, 8024, 2697, 6230, 2190, 2971, 4576, 2971, 3779, 3126, 3362, 2923, 1962, 4638, 102]...]
     #确保行数相同
