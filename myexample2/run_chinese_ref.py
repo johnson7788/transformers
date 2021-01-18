@@ -152,7 +152,7 @@ def prepare_ref(lines: List[str], ltp_tokenizer: LTP, bert_tokenizer: BertTokeni
 def main(args):
     # For Chinese (Ro)Bert, the best result is from : RoBERTa-wwm-ext (https://github.com/ymcui/Chinese-BERT-wwm)
     # 如果要微调这些模型，则必须使用相同的tokenizer  : LTP (https://github.com/HIT-SCIR/ltp)
-    with open(args.file_name, "r", encoding="utf-8") as f:
+    with open(args.file_name, "r", encoding="utf-8", errors='ignore') as f:
         data = f.readlines()
     print(f'开始处理数据,共有{len(data)}条')
     data = [line.strip() for line in data if len(line) > 0 and not line.isspace()]  # avoid delimiter like '\u2029'
