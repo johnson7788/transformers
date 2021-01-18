@@ -84,7 +84,7 @@ def add_sub_symbol(bert_tokens: List[str], chinese_word_set: set()):
     return bert_word
 
 
-def prepare_ref(lines: List[str], ltp_tokenizer: LTP, bert_tokenizer: BertTokenizer):
+def prepare_ref(lines: List[str], ltp_tokenizer: LTP, bert_tokenizer: BertTokenizer, batch_size=50000):
     """
     Args:
         lines:  每行一个中文段落，
@@ -94,8 +94,7 @@ def prepare_ref(lines: List[str], ltp_tokenizer: LTP, bert_tokenizer: BertTokeni
 
     """
     ltp_res = []
-    # 每次处理100行，batch_size等于100,
-    batch_size = 10000
+    # batch_size等于100,每次处理100行，
     print(f"开始用ltp模型进行分词处理...")
     for i in tqdm(range(0, len(lines), batch_size)):
         #调用ltp进行分词
