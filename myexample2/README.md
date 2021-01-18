@@ -135,6 +135,8 @@ python examples/contrib/run_chinese_ref.py \
     --bert=bert-base-chinese \
     --save_path=data/ref.txt
 
+cd myexample2 && python run_chinese_ref.py --file_name=data/newbig.txt --ltp=small --bert=bert-base-chinese --save_path=data/newbigref.txt
+
 输出类似:
 第2个样本是: 吸收效果：等价位小 性价比还行
 第2个样本的ltp分词后结果: ['还行', '性价', '吸收', '等价位', '效果']
@@ -157,13 +159,15 @@ python run_mlm_wwm.py \
     --do_train \
     --do_eval \
     --output_dir output
-
+```
 方法1: 继续训练，注意不要让src/transfromers/trainer.py 的Trainer的_remove_unused_columns函数移除chinese_ref列, 需要使用TrainingArguments中的设为False，不要移除，--no_remove_unused_columns，
 这样才能对匹配到src/transformers/data/data_collator.py 的 DataCollatorForWholeWordMask, 的判断语句if "chinese_ref" in e:
 还需更改接下来的一行 len_seq = e["input_ids"].size(0) 为 len_seq = len(e["input_ids"])
+```
 python run_mlm_wwm.py --model_name_or_path rbt3 --tokenizer_name bert_model --no_remove_unused_columns --max_seq_length 128 --pad_to_max_length --train_file data/demo.txt --train_ref_file data/ref.txt --do_train --output_dir output
-
-方法2： scratch 重新训练
+```
+方法2：scratch 重新训练
+```
 python run_mlm_wwm.py \
 --model_type
 roberta
@@ -181,7 +185,6 @@ data/ref.txt
 --do_train
 --output_dir
 output
-
 ```
 
 **Note:** 在TPU上，您应该标记`--pad_to_max_length`以确保所有批次的长度都相同。 

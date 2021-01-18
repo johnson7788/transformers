@@ -181,8 +181,8 @@ def thread_main(args):
     ltp_tokenizer = LTP(path=args.ltp)  # faster in GPU device
     bert_tokenizer = BertTokenizer.from_pretrained(args.bert)
     newdata = [data[i:i + 100] for i in range(0, len(data), 100)]
-    #准备映射关系
-    with Pool(processes=2) as p:
+    #准备映射关系, 并行线程数
+    with Pool(processes=args.processes) as p:
         # partial_clean 是封装一下函数
         partial_clean = partial(prepare_ref, ltp_tokenizer=ltp_tokenizer, bert_tokenizer=bert_tokenizer)
         # chunksize8，就是数据分成8份
@@ -209,5 +209,7 @@ if __name__ == "__main__":
     parser.add_argument("--save_path", type=str, default="data/ref.txt", help="输出保存参考的位置")
 
     args = parser.parse_args()
-    main(args)
-    # thread_main(args)
+    #并行处理数
+    args.processes = 8
+    # main(args)
+    thread_main(args)
