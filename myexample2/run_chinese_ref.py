@@ -222,6 +222,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     #并行处理数
-    args.processes = 4
-    # main(args)
-    thread_main(args)
+    # args.processes = 4
+    main(args)
+    # thread_main(args)
