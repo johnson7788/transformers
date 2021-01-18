@@ -167,7 +167,15 @@ def main(args):
         f.writelines(data)
     print(f"保存所有{len(data)}条数据的映射关系到文件{args.save_path}")
 
-def thread_main(args):
+def thread_main(args, gpu=True):
+    """
+    多线程处理
+    Args:
+        args:
+        gpu: 是否使用gpu
+    Returns:
+
+    """
     from functools import partial
     from multiprocessing import Pool
     from tqdm import tqdm
@@ -182,8 +190,10 @@ def thread_main(args):
     bert_tokenizer = BertTokenizer.from_pretrained(args.bert)
     newdata = [data[i:i + 100] for i in range(0, len(data), 100)]
     #准备映射关系, 并行线程数
-    import torch
-    torch.multiprocessing.set_start_method('spawn')
+    #如果使用GPU，请设置如下
+    if gpu:
+        import torch
+        torch.multiprocessing.set_start_method('spawn')
     with Pool(processes=args.processes) as p:
         # partial_clean 是封装一下函数
         partial_clean = partial(prepare_ref, ltp_tokenizer=ltp_tokenizer, bert_tokenizer=bert_tokenizer)
