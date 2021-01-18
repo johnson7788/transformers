@@ -182,6 +182,8 @@ def thread_main(args):
     bert_tokenizer = BertTokenizer.from_pretrained(args.bert)
     newdata = [data[i:i + 100] for i in range(0, len(data), 100)]
     #准备映射关系, 并行线程数
+    import torch
+    torch.multiprocessing.set_start_method('spawn')
     with Pool(processes=args.processes) as p:
         # partial_clean 是封装一下函数
         partial_clean = partial(prepare_ref, ltp_tokenizer=ltp_tokenizer, bert_tokenizer=bert_tokenizer)
