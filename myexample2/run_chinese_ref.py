@@ -188,7 +188,7 @@ def thread_main(args, gpu=True):
     print(f"开始加载ltp和bert的tokenizer模型")
     ltp_tokenizer = LTP(path=args.ltp)  # faster in GPU device
     bert_tokenizer = BertTokenizer.from_pretrained(args.bert)
-    newdata = [data[i:i + 100] for i in range(0, len(data), 100)]
+    newdata = [data[i:i + 1000] for i in range(0, len(data), 1000)]
     #准备映射关系, 并行线程数
     #如果使用GPU，请设置如下
     if gpu:
