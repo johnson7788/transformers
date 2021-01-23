@@ -398,7 +398,7 @@ Based on the script [`run_xnli.py`](https://github.com/huggingface/transformers/
 可以通过以下链接下载XNLI的数据，并且应将其同时保存（并解压缩）在`$XNLI_DIR`目录中。
 
 
-* [XNLI 1.0](https://www.nyu.edu/projects/bowman/xnli/XNLI-1.0.zip)
+* [XNLI 1.0](https://cims.nyu.edu/~sbowman/xnli/XNLI-1.0.zip)
 * [XNLI-MT 1.0](https://dl.fbaipublicfiles.com/XNLI/XNLI-MT-1.0.zip)
 
 ```bash
