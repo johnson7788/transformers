@@ -1,7 +1,7 @@
-from transformers import BertForMaskedLM, BertTokenizer
+from transformers import AlbertForMaskedLM, AlbertTokenizer
 import torch
-tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-model = BertForMaskedLM.from_pretrained("bert-base-uncased")
+tokenizer = AlbertTokenizer.from_pretrained("albert-large-v2")
+model = AlbertForMaskedLM.from_pretrained("albert-large-v2")
 sequence = f"Distilled models are smaller than the models they mimic. Using them instead of the large versions would help {tokenizer.mask_token} our carbon footprint."
 input = tokenizer.encode(sequence, return_tensors="pt")
 # 被Mask的字符的位置

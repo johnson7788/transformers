@@ -127,16 +127,11 @@ class ModelArguments:
         default=None, metadata={"help": "预训练的tokenizer生成器名称或路径（如果与model_name不同）"}
     )
     cache_dir: Optional[str] = field(
-<<<<<<< HEAD
         default=None, metadata={"help": "您想在哪里存储从s3下载的预训练模型,缓存模型文件夹"}
-=======
-        default=None,
-        metadata={"help": "Where do you want to store the pretrained models downloaded from huggingface.co"},
     )
     use_fast_tokenizer: bool = field(
         default=True,
         metadata={"help": "Whether to use one of the fast tokenizer (backed by the tokenizers library) or not."},
->>>>>>> upstream/master
     )
     model_revision: str = field(
         default="main",
@@ -182,34 +177,25 @@ def main():
         datefmt="%m/%d/%Y %H:%M:%S",
         level=logging.INFO if is_main_process(training_args.local_rank) else logging.WARN,
     )
-<<<<<<< HEAD
     #打印当前设置
-=======
 
     # Log on each process the small summary:
->>>>>>> upstream/master
     logger.warning(
         f"Process rank: {training_args.local_rank}, device: {training_args.device}, n_gpu: {training_args.n_gpu}"
         + f"distributed training: {bool(training_args.local_rank != -1)}, 16-bits training: {training_args.fp16}"
     )
-<<<<<<< HEAD
     #打印参数
     logger.info("Training/evaluation parameters %s", training_args)
 
+    # Set seed before initializing model.
     #随机数种子
     set_seed(training_args.seed)
     #num_labels 类别数量, output_mode  是任务类型，'classification'
-    try:
-        num_labels = glue_tasks_num_labels[data_args.task_name]
-        output_mode = glue_output_modes[data_args.task_name]
-    except KeyError:
-        raise ValueError("Task not found: %s" % (data_args.task_name))
 
     # 加载预训练的模型和令牌生成器
     # 分布式培训：
     # from_pretrained方法保证只有一个本地进程可以并发下载模型和vocab。
     #添加自定义参数finetuning_task, num_labels
-=======
     # Set the verbosity to info of the Transformers logger (on main process only):
     if is_main_process(training_args.local_rank):
         transformers.utils.logging.set_verbosity_info()
@@ -289,7 +275,6 @@ def main():
     #
     # In distributed training, the .from_pretrained methods guarantee that only one local process can concurrently
     # download model & vocab.
->>>>>>> upstream/master
     config = AutoConfig.from_pretrained(
         model_args.config_name if model_args.config_name else model_args.model_name_or_path,
         num_labels=num_labels,
@@ -417,20 +402,9 @@ def main():
         train_result = trainer.train(
             model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None
         )
-<<<<<<< HEAD
-<<<<<<< HEAD
-        trainer.save_model()
-        # 为了方便起见，我们还将令牌生成器重新保存到同一目录中，
-        # 以便您可以轻松地在huggingface.co/models上共享模型
-        if trainer.is_world_master():
-            tokenizer.save_pretrained(training_args.output_dir)
-=======
-=======
         metrics = train_result.metrics
 
->>>>>>> DataCollatorForWholeWordMask_Bug
         trainer.save_model()  # Saves the tokenizer too for easy upload
->>>>>>> upstream/master
 
         output_train_file = os.path.join(training_args.output_dir, "train_results.txt")
         if trainer.is_world_process_zero():
@@ -447,13 +421,9 @@ def main():
     eval_results = {}
     if training_args.do_eval:
         logger.info("*** Evaluate ***")
-
-<<<<<<< HEAD
         # 如果是mnli, 循环以处理MNLI双重评估（匹配，不匹配)
-=======
         # Loop to handle MNLI double evaluation (matched, mis-matched)
         tasks = [data_args.task_name]
->>>>>>> upstream/master
         eval_datasets = [eval_dataset]
         if data_args.task_name == "mnli":
             tasks.append("mnli-mm")
