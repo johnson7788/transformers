@@ -1,31 +1,13 @@
-<!---
-Copyright 2020 The HuggingFace Team. All rights reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--->
-
 # Text classification examples
 
 ## PyTorch version
 
 Based on the script [`run_glue.py`](https://github.com/huggingface/transformers/blob/master/examples/text-classification/run_glue.py).
 
-Fine-tuning the library models for sequence classification on the GLUE benchmark: [General Language Understanding
-Evaluation](https://gluebenchmark.com/). This script can fine-tune any of the models on the [hub](https://huggingface.co/models)
-and can also be used for your own data in a csv or a JSON file (the script might need some tweaks in that case, refer
-to the comments inside for help).
+在GLUE基准上微调用于序列分类的库模型：[General Language Understanding Evaluation](https://gluebenchmark.com/)。 
+该脚本可以微调[hub](https://huggingface.co/models) 上的任何模型，也可以用于csv或JSON文件中的您自己的数据(该脚本可能需要进行一些调整。)
 
-GLUE is made up of a total of 9 different tasks. Here is how to run the script on one of them:
+GLUE由9个不同的任务组成。 这是在其中之一上运行脚本的方法：
 
 ```bash
 export TASK_NAME=mrpc
@@ -42,12 +24,11 @@ python run_glue.py \
   --output_dir /tmp/$TASK_NAME/
 ```
 
-where task name can be one of cola, sst2, mrpc, stsb, qqp, mnli, qnli, rte, wnli.
+其中任务名称可以是cola，sst2，mrpc，stsb，qqp，mnli，qnli，rte，wnli中的一个。
 
-We get the following results on the dev set of the benchmark with the previous commands (with an exception for MRPC and
-WNLI which are tiny and where we used 5 epochs isntead of 3). Trainings are seeded so you should obtain the same
-results with PyTorch 1.6.0 (and close results with different versions), training times are given for information (a
-single Titan RTX was used):
+我们使用先前的命令在基准测试的开发集上获得了以下结果(MRPC和WNLI除外，它们很小，使用了3个epoch)。
+训练是seeded的，因此您应该在PyTorch 1.6.0上获得相同的结果(并在不同版本上获得接近的结果)，并给出训练时间以供参考(使用了单个Titan RTX)：
+
 
 | Task  | Metric                       | Result      | Training time |
 |-------|------------------------------|-------------|---------------|
@@ -61,10 +42,12 @@ single Titan RTX was used):
 | RTE   | Accuracy                     | 65.70       | 57            |
 | WNLI  | Accuracy                     | 56.34       | 24            |
 
-Some of these results are significantly different from the ones reported on the test set of GLUE benchmark on the
-website. For QQP and WNLI, please refer to [FAQ #12](https://gluebenchmark.com/faq) on the website.
 
-### Mixed precision training
+其中一些结果与网站上GLUE基准测试集上报告的结果有显着差异。 
+有关QQP和WNLI，请参阅网站上的[FAQ #12](https://gluebenchmark.com/faq) 。
+
+
+### 混合精度训练
 
 If you have a GPU with mixed precision capabilities (architecture Pascal or more recent), you can use mixed precision
 training with PyTorch 1.6.0 or latest, or by installing the [Apex](https://github.com/NVIDIA/apex) library for previous
@@ -105,11 +88,7 @@ run_tf_glue.py 是tensorflow版本的GLUE分类
 | V100    | AMP | 22s | 0.8646/0.8385/0.8411 |
 | 1080 Ti | FP32 | 55s | - |
 
-<<<<<<< HEAD
 对于相同的硬件和超参数（使用相同的批次大小），混合精度（AMP）大大减少了训练时间。
-=======
-Mixed precision (AMP) reduces the training time considerably for the same hardware and hyper-parameters (same batch size was used).
-
 
 ## Run generic text classification script in TensorFlow
 
