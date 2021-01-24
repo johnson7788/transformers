@@ -45,41 +45,35 @@ logger = logging.getLogger(__name__)
 @dataclass
 class DataTrainingArguments:
     """
-    Arguments pertaining to what data we are going to input our model for training and eval.
-
-    Using `HfArgumentParser` we can turn this class
-    into argparse arguments to be able to specify them on
-    the command line.
+    要输入哪些数据以输入我们的模型进行训练和评估的Arguments。
+    使用`HfArgumentParser`，我们可以将此类转换为argparse参数，以便能够在命令行上指定它们。
     """
-
     task_name: Optional[str] = field(
         default=None,
-        metadata={"help": "The name of the task to train on: " + ", ".join(task_to_keys.keys())},
+        metadata={"help": "训练任务的名称 : " + ", ".join(task_to_keys.keys())},
     )
     max_seq_length: int = field(
         default=128,
         metadata={
-            "help": "The maximum total input sequence length after tokenization. Sequences longer "
-            "than this will be truncated, sequences shorter will be padded."
+            "help": "分词后的最大总输入序列长度。 长度大于此长度的序列将被截断，较短的序列将被填充。"
         },
     )
     overwrite_cache: bool = field(
-        default=False, metadata={"help": "Overwrite the cached preprocessed datasets or not."}
+        default=False, metadata={"help": "是否覆盖cached预处理数据集。"}
     )
     pad_to_max_length: bool = field(
         default=True,
         metadata={
-            "help": "Whether to pad all samples to `max_seq_length`. "
-            "If False, will pad the samples dynamically when batching to the maximum length in the batch."
+            "help": "是否将所有样本填充到“max_seq_length”。 如果为False，则将动态填充样本到批次中的最大长度。"
         },
     )
     train_file: Optional[str] = field(
-        default=None, metadata={"help": "A csv or a json file containing the training data."}
+        default=None, metadata={"help": "包含训练数据的csv或json文件。 "}
     )
     validation_file: Optional[str] = field(
-        default=None, metadata={"help": "A csv or a json file containing the validation data."}
+        default=None, metadata={"help": "包含验证数据的csv或json文件。 "}
     )
-    test_file: Optional[str] = field(default=None, metadata={"help": "A csv or a json file containing the test data."})
+    test_file: Optional[str] = field(default=None, metadata={"help": "包含测试数据的csv或json文件。"})
 
     def __post_init__(self):
         if self.task_name is not None:
@@ -117,11 +111,11 @@ class ModelArguments:
     )
     use_fast_tokenizer: bool = field(
         default=True,
-        metadata={"help": "Whether to use one of the fast tokenizer (backed by the tokenizers library) or not."},
+        metadata={"help": "是否使用快速tokenizer之一(由tokenizer库支持)。"},
     )
     model_revision: str = field(
         default="main",
-        metadata={"help": "The specific model version to use (can be a branch name, tag name or commit id)."},
+        metadata={"help": "要使用的特定模型版本 (can be a branch name, tag name or commit id)."},
     )
     use_auth_token: bool = field(
         default=False,
@@ -135,7 +129,6 @@ class ModelArguments:
 def main():
     # 在src/transformers/training_args.py中查看所有可能的参数，
     # 或将 -help标志传递给此脚本。 现在，我们保留了不同的参数集，以更清晰地分离关注点。
-
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
     if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
         # 如果我们仅向脚本传递一个参数，并且它是json文件的路径，
