@@ -14,6 +14,7 @@ from transformers import (
     AutoConfig,
     AutoModelForTokenClassification,
     AutoTokenizer,
+    BertTokenizerFast,
     DataCollatorForTokenClassification,
     HfArgumentParser,
     PreTrainedTokenizerFast,
@@ -218,11 +219,19 @@ def main():
         finetuning_task=data_args.task_name,    #ner
         cache_dir=model_args.cache_dir,        #None
     )
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
-        cache_dir=model_args.cache_dir,
-        use_fast=True,
-    )
+    if model_args.model_name_or_path == "albert_model":
+        #我们的albertmodel使用的是Bert的tokenizer
+        tokenizer = BertTokenizerFast.from_pretrained(
+            model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
+            cache_dir=model_args.cache_dir,
+            use_fast=True,
+        )
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(
+            model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
+            cache_dir=model_args.cache_dir,
+            use_fast=True,
+        )
     model = AutoModelForTokenClassification.from_pretrained(
         model_args.model_name_or_path,
         from_tf=bool(".ckpt" in model_args.model_name_or_path),
