@@ -302,7 +302,7 @@ def main():
         # {list: 11}[-100, 3, 0, 7, 0, 0, 0, 7, 0, 0, -100]
         # {list: 4}[-100, 1, 2, -100]
         tokenized_inputs["labels"] = labels
-        print(f"一个batch的tokenized_inputs,{tokenized_inputs}")
+        # print(f"一个batch的tokenized_inputs,{tokenized_inputs}")
         return tokenized_inputs
     #处理数据，用map函数
     tokenized_datasets = datasets.map(
