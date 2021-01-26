@@ -276,6 +276,6 @@ cosmetic_run_ner_predict_api.py
 使用自定义数据集:包含的column  ['id', 'ner_tags', 'tokens']
 ```buildoutcfg
 cd myexample
-python cosmetics_run_ner.py --model_name_or_path albert_model --dataset_name ner6 --script_file data/ner6.py --train_file dataset/ner6/train.txt --validation_file dataset/ner6/dev.txt --test_file dataset/ner6/test.txt --output_dir ner6 --do_train --do_eval --do_predict --max_length 128 --save_total_limit 5
+python cosmetics_run_ner.py --model_name_or_path albert_model --dataset_name ner6 --script_file data/ner6.py --train_file dataset/ner6/train.txt --validation_file dataset/ner6/dev.txt --test_file dataset/ner6/test.txt --output_dir ner6 --do_train --do_eval --do_predict --max_length 128 --save_total_limit 5 --per_device_train_batch_size 16 --gradient_accumulation_steps 4
 
 ```
