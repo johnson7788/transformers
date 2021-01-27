@@ -265,7 +265,7 @@ python cosmetics_run_ner.py --model_name_or_path hfl/chinese-macbert-base --data
 12/10/2020 07:56:50 - INFO - __main__ -     epoch = 3.0
 
 #使用已经训练好的模型做预测
-python cosmetics_run_ner.py --model_name_or_path cosmetic_ner --dataset_name cosmetic_ner --script_file data/cosmetic_ner.py --train_file dataset/cosmetic/train.txt --validation_file dataset/cosmetic/dev.txt --test_file dataset/cosmetic/test.txt --output_dir cosmetic_ner --do_predict --max_length 64
+python cosmetic_run_ner.py --model_name_or_path cosmetic_ner --dataset_name cosmetic_ner --script_file data/cosmetic_ner.py --train_file dataset/cosmetic/train.txt --validation_file dataset/cosmetic/dev.txt --test_file dataset/cosmetic/test.txt --output_dir cosmetic_ner --do_predict --max_length 64
 
 #flask api接口
 cosmetic_run_ner_predict_api.py
@@ -278,6 +278,6 @@ cosmetic_run_ner_predict_api.py
 cd myexample
 python cosmetic_run_ner.py --model_name_or_path albert_model --dataset_name ner6 --script_file data/ner6.py --train_file dataset/ner6/train.txt --validation_file dataset/ner6/dev.txt --test_file dataset/ner6/test.txt --output_dir ner6 --do_train --do_eval --do_predict --max_length 128 --save_total_limit 5 --per_device_train_batch_size 16 --gradient_accumulation_steps 4 --evaluation_strategy steps --eval_steps 1000
 
-python  msra_run_ner.py --model_name_or_path albert_model --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128 --save_total_limit 5 --per_device_train_batch_size 16 --gradient_accumulation_steps 4 --evaluation_strategy steps --eval_steps 1000
+python msra_run_ner.py --model_name_or_path albert_model --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128 --save_total_limit 5 --per_device_train_batch_size 16 --gradient_accumulation_steps 4 --evaluation_strategy steps --eval_steps 1000
 
 ```
