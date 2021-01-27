@@ -251,6 +251,20 @@ python msra_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_n
 12/09/2020 09:53:40 - INFO - __main__ -     epoch = 3.0
 ```
 
+## 使用albert测试msra-ner
+```buildoutcfg
+python msra_run_ner.py --model_name_or_path albert_model --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128 --save_total_limit 5 --per_device_train_batch_size 16 --gradient_accumulation_steps 4 --evaluation_strategy steps --eval_steps 1000
+01/27/2021 03:25:27 - INFO - __main__ -   ***** Eval results *****
+01/27/2021 03:25:27 - INFO - __main__ -     eval_loss = 0.028575880452990532
+01/27/2021 03:25:27 - INFO - __main__ -     eval_accuracy_score = 0.9923664591310547
+01/27/2021 03:25:27 - INFO - __main__ -     eval_precision = 0.9270736685841529
+01/27/2021 03:25:27 - INFO - __main__ -     eval_recall = 0.9348802395209581
+01/27/2021 03:25:27 - INFO - __main__ -     eval_f1 = 0.9309605888381627
+01/27/2021 03:25:27 - INFO - __main__ -     eval_runtime = 69.2287
+01/27/2021 03:25:27 - INFO - __main__ -     eval_samples_per_second = 49.734
+01/27/2021 03:25:27 - INFO - __main__ -     epoch = 3.0
+```
+
 # cosemtics MacBert
 使用自定义数据集:包含的column  ['id', 'ner_tags', 'tokens']
 ```buildoutcfg
@@ -277,7 +291,5 @@ cosmetic_run_ner_predict_api.py
 ```buildoutcfg
 cd myexample
 python cosmetic_run_ner.py --model_name_or_path albert_model --dataset_name ner6 --script_file data/ner6.py --train_file dataset/ner6/train.txt --validation_file dataset/ner6/dev.txt --test_file dataset/ner6/test.txt --output_dir ner6 --do_train --do_eval --do_predict --max_length 128 --save_total_limit 5 --per_device_train_batch_size 16 --gradient_accumulation_steps 4 --evaluation_strategy steps --eval_steps 1000
-
-python msra_run_ner.py --model_name_or_path albert_model --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128 --save_total_limit 5 --per_device_train_batch_size 16 --gradient_accumulation_steps 4 --evaluation_strategy steps --eval_steps 1000
 
 ```

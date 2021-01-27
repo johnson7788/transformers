@@ -280,6 +280,7 @@ def main():
 
     # Preprocessing the datasets
     if data_args.task_name is not None:
+        # 对于sstb:  sentence1_key, sentence2_key = ('sentence1', 'sentence2')
         sentence1_key, sentence2_key = task_to_keys[data_args.task_name]
     else:
         # Again, we try to have some nice defaults but don't hesitate to tweak to your use case.
@@ -320,7 +321,10 @@ def main():
         label_to_id = {v: i for i, v in enumerate(label_list)}
 
     def preprocess_function(examples):
+        """"
         # Tokenize the texts
+        examples: {'idx': [0, 1], 'label': [5.0, 3.799999952316284], 'sentence1': ['A plane is taking off.', 'A man is playing a large flute.'], 'sentence2': ['An air plane is taking off.', 'A man is playing a flute.']}
+        """
         args = (
             (examples[sentence1_key],) if sentence2_key is None else (examples[sentence1_key], examples[sentence2_key])
         )
