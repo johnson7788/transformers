@@ -1,6 +1,9 @@
-# coding=utf-8
-
-"""加载Cosmetic NER Dataset"""
+# -*- coding: utf-8 -*-
+# @Date  : 2021/1/27 10:30 上午
+# @File  : gen_data.py
+# @Author: johnson
+# @Contact : github: johnson7788
+# @Desc  : 二分类的数据集, 上下句是连贯的，那么值为1，否则为0
 
 import logging
 
@@ -19,7 +22,7 @@ _CITATION = """\
 """
 
 _DESCRIPTION = """\
-ner识别数据
+连贯性测试
 """
 
 class CosmeticNerConfig(datasets.BuilderConfig):
@@ -36,7 +39,7 @@ class CosmeticNer(datasets.GeneratorBasedBuilder):
     """Cosmetic NER dataset."""
     # 注意这里的name会与load_dataset加载时的name进行对应,否则会提示找不到
     BUILDER_CONFIGS = [
-        CosmeticNerConfig(name="cosmetic_ner", version=datasets.Version("1.0.0"), description="Cosmetic NER dataset"),
+        CosmeticNerConfig(name="ner6", version=datasets.Version("1.0.0"), description="NER 6 dataset"),
     ]
 
     def _info(self):
@@ -54,6 +57,12 @@ class CosmeticNer(datasets.GeneratorBasedBuilder):
                                 "I-COM",
                                 "B-EFF",
                                 "I-EFF",
+                                "B-FRA",
+                                "I-FRA",
+                                "B-PAC",
+                                "I-PAC",
+                                "B-SKI",
+                                "I-SKI",
                             ]
                         )
                     ),

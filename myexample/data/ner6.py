@@ -13,12 +13,12 @@ import datasets
 
 
 _CITATION = """\
-@inproceedings{lavector,
+@inproceedings{test,
   author    = {johnson},
   title     = {Cosmetic dataset},
-  booktitle = {lavector},
+  booktitle = {test},
   pages     = {100},
-  publisher = {lavector},
+  publisher = {test},
   year      = {2020}
 }
 """

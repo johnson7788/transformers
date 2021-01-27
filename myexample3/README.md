@@ -403,3 +403,8 @@ python run_xnli.py \
 ```bash
 acc = 0.7093812375249501
 ```
+
+
+# 句子连贯性分类
+python sequence_classfication.py --model_name_or_path albert-base-v2 --train_file dataset/train.json --validation_file dataset/dev.json --test_file dataset/test.json \
+--output_dir smooth --do_train --do_eval --max_seq_length 64 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3
