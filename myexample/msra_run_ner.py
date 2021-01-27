@@ -14,6 +14,7 @@ from transformers import (
     AutoConfig,
     AutoModelForTokenClassification,
     AutoTokenizer,
+    BertTokenizerFast,
     DataCollatorForTokenClassification,
     HfArgumentParser,
     PreTrainedTokenizerFast,
@@ -102,6 +103,7 @@ class DataTrainingArguments:
     )
 
     def __post_init__(self):
+        #在parse参数时，会自动检查dataset的后缀或文件 parser.parse_args_into_dataclasses()
         if self.dataset_name is None and self.train_file is None and self.validation_file is None:
             raise ValueError("Need either a dataset name or a training/validation file.")
         else:
@@ -217,11 +219,19 @@ def main():
         finetuning_task=data_args.task_name,    #ner
         cache_dir=model_args.cache_dir,        #None
     )
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
-        cache_dir=model_args.cache_dir,
-        use_fast=True,
-    )
+    if model_args.model_name_or_path == "albert_model":
+        #我们的albertmodel使用的是Bert的tokenizer
+        tokenizer = BertTokenizerFast.from_pretrained(
+            model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
+            cache_dir=model_args.cache_dir,
+            use_fast=True,
+        )
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(
+            model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
+            cache_dir=model_args.cache_dir,
+            use_fast=True,
+        )
     model = AutoModelForTokenClassification.from_pretrained(
         model_args.model_name_or_path,
         from_tf=bool(".ckpt" in model_args.model_name_or_path),

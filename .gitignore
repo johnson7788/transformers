@@ -176,3 +176,5 @@ myexample2/roberta_model/
 *.lock
 myexample/dataset/ner6/
 myexample/albert_model/
+myexample/dataset/msra/
+myexample/ner6/

@@ -224,8 +224,8 @@ python conll2003_run_ner.py --model_name_or_path bert-base-uncased --dataset_nam
 12/09/2020 08:33:19 - INFO - __main__ -     eval_f1 = 0.9475184439973172
 12/09/2020 08:33:19 - INFO - __main__ -     epoch = 3.0
 ```
-
-# 使用BERT的效果,最大序列长度128， 默认3个epoch
+# msra_ner
+## 使用BERT测试msra_ner的效果,最大序列长度128， 默认3个epoch
 ```buildoutcfg
 cd myexample
 python msra_run_ner.py --model_name_or_path bert-base-chinese --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128 --save_total_limit 5
@@ -238,7 +238,7 @@ python msra_run_ner.py --model_name_or_path bert-base-chinese --dataset_name msr
 12/10/2020 06:11:51 - INFO - __main__ -     epoch = 3.0
 ```
 
-# 使用MacBERT的效果,最大序列长度128, 默认3个epoch
+## 使用MacBERT测试msra_ner的效果,最大序列长度128, 默认3个epoch
 ```buildoutcfg
 cd myexample
 python msra_run_ner.py --model_name_or_path hfl/chinese-macbert-base --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128 --save_total_limit 5
@@ -272,10 +272,12 @@ cosmetic_run_ner_predict_api.py
 ```
 
 #  ner6 测试
-# cosemtics xlarge albert
+## xlarge albert
 使用自定义数据集:包含的column  ['id', 'ner_tags', 'tokens']
 ```buildoutcfg
 cd myexample
-python cosmetics_run_ner.py --model_name_or_path albert_model --dataset_name ner6 --script_file data/ner6.py --train_file dataset/ner6/train.txt --validation_file dataset/ner6/dev.txt --test_file dataset/ner6/test.txt --output_dir ner6 --do_train --do_eval --do_predict --max_length 128 --save_total_limit 5 --per_device_train_batch_size 16 --gradient_accumulation_steps 4
+python cosmetic_run_ner.py --model_name_or_path albert_model --dataset_name ner6 --script_file data/ner6.py --train_file dataset/ner6/train.txt --validation_file dataset/ner6/dev.txt --test_file dataset/ner6/test.txt --output_dir ner6 --do_train --do_eval --do_predict --max_length 128 --save_total_limit 5 --per_device_train_batch_size 16 --gradient_accumulation_steps 4 --evaluation_strategy steps --eval_steps 1000
+
+python  msra_run_ner.py --model_name_or_path albert_model --dataset_name msra_ner --output_dir msra_ner --do_train --do_eval --max_length 128 --save_total_limit 5 --per_device_train_batch_size 16 --gradient_accumulation_steps 4 --evaluation_strategy steps --eval_steps 1000
 
 ```
