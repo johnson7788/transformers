@@ -23,101 +23,81 @@ import os
 import datasets
 
 
-# TODO: Add BibTeX citation
-# Find for instance the citation on arxiv or on the dataset repo/website
+
 _CITATION = """\
 @InProceedings{huggingface:dataset,
-title = {A great new dataset},
-authors={huggingface, Inc.
+title = {smooth test},
+authors={johnson
 },
 year={2020}
 }
 """
 
-# TODO: Add description of the dataset here
-# You can copy an official description
+#数据集描述
 _DESCRIPTION = """\
-This new dataset is designed to solve this great NLP task and is crafted with a lot of care. 
+连贯性测试数据集
 """
 
-# TODO: Add a link to an official homepage for the dataset here
-_HOMEPAGE = ""
+_HOMEPAGE = "johnson homepage"
 
-# TODO: Add the licence for the dataset here if you can find it
-_LICENSE = ""
+_LICENSE = "johnson license"
 
-# TODO: Add link to the official dataset URLs here
-# The HuggingFace dataset library don't host the datasets but only point to the original files
-# This can be an arbitrary nested dict/list of URLs (see below in `_split_generators` method)
+# 数据集下载地址
 _URLs = {
-    'first_domain': "https://huggingface.co/great-new-dataset-first_domain.zip",
-    'second_domain': "https://huggingface.co/great-new-dataset-second_domain.zip",
+    'mini_smooth': "https://huggingface.co/great-new-dataset-first_domain.zip",
+    'std_smooth': "https://huggingface.co/great-new-dataset-second_domain.zip",
 }
 
 
-# TODO: Name of the dataset usually match the script name with CamelCase instead of snake_case
-class NewDataset(datasets.GeneratorBasedBuilder):
-    """TODO: Short description of my dataset."""
+#通常CamelCase命名
+class SmoothDataset(datasets.GeneratorBasedBuilder):
+    """连贯性测试数据集"""
 
     VERSION = datasets.Version("1.1.0")
 
-    # This is an example of a dataset with multiple configurations.
-    # If you don't want/need to define several sub-sets in your dataset,
-    # just remove the BUILDER_CONFIG_CLASS and the BUILDER_CONFIGS attributes.
-
-    # If you need to make complex sub-parts in the datasets with configurable options
-    # You can create your own builder configuration class to store attribute, inheriting from datasets.BuilderConfig
-    # BUILDER_CONFIG_CLASS = MyBuilderConfig
-
-    # You will be able to load one or the other configurations in the following list with
-    # data = datasets.load_dataset('my_dataset', 'first_domain')
-    # data = datasets.load_dataset('my_dataset', 'second_domain')
+    # 可以使用如下方式加载，
+    # data = datasets.load_dataset(path='my_dataset', name='mini_smooth')
+    # data = datasets.load_dataset(path='my_dataset', name='std_smooth')
     BUILDER_CONFIGS = [
-        datasets.BuilderConfig(name="first_domain", version=VERSION, description="This part of my dataset covers a first domain"),
-        datasets.BuilderConfig(name="second_domain", version=VERSION, description="This part of my dataset covers a second domain"),
+        datasets.BuilderConfig(name="mini_smooth", version=VERSION, description="mini数据集"),
+        datasets.BuilderConfig(name="std_smooth", version=VERSION, description="正常数量数据集"),
     ]
 
-    DEFAULT_CONFIG_NAME = "first_domain"  # It's not mandatory to have a default configuration. Just use one if it make sense.
+    DEFAULT_CONFIG_NAME = "std_smooth"
 
     def _info(self):
-        # TODO: This method specifies the datasets.DatasetInfo object which contains informations and typings for the dataset
-        if self.config.name == "first_domain":  # This is the name of the configuration selected in BUILDER_CONFIGS above 
+        # 指定datasets.DatasetInfo类包含的数据集信息
+        # 判断传入的参数，  data = datasets.load_dataset(path='my_dataset', name='std_smooth')
+        if self.config.name == "std_smooth":
             features = datasets.Features(
                 {
-                    "sentence": datasets.Value("string"),
-                    "option1": datasets.Value("string"),
-                    "answer": datasets.Value("string")
-                    # These are the features of your dataset like images, labels ...
+                    "sentence1": datasets.Value("string"),
+                    "sentence2": datasets.Value("string"),
+                    "label": datasets.Value("string")
+                    # 还可传入其它特征
                 }
             )
-        else:  # This is an example to show how to have different features for "first_domain" and "second_domain"
+        else:  # 这里假设它们传入的features一样，其实可以根据name进行修改
             features = datasets.Features(
                 {
-                    "sentence": datasets.Value("string"),
-                    "option2": datasets.Value("string"),
-                    "second_domain_answer": datasets.Value("string")
-                    # These are the features of your dataset like images, labels ...
+                    "sentence1": datasets.Value("string"),
+                    "sentence2": datasets.Value("string"),
+                    "label": datasets.Value("string")
                 }
             )
         return datasets.DatasetInfo(
-            # This is the description that will appear on the datasets page.
             description=_DESCRIPTION,
-            # This defines the different columns of the dataset and their types
-            features=features,  # Here we define them above because they are different between the two configurations
-            # If there's a common (input, target) tuple from the features,
-            # specify them here. They'll be used if as_supervised=True in
-            # builder.as_dataset.
+            #不同的数据集可以不同的特征，即不同的column
+            features=features,
+            # 如果特征包含一个通用的(input, target)元组，请在此处指定它们。They'll be used in builder.as_dataset,  as_supervised=True
             supervised_keys=None,
-            # Homepage of the dataset for documentation
             homepage=_HOMEPAGE,
-            # License for the dataset if available
             license=_LICENSE,
-            # Citation for the dataset
             citation=_CITATION,
         )
 
     def _split_generators(self, dl_manager):
-        """Returns SplitGenerators."""
+        """下载数据集"""
         # TODO: This method is tasked with downloading/extracting the data and defining the splits depending on the configuration
         # If several configurations are possible (listed in BUILDER_CONFIGS), the configuration selected by the user is in self.config.name
 
@@ -129,7 +109,7 @@ class NewDataset(datasets.GeneratorBasedBuilder):
         return [
             datasets.SplitGenerator(
                 name=datasets.Split.TRAIN,
-                # These kwargs will be passed to _generate_examples
+                # 下面的参数将传给 _generate_examples
                 gen_kwargs={
                     "filepath": os.path.join(data_dir, "train.jsonl"),
                     "split": "train",
@@ -137,7 +117,7 @@ class NewDataset(datasets.GeneratorBasedBuilder):
             ),
             datasets.SplitGenerator(
                 name=datasets.Split.TEST,
-                # These kwargs will be passed to _generate_examples
+                # 下面的参数将传给 _generate_examples
                 gen_kwargs={
                     "filepath": os.path.join(data_dir, "test.jsonl"),
                     "split": "test"
@@ -145,7 +125,7 @@ class NewDataset(datasets.GeneratorBasedBuilder):
             ),
             datasets.SplitGenerator(
                 name=datasets.Split.VALIDATION,
-                # These kwargs will be passed to _generate_examples
+                # 下面的参数将传给 _generate_examples
                 gen_kwargs={
                     "filepath": os.path.join(data_dir, "dev.jsonl"),
                     "split": "dev",
