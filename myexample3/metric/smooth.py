@@ -73,10 +73,10 @@ class NewMetric(datasets.Metric):
             description=_DESCRIPTION,
             citation=_CITATION,
             inputs_description=_KWARGS_DESCRIPTION,
-            # 定义预测和真实标签的格式
+            # 定义预测和真实标签的格式, 注意预测时的标签格式，一般为int格式, 如果是回归模型为float32
             features=datasets.Features({
-                'predictions': datasets.Value('string'),
-                'references': datasets.Value('string'),
+                'predictions': datasets.Value("int64"),
+                'references': datasets.Value("int64"),
             }),
             homepage="http://metric.homepage",
             #其它介绍信息

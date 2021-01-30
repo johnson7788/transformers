@@ -557,7 +557,6 @@ class Glue(datasets.GeneratorBasedBuilder):
                 reader = csv.DictReader(f, delimiter="\t", quoting=csv.QUOTE_NONE)
                 if is_cola_non_test:
                     reader = csv.reader(f, delimiter="\t", quoting=csv.QUOTE_NONE)
-
                 for n, row in enumerate(reader):
                     if is_cola_non_test:
                         row = {
