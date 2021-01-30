@@ -408,3 +408,7 @@ acc = 0.7093812375249501
 # 句子连贯性分类
 python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name smooth --task_script data/smooth.py --task_dir dataset/ --metric_script metric/smooth.py \
 --output_dir smooth --do_train --do_eval --max_seq_length 64 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3
+
+#mini,100条数据训练
+python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name mini_smooth --task_script data/smooth.py --task_dir dataset/ --metric_script metric/smooth.py \
+--output_dir smooth --do_train --do_eval --max_seq_length 64 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3

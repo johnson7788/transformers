@@ -136,16 +136,11 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
 
         with open(filepath, encoding="utf-8") as f:
             data = json.load(f)
+            if self.config.name == "mini_smooth":
+                data = data[:100]
             for id_, row in enumerate(data):
-                if self.config.name == "smooth":
-                    yield id_, {
-                        "sentence1": row[0],
-                        "sentence2": row[1],
-                        "label": row[2],
-                    }
-                else:
-                    yield id_, {
-                        "sentence1": row[0],
-                        "sentence2": row[1],
-                        "label": row[2],
-                    }
+                yield id_, {
+                    "sentence1": row[0],
+                    "sentence2": row[1],
+                    "label": row[2],
+                }
