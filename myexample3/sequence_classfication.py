@@ -287,9 +287,11 @@ def main():
     )
 
     # Preprocessing the datasets
-    if data_args.task_name is not None:
+    if data_args.task_name is not None and data_args.task_name in task_to_keys.keys():
         # 对于sstb:  sentence1_key, sentence2_key = ('sentence1', 'sentence2')
         sentence1_key, sentence2_key = task_to_keys[data_args.task_name]
+    elif data_args.task_name in ["smooth"]:
+        sentence1_key, sentence2_key = ('sentence1', 'sentence2')
     else:
         # Again, we try to have some nice defaults but don't hesitate to tweak to your use case.
         non_label_column_names = [name for name in datasets["train"].column_names if name != "label"]
