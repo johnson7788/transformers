@@ -56,6 +56,10 @@ class DataTrainingArguments:
         default=None,
         metadata={"help": "训练的处理脚本位置"},
     )
+    metric_script: Optional[str] = field(
+        default=None,
+        metadata={"help": "训练集的metric脚本的位置"},
+    )
     max_seq_length: int = field(
         default=128,
         metadata={
@@ -352,15 +356,15 @@ def main():
     for index in random.sample(range(len(train_dataset)), 3):
         logger.info(f"Sample {index} of the training set: {train_dataset[index]}.")
 
-    # Get the metric function
-    if data_args.task_name is not None:
-        # metric = load_metric("data/glue.py", data_args.task_name)
+    # 设置metric的脚本
+    if data_args.task_name is not None and data_args.metric_script is not None:
+        metric = load_metric(data_args.metric_script, data_args.task_name)
+    else:
         metric = load_metric("metric/glue.py", data_args.task_name)
     # TODO: When datasets metrics include regular accuracy, make an else here and remove special branch from
     # compute_metrics
 
-    # You can define your custom compute_metrics function. It takes an `EvalPrediction` object (a namedtuple with a
-    # predictions and label_ids field) and has to return a dictionary string to float.
+    # 您可以定义自定义的compute_metrics函数。 它需要一个`EvalPrediction`对象(一个带有predictions和label_ids字段的namedtuple)，并且必须返回一个值为float的字典字符串。
     def compute_metrics(p: EvalPrediction):
         preds = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
         preds = np.squeeze(preds) if is_regression else np.argmax(preds, axis=1)

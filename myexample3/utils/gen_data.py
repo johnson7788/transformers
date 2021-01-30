@@ -7,7 +7,7 @@
 # @Desc  : 生成二分类的数据集, 上下句是连贯的，那么值为1，否则为0
 from pathlib import Path
 import re
-import random
+import random, os
 import json
 from tqdm import tqdm
 
@@ -29,12 +29,13 @@ def split_train_test(data):
         data: [txt1,txt2,txt3,...]
     Returns:
     """
-    # 正样本样本组成[[sen1,sen2,1]... ]
+    # 正样本样本组成[[sen1,sen2,yes]... ]
     positive = []
     negative = []
-    dev_file = "dev.json"
-    test_file = "test.json"
-    train_file = "train.json"
+    dir_path = "../dataset"
+    dev_file = os.path.join(dir_path, "dev.json")
+    test_file = os.path.join(dir_path,"test.json")
+    train_file = os.path.join(dir_path,"train.json")
     # 随机拆分句子为正样本，txt --> sentence1, sentence2
     # 随机拆分句子为负样本, txt1, txt2  ---> sentence1(from txt1), sentence2(from txt2)
     for one in tqdm(data, desc="样本生成中: "):
@@ -46,8 +47,8 @@ def split_train_test(data):
         neg_one = random.choice(data)
         neg_len = len(neg_one)
         neg_split = random.randrange(1,neg_len-1)
-        positive.append([one[:pos_split], one[pos_split:], 1])
-        negative.append([one[:pos_split], neg_one[neg_split:], 0])
+        positive.append([one[:pos_split], one[pos_split:], "yes"])
+        negative.append([one[:pos_split], neg_one[neg_split:], "no"])
     print(f"正样本数{len(positive)}, 负样本数{len(negative)}")
     examples = positive + negative
     random.shuffle(examples)

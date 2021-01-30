@@ -1,142 +1,148 @@
-# -*- coding: utf-8 -*-
+# coding=utf-8
 # @Date  : 2021/1/27 10:30 上午
 # @File  : gen_data.py
 # @Author: johnson
 # @Contact : github: johnson7788
 # @Desc  : 二分类的数据集, 上下句是连贯的，那么值为1，否则为0
 
-import logging
+from __future__ import absolute_import, division, print_function
+
+import csv
+import json
+import os
 
 import datasets
 
 
+
 _CITATION = """\
-@inproceedings{test,
-  author    = {johnson},
-  title     = {Smooth dataset},
-  booktitle = {test},
-  pages     = {100},
-  publisher = {test},
-  year      = {2020}
+@InProceedings{huggingface:dataset,
+title = {smooth test},
+authors={johnson
+},
+year={2020}
 }
 """
 
+#数据集描述
 _DESCRIPTION = """\
-连贯性测试
+连贯性测试数据集
 """
 
-class SmoothConfig(datasets.BuilderConfig):
-    def __init__(self, **kwargs):
-        """构建配置文件
+_HOMEPAGE = "johnson homepage"
 
-        Args:
-          **kwargs: keyword arguments forwarded to super.
-        """
-        super(SmoothConfig, self).__init__(**kwargs)
+_LICENSE = "johnson license"
+
+# 数据集下载地址
+_URLs = {
+    # 'mini_smooth': "https://huggingface.co/great-new-dataset-first_domain.zip",
+    'mini_smooth': "/Users/admin/git/transformers/myexample3/dataset",
+    'std_smooth': "/Users/admin/git/transformers/myexample3/dataset",
+}
 
 
-class Smooth(datasets.GeneratorBasedBuilder):
-    """Smooth dataset."""
-    # 注意这里的name会与load_dataset加载时的name进行对应,否则会提示找不到
+#通常CamelCase命名
+class SmoothDataset(datasets.GeneratorBasedBuilder):
+    """连贯性测试数据集"""
+
+    VERSION = datasets.Version("1.1.0")
+
+    # 可以使用如下方式加载，
+    # data = datasets.load_dataset(path='my_dataset', name='mini_smooth')
+    # data = datasets.load_dataset(path='my_dataset', name='std_smooth')
     BUILDER_CONFIGS = [
-        SmoothConfig(name="smooth", version=datasets.Version("1.0.0"), description="smooth dataset"),
+        datasets.BuilderConfig(name="mini_smooth", version=VERSION, description="mini数据集"),
+        datasets.BuilderConfig(name="std_smooth", version=VERSION, description="正常数量数据集"),
     ]
 
+    DEFAULT_CONFIG_NAME = "std_smooth"
+
     def _info(self):
+        # 指定datasets.DatasetInfo类包含的数据集信息
+        # 判断传入的参数，  data = datasets.load_dataset(path='my_dataset', name='std_smooth')
+        if self.config.name == "std_smooth":
+            features = datasets.Features(
+                {
+                    "sentence1": datasets.Value("string"),
+                    "sentence2": datasets.Value("string"),
+                    "label": datasets.Value("string")
+                    # 还可传入其它特征
+                }
+            )
+        else:  # 这里假设它们传入的features一样，其实可以根据name进行修改
+            features = datasets.Features(
+                {
+                    "sentence1": datasets.Value("string"),
+                    "sentence2": datasets.Value("string"),
+                    "label": datasets.Value("string")
+                }
+            )
         return datasets.DatasetInfo(
             description=_DESCRIPTION,
-            features=datasets.Features(
-                {
-                    "id": datasets.Value("string"),
-                    "tokens": datasets.Sequence(datasets.Value("string")),
-                    "label": datasets.Sequence(
-                        datasets.features.ClassLabel(
-                            names=[
-                                "O",
-                                "B-COM",
-                                "I-COM",
-                                "B-EFF",
-                                "I-EFF",
-                                "B-FRA",
-                                "I-FRA",
-                                "B-PAC",
-                                "I-PAC",
-                                "B-SKI",
-                                "I-SKI",
-                            ]
-                        )
-                    ),
-                }
-            ),
+            #不同的数据集可以不同的特征，即不同的column
+            features=features,
+            # 如果特征包含一个通用的(input, target)元组，请在此处指定它们。They'll be used in builder.as_dataset,  as_supervised=True
             supervised_keys=None,
-            homepage="https://example.com/Cosmetic",
+            homepage=_HOMEPAGE,
+            license=_LICENSE,
             citation=_CITATION,
         )
 
     def _split_generators(self, dl_manager):
+        """下载数据集
+        此方法的任务是下载/提取数据并根据配置定义拆分
+        根据不同的配置BUILDER_CONFIGS，和数据集的name定义
         """
-                返回SplitGenerators生成器, 下载数据和定义拆分数据
-        可以使用self的config，里面包含了data_dir, data_files的从load_dataset传过来的参数
-        例如: dataset = load_dataset('msra/msra_ner.py', data_dir='msra', data_files={'train': 'msra/mini.txt', 'test': 'msra/mini.txt'})
-        那么self中会有如下参数
-         config = {BuilderConfig} BuilderConfig(name='default-21c5277b4d9558dd', version=0.0.0, data_dir='msra', data_files={'train': 'msra/mini.txt', 'test': 'msra/mini.txt'}, description=None)
-         data_dir = {str} 'msra'
-         data_files = {dict: 2} {'train': 'msra/mini.txt', 'test': 'msra/mini.txt'}
-         description = {NoneType} None
-         name = {str} 'default-21c5277b4d9558dd'
-        Args:
-            dl_manager: dl_manager is a nlp.download.DownloadManager 下载器，从url下载数据并解压
-
-        Returns:
-
-        """
-        if not self.config.data_files:
-            print("错误，必须提供data_files参数")
-            return None
-        #注意gen_kwargs
-        #调用_generate_examples加载训练集样本, 这个gen_kwargs是传给_generate_examples的，可以自己设定
+        # dl_manager是一个datasets.download.DownloadManager，可用于下载和提取URL，
+        # 它可以接受任何类型或嵌套的列表/字典，并将返回相同的结构，url也可以替换为局部文件的路径。
+        # 默认情况下，将提取压缩包，如果文件是压缩的，并返回提取压缩的缓存文件夹的路径，而不是压缩文件
+        my_urls = _URLs[self.config.name]
+        data_dir = dl_manager.download_and_extract(my_urls)
         return [
-            datasets.SplitGenerator(name=datasets.Split.TRAIN, gen_kwargs={"filepath": self.config.data_files["train"]}),
-            datasets.SplitGenerator(name=datasets.Split.TEST, gen_kwargs={"filepath": self.config.data_files["test"]}),
-            datasets.SplitGenerator(name=datasets.Split.VALIDATION, gen_kwargs={"filepath": self.config.data_files["validation"]}),
+            datasets.SplitGenerator(
+                name=datasets.Split.TRAIN,
+                # 下面的参数将传给 _generate_examples
+                gen_kwargs={
+                    "filepath": os.path.join(data_dir, "train.json"),
+                    "split": "train",
+                },
+            ),
+            datasets.SplitGenerator(
+                name=datasets.Split.TEST,
+                # 下面的参数将传给 _generate_examples
+                gen_kwargs={
+                    "filepath": os.path.join(data_dir, "test.json"),
+                    "split": "test"
+                },
+            ),
+            datasets.SplitGenerator(
+                name=datasets.Split.VALIDATION,
+                # 下面的参数将传给 _generate_examples
+                gen_kwargs={
+                    "filepath": os.path.join(data_dir, "dev.json"),
+                    "split": "dev",
+                },
+            ),
         ]
 
-    def _generate_examples(self, filepath):
-        """
-        yields 返回样本, 参数由_split_generators返回的gen_kwargs提供
-        :param filepath: 读取的文件路径
-        :return: Yiled 一个 (key, example) tuples的元祖数据
-        Args:
-            filepath:
-        Returns:
+    def _generate_examples(self, filepath, split):
+        """ Yields 方法返回每个样本. """
+        # 被函数_split_generators 调用，参数也是通过 gen_kwargs被传过来
+        # 它负责打开给定的文件并从数据集中产生(key, example)元组
+        # key是不重要的，只是习惯于这样
 
-        """
-        logging.info("开始生成样本= %s", filepath)
         with open(filepath, encoding="utf-8") as f:
-            guid = 0
-            tokens = []
-            ner_tags = []
-            for line in f:
-                line_stripped = line.strip()
-                if line_stripped == "":
-                    if tokens:
-                        yield guid, {
-                            "id": str(guid),
-                            "tokens": tokens,
-                            "ner_tags": ner_tags,
-                        }
-                        guid += 1
-                        tokens = []
-                        ner_tags = []
+            data = json.load(f)
+            for id_, row in enumerate(data):
+                if self.config.name == "std_smooth":
+                    yield id_, {
+                        "sentence1": row[0],
+                        "sentence2": row[1],
+                        "label": row[2],
+                    }
                 else:
-                    splits = line_stripped.split("\t")
-                    if len(splits) == 1:
-                        splits.append("O")
-                    tokens.append(splits[0])
-                    ner_tags.append(splits[1])
-            #最后一条样本
-            yield guid, {
-                "id": str(guid),
-                "tokens": tokens,
-                "ner_tags": ner_tags,
-            }
+                    yield id_, {
+                        "sentence1": row[0],
+                        "sentence2": row[1],
+                        "label": row[2],
+                    }
