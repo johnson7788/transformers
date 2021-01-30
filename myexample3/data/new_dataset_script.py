@@ -97,13 +97,13 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
         )
 
     def _split_generators(self, dl_manager):
-        """下载数据集"""
-        # TODO: This method is tasked with downloading/extracting the data and defining the splits depending on the configuration
-        # If several configurations are possible (listed in BUILDER_CONFIGS), the configuration selected by the user is in self.config.name
-
-        # dl_manager is a datasets.download.DownloadManager that can be used to download and extract URLs
-        # It can accept any type or nested list/dict and will give back the same structure with the url replaced with path to local files.
-        # By default the archives will be extracted and a path to a cached folder where they are extracted is returned instead of the archive 
+        """下载数据集
+        此方法的任务是下载/提取数据并根据配置定义拆分
+        根据不同的配置BUILDER_CONFIGS，和数据集的name定义
+        """
+        # dl_manager是一个datasets.download.DownloadManager，可用于下载和提取URL，
+        # 它可以接受任何类型或嵌套的列表/字典，并将返回相同的结构，url也可以替换为局部文件的路径。
+        # 默认情况下，将提取压缩包，如果文件是压缩的，并返回提取压缩的缓存文件夹的路径，而不是压缩文件
         my_urls = _URLs[self.config.name]
         data_dir = dl_manager.download_and_extract(my_urls)
         return [
@@ -134,10 +134,10 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
         ]
 
     def _generate_examples(self, filepath, split):
-        """ Yields examples. """
-        # TODO: This method will receive as arguments the `gen_kwargs` defined in the previous `_split_generators` method.
-        # It is in charge of opening the given file and yielding (key, example) tuples from the dataset
-        # The key is not important, it's more here for legacy reason (legacy from tfds)
+        """ Yields 方法返回每个样本. """
+        # 被函数_split_generators 调用，参数也是通过 gen_kwargs被传过来
+        # 它负责打开给定的文件并从数据集中产生(key, example)元组
+        # key是不重要的，只是习惯于这样
 
         with open(filepath, encoding="utf-8") as f:
             for id_, row in enumerate(f):
