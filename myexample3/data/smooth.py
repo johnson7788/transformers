@@ -65,7 +65,7 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
                 {
                     "sentence1": datasets.Value("string"),
                     "sentence2": datasets.Value("string"),
-                    "label": datasets.features.ClassLabel(names=["是","否"])
+                    "label": datasets.features.ClassLabel(names=["yes","no"])
                     # 还可传入其它特征
                 }
             )
@@ -74,7 +74,7 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
                 {
                     "sentence1": datasets.Value("string"),
                     "sentence2": datasets.Value("string"),
-                    "label": datasets.features.ClassLabel(names=["是","否"])
+                    "label": datasets.features.ClassLabel(names=["yes","no"])
                 }
             )
         return datasets.DatasetInfo(
