@@ -52,7 +52,7 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
     # data = datasets.load_dataset(path='my_dataset', name='std_smooth')
     BUILDER_CONFIGS = [
         datasets.BuilderConfig(name="mini_smooth", version=VERSION, description="mini数据集"),
-        datasets.BuilderConfig(name="std_smooth", version=VERSION, description="正常数量数据集"),
+        datasets.BuilderConfig(name="smooth", version=VERSION, description="正常数量数据集"),
     ]
 
     DEFAULT_CONFIG_NAME = "smooth"
@@ -65,7 +65,7 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
                 {
                     "sentence1": datasets.Value("string"),
                     "sentence2": datasets.Value("string"),
-                    "label": datasets.Value("string")
+                    "label": datasets.features.ClassLabel(names=["是","否"])
                     # 还可传入其它特征
                 }
             )
@@ -74,7 +74,7 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
                 {
                     "sentence1": datasets.Value("string"),
                     "sentence2": datasets.Value("string"),
-                    "label": datasets.Value("string")
+                    "label": datasets.features.ClassLabel(names=["是","否"])
                 }
             )
         return datasets.DatasetInfo(
@@ -96,8 +96,9 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
         # dl_manager是一个datasets.download.DownloadManager，可用于下载和提取URL，
         # 它可以接受任何类型或嵌套的列表/字典，并将返回相同的结构，url也可以替换为局部文件的路径。
         # 默认情况下，将提取压缩包，如果文件是压缩的，并返回提取压缩的缓存文件夹的路径，而不是压缩文件
-        my_urls = _URLs[self.config.name]
-        data_dir = dl_manager.download_and_extract(my_urls)
+        # my_urls = _URLs[self.config.name]
+        # data_dir = dl_manager.download_and_extract(my_urls)
+        data_dir = _URLs[self.config.name]
         return [
             datasets.SplitGenerator(
                 name=datasets.Split.TRAIN,
