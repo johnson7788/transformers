@@ -52,6 +52,10 @@ class DataTrainingArguments:
         default=None,
         metadata={"help": "训练任务的名称 : " + ", ".join(task_to_keys.keys())},
     )
+    task_dir: Optional[str] = field(
+        default=None,
+        metadata={"help": "训练数据文件夹路径"},
+    )
     task_script: Optional[str] = field(
         default=None,
         metadata={"help": "训练的处理脚本位置"},
@@ -207,7 +211,7 @@ def main():
         # Downloading and loading a dataset from the hub.
         datasets = load_dataset(path="data/glue.py", name=data_args.task_name)
     elif data_args.task_name and data_args.task_script:
-        datasets = load_dataset(path=data_args.task_script, name=data_args.task_name)
+        datasets = load_dataset(path=data_args.task_script, name=data_args.task_name, data_dir=data_args.task_dir)
     else:
         # Loading a dataset from your local files.
         # CSV/JSON training and evaluation files are needed.

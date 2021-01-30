@@ -36,8 +36,8 @@ _LICENSE = "johnson license"
 # 数据集下载地址
 _URLs = {
     # 'mini_smooth': "https://huggingface.co/great-new-dataset-first_domain.zip",
-    'mini_smooth': "/Users/admin/git/transformers/myexample3/dataset",
-    'smooth': "/Users/admin/git/transformers/myexample3/dataset",
+    'mini_smooth': "https://huggingface.co/great-new-dataset-first_domain.zip",
+    'smooth': "https://huggingface.co/great-new-dataset-first_domain.zip",
 }
 
 
@@ -96,9 +96,11 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
         # dl_manager是一个datasets.download.DownloadManager，可用于下载和提取URL，
         # 它可以接受任何类型或嵌套的列表/字典，并将返回相同的结构，url也可以替换为局部文件的路径。
         # 默认情况下，将提取压缩包，如果文件是压缩的，并返回提取压缩的缓存文件夹的路径，而不是压缩文件
-        # my_urls = _URLs[self.config.name]
-        # data_dir = dl_manager.download_and_extract(my_urls)
-        data_dir = _URLs[self.config.name]
+        if self.config.data_dir:
+            data_dir = self.config.data_dir
+        else:
+            my_urls = _URLs[self.config.name]
+            data_dir = dl_manager.download_and_extract(my_urls)
         return [
             datasets.SplitGenerator(
                 name=datasets.Split.TRAIN,
