@@ -13,7 +13,7 @@ import datasets
 _CITATION = """\
 @inproceedings{test,
   author    = {johnson},
-  title     = {Cosmetic dataset},
+  title     = {Smooth dataset},
   booktitle = {test},
   pages     = {100},
   publisher = {test},
@@ -25,21 +25,21 @@ _DESCRIPTION = """\
 连贯性测试
 """
 
-class CosmeticNerConfig(datasets.BuilderConfig):
+class SmoothConfig(datasets.BuilderConfig):
     def __init__(self, **kwargs):
         """构建配置文件
 
         Args:
           **kwargs: keyword arguments forwarded to super.
         """
-        super(CosmeticNerConfig, self).__init__(**kwargs)
+        super(SmoothConfig, self).__init__(**kwargs)
 
 
-class CosmeticNer(datasets.GeneratorBasedBuilder):
-    """Cosmetic NER dataset."""
+class Smooth(datasets.GeneratorBasedBuilder):
+    """Smooth dataset."""
     # 注意这里的name会与load_dataset加载时的name进行对应,否则会提示找不到
     BUILDER_CONFIGS = [
-        CosmeticNerConfig(name="ner6", version=datasets.Version("1.0.0"), description="NER 6 dataset"),
+        SmoothConfig(name="smooth", version=datasets.Version("1.0.0"), description="smooth dataset"),
     ]
 
     def _info(self):
@@ -49,7 +49,7 @@ class CosmeticNer(datasets.GeneratorBasedBuilder):
                 {
                     "id": datasets.Value("string"),
                     "tokens": datasets.Sequence(datasets.Value("string")),
-                    "ner_tags": datasets.Sequence(
+                    "label": datasets.Sequence(
                         datasets.features.ClassLabel(
                             names=[
                                 "O",

@@ -52,6 +52,10 @@ class DataTrainingArguments:
         default=None,
         metadata={"help": "训练任务的名称 : " + ", ".join(task_to_keys.keys())},
     )
+    task_script: Optional[str] = field(
+        default=None,
+        metadata={"help": "训练的处理脚本位置"},
+    )
     max_seq_length: int = field(
         default=128,
         metadata={
@@ -197,9 +201,11 @@ def main():
     #
     # In distributed training, the load_dataset function guarantee that only one local process can concurrently
     # download the dataset.
-    if data_args.task_name is not None:
+    if data_args.task_name in task_to_keys.keys():
         # Downloading and loading a dataset from the hub.
         datasets = load_dataset(path="data/glue.py", name=data_args.task_name)
+    elif data_args.task_name and data_args.task_script:
+        datasets = load_dataset(path=data_args.task_script, name=data_args.task_name)
     else:
         # Loading a dataset from your local files.
         # CSV/JSON training and evaluation files are needed.
