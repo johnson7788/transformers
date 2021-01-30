@@ -10,6 +10,7 @@ import re
 import random, os
 import json
 from tqdm import tqdm
+from collections import Counter
 
 def search_and_read(path='/opt/nlp/pycorrect'):
     data = []
@@ -17,9 +18,18 @@ def search_and_read(path='/opt/nlp/pycorrect'):
         with open(fpath) as f:
             for line in f:
                 #匹配英文，并且，单词数大于10
-                if len(line.split()) > 10 and not re.search("[\u4e00-\u9fa5]", line):
-                    data.append(line)
-    print(f"读取文件行数{len(data)}")
+                if len(line.split()) > 20 and not re.search("[\u4e00-\u9fa5]", line):
+                    # 按逗号和句号分隔空格分隔
+                    line_split = re.split('[,.]', line)
+                    for sentence in line_split:
+                        if len(sentence) >10:
+                            #按空格分隔
+                            tokens = sentence.split()
+                            if len(tokens) > 4:
+                                #至少这个句子包含5个词
+                                data.append(tokens)
+    cnt = Counter([len(d) for d in data])
+    print(f"生成文件行数{len(data)}, 长度最多的个数是{cnt.most_common(1)[0][1]},长度是{cnt.most_common(1)[0][0]}, 样本的长度规则是{cnt}")
     return data
 
 def split_train_test(data):
@@ -38,17 +48,27 @@ def split_train_test(data):
     train_file = os.path.join(dir_path,"train.json")
     # 随机拆分句子为正样本，txt --> sentence1, sentence2
     # 随机拆分句子为负样本, txt1, txt2  ---> sentence1(from txt1), sentence2(from txt2)
+    def gen_neg_smaple(data):
+        """
+        Args:
+            data: 所有样本
+        Returns:返回一个句子的的随机部分，作为负样本
+        """
+        # 负样本,随机组合负样本
+        neg_one = random.choice(data)
+        neg_len = len(neg_one)
+        neg_split = random.randrange(1, neg_len - 1)
+        neg_half_sentence = " ".join(neg_one[neg_split:])
+        return neg_half_sentence
     for one in tqdm(data, desc="样本生成中: "):
         #正样本
         pos_len = len(one)
         #随机取一个分隔点
         pos_split = random.randrange(1,pos_len-1)
-        #负样本,随机组合负样本
-        neg_one = random.choice(data)
-        neg_len = len(neg_one)
-        neg_split = random.randrange(1,neg_len-1)
-        positive.append([one[:pos_split], one[pos_split:], "yes"])
-        negative.append([one[:pos_split], neg_one[neg_split:], "no"])
+        neg_half_sentence1 = gen_neg_smaple(data)
+        neg_half_sentence2 = gen_neg_smaple(data)
+        positive.append([" ".join(one[:pos_split]), " ".join(one[pos_split:]), "yes"])
+        negative.append([neg_half_sentence1, neg_half_sentence2, "no"])
     print(f"正样本数{len(positive)}, 负样本数{len(negative)}")
     examples = positive + negative
     random.shuffle(examples)

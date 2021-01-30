@@ -179,3 +179,4 @@ myexample/albert_model/
 myexample/dataset/msra/
 myexample/ner6/
 myexample3/dataset/
+*.tar.gz

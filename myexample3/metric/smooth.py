@@ -63,7 +63,7 @@ def pearson_and_spearman(preds, labels):
         "spearmanr": spearman_corr,
     }
 
-class NewMetric(datasets.Metric):
+class SmoothMetric(datasets.Metric):
     """metric的描述"""
 
     def _info(self):
