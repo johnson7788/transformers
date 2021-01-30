@@ -86,8 +86,6 @@ class DataTrainingArguments:
     def __post_init__(self):
         if self.task_name is not None:
             self.task_name = self.task_name.lower()
-            if self.task_name not in task_to_keys.keys():
-                raise ValueError("Unknown task, you should pick one in " + ",".join(task_to_keys.keys()))
         elif self.train_file is None or self.validation_file is None:
             raise ValueError("Need either a GLUE task or a training/validation file.")
         else:

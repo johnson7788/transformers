@@ -37,7 +37,7 @@ _LICENSE = "johnson license"
 _URLs = {
     # 'mini_smooth': "https://huggingface.co/great-new-dataset-first_domain.zip",
     'mini_smooth': "/Users/admin/git/transformers/myexample3/dataset",
-    'std_smooth': "/Users/admin/git/transformers/myexample3/dataset",
+    'smooth': "/Users/admin/git/transformers/myexample3/dataset",
 }
 
 
@@ -55,12 +55,12 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
         datasets.BuilderConfig(name="std_smooth", version=VERSION, description="正常数量数据集"),
     ]
 
-    DEFAULT_CONFIG_NAME = "std_smooth"
+    DEFAULT_CONFIG_NAME = "smooth"
 
     def _info(self):
         # 指定datasets.DatasetInfo类包含的数据集信息
         # 判断传入的参数，  data = datasets.load_dataset(path='my_dataset', name='std_smooth')
-        if self.config.name == "std_smooth":
+        if self.config.name == "smooth":
             features = datasets.Features(
                 {
                     "sentence1": datasets.Value("string"),
@@ -134,7 +134,7 @@ class SmoothDataset(datasets.GeneratorBasedBuilder):
         with open(filepath, encoding="utf-8") as f:
             data = json.load(f)
             for id_, row in enumerate(data):
-                if self.config.name == "std_smooth":
+                if self.config.name == "smooth":
                     yield id_, {
                         "sentence1": row[0],
                         "sentence2": row[1],
