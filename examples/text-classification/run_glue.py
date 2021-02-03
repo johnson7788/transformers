@@ -30,6 +30,7 @@ from transformers import (
     AutoConfig,
     AutoModelForSequenceClassification,
     AutoTokenizer,
+    DataCollatorWithPadding,
     EvalPrediction,
     HfArgumentParser,
     PretrainedConfig,
@@ -38,7 +39,7 @@ from transformers import (
     default_data_collator,
     set_seed,
 )
-from transformers.trainer_utils import is_main_process
+from transformers.trainer_utils import get_last_checkpoint, is_main_process
 
 
 task_to_keys = {
@@ -114,20 +115,21 @@ class DataTrainingArguments:
 @dataclass
 class ModelArguments:
     """
-    关于我们要微调的model/config/tokenizer的参数。
+    Arguments pertaining to which model/config/tokenizer we are going to fine-tune from.
     """
 
     model_name_or_path: str = field(
-        metadata={"help": "huggingface.co/models中预训练模型或模型标识符的路径"}
+        metadata={"help": "Path to pretrained model or model identifier from huggingface.co/models"}
     )
     config_name: Optional[str] = field(
-        default=None, metadata={"help": "预训练的配置名称或路径（如果与model_name不同）"}
+        default=None, metadata={"help": "Pretrained config name or path if not the same as model_name"}
     )
     tokenizer_name: Optional[str] = field(
-        default=None, metadata={"help": "预训练的tokenizer生成器名称或路径（如果与model_name不同）"}
+        default=None, metadata={"help": "Pretrained tokenizer name or path if not the same as model_name"}
     )
     cache_dir: Optional[str] = field(
-        default=None, metadata={"help": "您想在哪里存储从s3下载的预训练模型,缓存模型文件夹"}
+        default=None,
+        metadata={"help": "Where do you want to store the pretrained models downloaded from huggingface.co"},
     )
     use_fast_tokenizer: bool = field(
         default=True,
@@ -147,55 +149,46 @@ class ModelArguments:
 
 
 def main():
-    # 在src/transformers/training_args.py中查看所有可能的参数，
-    # 或将 -help标志传递给此脚本。 现在，我们保留了不同的参数集，以更清晰地分离关注点。
+    # See all possible arguments in src/transformers/training_args.py
+    # or by passing the --help flag to this script.
+    # We now keep distinct sets of args, for a cleaner separation of concerns.
 
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
     if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
-        # 如果我们仅向脚本传递一个参数，并且它是json文件的路径，
-        # 让我们对其进行解析以获取参数。
+        # If we pass only one argument to the script and it's the path to a json file,
+        # let's parse it to get our arguments.
         model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
     else:
-        #通过命令行传递参数
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
-    # 判断是不是重新训练
-    if (
-        os.path.exists(training_args.output_dir)
-        and os.listdir(training_args.output_dir)
-        and training_args.do_train
-        and not training_args.overwrite_output_dir
-    ):
-        raise ValueError(
-            f"Output directory ({training_args.output_dir}) already exists and is not empty. "
-            "Use --overwrite_output_dir to overcome."
-        )
+    # Detecting last checkpoint.
+    last_checkpoint = None
+    if os.path.isdir(training_args.output_dir) and training_args.do_train and not training_args.overwrite_output_dir:
+        last_checkpoint = get_last_checkpoint(training_args.output_dir)
+        if last_checkpoint is None and len(os.listdir(training_args.output_dir)) > 0:
+            raise ValueError(
+                f"Output directory ({training_args.output_dir}) already exists and is not empty. "
+                "Use --overwrite_output_dir to overcome."
+            )
+        elif last_checkpoint is not None:
+            logger.info(
+                f"Checkpoint detected, resuming training at {last_checkpoint}. To avoid this behavior, change "
+                "the `--output_dir` or add `--overwrite_output_dir` to train from scratch."
+            )
 
-    #设置日志格式
+    # Setup logging
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
         datefmt="%m/%d/%Y %H:%M:%S",
-        level=logging.INFO if is_main_process(training_args.local_rank) else logging.WARN,
+        handlers=[logging.StreamHandler(sys.stdout)],
     )
-    #打印当前设置
+    logger.setLevel(logging.INFO if is_main_process(training_args.local_rank) else logging.WARN)
 
     # Log on each process the small summary:
     logger.warning(
         f"Process rank: {training_args.local_rank}, device: {training_args.device}, n_gpu: {training_args.n_gpu}"
         + f"distributed training: {bool(training_args.local_rank != -1)}, 16-bits training: {training_args.fp16}"
     )
-    #打印参数
-    logger.info("Training/evaluation parameters %s", training_args)
-
-    # Set seed before initializing model.
-    #随机数种子
-    set_seed(training_args.seed)
-    #num_labels 类别数量, output_mode  是任务类型，'classification'
-
-    # 加载预训练的模型和令牌生成器
-    # 分布式培训：
-    # from_pretrained方法保证只有一个本地进程可以并发下载模型和vocab。
-    #添加自定义参数finetuning_task, num_labels
     # Set the verbosity to info of the Transformers logger (on main process only):
     if is_main_process(training_args.local_rank):
         transformers.utils.logging.set_verbosity_info()
@@ -290,7 +283,6 @@ def main():
         revision=model_args.model_revision,
         use_auth_token=True if model_args.use_auth_token else None,
     )
-    # .ckpt 是可以加载tensorflow的模型
     model = AutoModelForSequenceClassification.from_pretrained(
         model_args.model_name_or_path,
         from_tf=bool(".ckpt" in model_args.model_name_or_path),
@@ -326,7 +318,7 @@ def main():
     if (
         model.config.label2id != PretrainedConfig(num_labels=num_labels).label2id
         and data_args.task_name is not None
-        and is_regression
+        and not is_regression
     ):
         # Some have all caps in their config, some don't.
         label_name_to_id = {k.lower(): v for k, v in model.config.label2id.items()}
@@ -385,6 +377,14 @@ def main():
         else:
             return {"accuracy": (preds == p.label_ids).astype(np.float32).mean().item()}
 
+    # Data collator will default to DataCollatorWithPadding, so we change it if we already did the padding.
+    if data_args.pad_to_max_length:
+        data_collator = default_data_collator
+    elif training_args.fp16:
+        data_collator = DataCollatorWithPadding(tokenizer, pad_to_multiple_of=8)
+    else:
+        data_collator = None
+
     # Initialize our Trainer
     trainer = Trainer(
         model=model,
@@ -393,15 +393,18 @@ def main():
         eval_dataset=eval_dataset if training_args.do_eval else None,
         compute_metrics=compute_metrics,
         tokenizer=tokenizer,
-        # Data collator will default to DataCollatorWithPadding, so we change it if we already did the padding.
-        data_collator=default_data_collator if data_args.pad_to_max_length else None,
+        data_collator=data_collator,
     )
 
     # Training
     if training_args.do_train:
-        train_result = trainer.train(
-            model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None
-        )
+        if last_checkpoint is not None:
+            checkpoint = last_checkpoint
+        elif os.path.isdir(model_args.model_name_or_path):
+            checkpoint = model_args.model_name_or_path
+        else:
+            checkpoint = None
+        train_result = trainer.train(resume_from_checkpoint=checkpoint)
         metrics = train_result.metrics
 
         trainer.save_model()  # Saves the tokenizer too for easy upload
@@ -421,7 +424,7 @@ def main():
     eval_results = {}
     if training_args.do_eval:
         logger.info("*** Evaluate ***")
-        # 如果是mnli, 循环以处理MNLI双重评估（匹配，不匹配)
+
         # Loop to handle MNLI double evaluation (matched, mis-matched)
         tasks = [data_args.task_name]
         eval_datasets = [eval_dataset]

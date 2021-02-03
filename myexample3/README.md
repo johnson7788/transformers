@@ -405,9 +405,20 @@ acc = 0.7093812375249501
 ```
 
 
-# 句子连贯性分类
+# 句子连贯性分类, 准确度94%
+正样本数7797, 负样本数7797
+训练集12475, 测试集1559, 开发集1560
+```
 python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name smooth --task_script data/smooth.py --task_dir dataset/ --metric_script metric/smooth.py \
---output_dir smooth --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3
+--output_dir smooth --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3 --evaluation_strategy steps --eval_steps 500
+
+01/30/2021 10:53:37 - INFO - __main__ -   ***** Eval results smooth *****
+01/30/2021 10:53:37 - INFO - __main__ -     epoch = 5.0
+01/30/2021 10:53:37 - INFO - __main__ -     eval_accuracy = 0.948076923076923
+01/30/2021 10:53:37 - INFO - __main__ -     eval_loss = 0.3888275921344757
+01/30/2021 10:53:37 - INFO - __main__ -     eval_runtime = 7.0477
+01/30/2021 10:53:37 - INFO - __main__ -     eval_samples_per_second = 221.35
+```
 
 #mini,100条数据训练
 python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name mini_smooth --task_script data/smooth.py --task_dir dataset/ --metric_script metric/smooth.py \
