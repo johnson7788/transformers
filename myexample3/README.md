@@ -115,9 +115,7 @@ python run_tf_text_classification.py \
   --overwrite_output_dir \
   --max_seq_length 128
 ```
->>>>>>> upstream/master
 
-<<<<<<< HEAD
 # Run PyTorch version
 脚本是Pytorch版本 [`run_glue.py`](https://github.com/huggingface/transformers/blob/master/examples/text-classification/run_glue.py).
 
@@ -185,7 +183,6 @@ python run_glue.py \
 
 ## Running on TPUs in PyTorch
 
-<<<<<<< HEAD
 **Update**: read the more up-to-date [Running on TPUs](../README.md#running-on-tpus) in the main README.md instead.
 
 即使在运行PyTorch时，也可以使用pytorch / xla加快Google TPU上的工作量。 有关如何设置TPU环境的信息， using `pytorch/xla`. 请参阅
@@ -201,7 +198,6 @@ how to setup your TPU environment refer to the
 
 For running your GLUE task on MNLI dataset you can run something like the following form the root of the transformers
 repo:
->>>>>>> upstream/master
 
 ```
 python examples/xla_spawn.py \
@@ -223,7 +219,6 @@ python examples/xla_spawn.py \
   --per_device_eval_batch_size=64
 ```
 
-<<<<<<< HEAD
 ### MRPC
 
 #### Fine-tuning example
