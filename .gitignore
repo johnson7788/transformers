@@ -181,3 +181,5 @@ myexample/ner6/
 myexample3/dataset/
 *.tar.gz
 myexample4/deberta-base
+myexample4/cache_deberta/
+myexample4/dataset/

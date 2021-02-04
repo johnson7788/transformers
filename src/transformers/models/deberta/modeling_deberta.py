@@ -186,7 +186,7 @@ class StableDropout(torch.nn.Module):
 
 
         """
-        if self.training and self.drop_prob > 0:
+        if self.training and self.drop_prob > 0:   #只有在训练的时候和使用dropout的时候才进行计算
             return XDropout.apply(x, self.get_context())
         return x
 
@@ -392,7 +392,7 @@ class DebertaEncoder(nn.Module):
         relative_pos=None,
         return_dict=True,
     ):
-        attention_mask = self.get_attention_mask(attention_mask)
+            attention_mask = self.get_attention_mask(attention_mask)
         relative_pos = self.get_rel_pos(hidden_states, query_states, relative_pos)
 
         all_hidden_states = () if output_hidden_states else None
@@ -712,44 +712,44 @@ class DebertaEmbeddings(nn.Module):
             input_shape = input_ids.size()
         else:
             input_shape = inputs_embeds.size()[:-1]
-
+        #序列长度
         seq_length = input_shape[1]
-
+        #如果position_ids为None，表示没有给每个token的位置id，那么通过[1, max_position_embeddings]来生成
         if position_ids is None:
             position_ids = self.position_ids[:, :seq_length]
 
         if token_type_ids is None:
             token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=self.position_ids.device)
-
+        # 输入id的嵌入--> inputs_embeds: [batch_size, seq_len, embedding_size],  torch.Size([8, 512, 768])
         if inputs_embeds is None:
             inputs_embeds = self.word_embeddings(input_ids)
 
         if self.position_embeddings is not None:
             position_embeddings = self.position_embeddings(position_ids.long())
         else:
-            position_embeddings = torch.zeros_like(inputs_embeds)
-
+            position_embeddings = torch.zeros_like(inputs_embeds) # 设置为和inputs_embeds: [batch_size, seq_len, embedding_size],一样的形状
+        #把嵌入都相加， 即内容embedding + 位置embedding + token type embedding
         embeddings = inputs_embeds
         if self.position_biased_input:
             embeddings += position_embeddings
         if self.config.type_vocab_size > 0:
             token_type_embeddings = self.token_type_embeddings(token_type_ids)
             embeddings += token_type_embeddings
-
+        #如果嵌入的尺寸和隐藏层的尺寸不相等，那么进行一次投影，使他们维度相等
         if self.embedding_size != self.config.hidden_size:
             embeddings = self.embed_proj(embeddings)
-
+        # 对embedding进行层归一化
         embeddings = self.LayerNorm(embeddings)
-
+        #如果有mask，[batch_size, seq_len]
         if mask is not None:
             if mask.dim() != embeddings.dim():
                 if mask.dim() == 4:
                     mask = mask.squeeze(1).squeeze(1)
-                mask = mask.unsqueeze(2)
-            mask = mask.to(embeddings.dtype)
-
+                mask = mask.unsqueeze(2)    # [batch_size, seq_len, 1], 末尾维度扩充
+            mask = mask.to(embeddings.dtype)    #转换下类型torch.float32
+            # 如果mask为0的token，那么embedding也为0，即不关注这个embedding
             embeddings = embeddings * mask
-
+        # 对embedding进行dropout
         embeddings = self.dropout(embeddings)
         return embeddings
 
@@ -891,19 +891,19 @@ class DebertaModel(DebertaPreTrainedModel):
         if input_ids is not None and inputs_embeds is not None:
             raise ValueError("You cannot specify both input_ids and inputs_embeds at the same time")
         elif input_ids is not None:
-            input_shape = input_ids.size()
+            input_shape = input_ids.size()    #输入的形状, torch.Size([8, 512])
         elif inputs_embeds is not None:
             input_shape = inputs_embeds.size()[:-1]
         else:
             raise ValueError("You have to specify either input_ids or inputs_embeds")
-
+        #设备是cpu还是gpu
         device = input_ids.device if input_ids is not None else inputs_embeds.device
-
+        # 如果attention_mask 不给定，那么所有地方都为1，表示每个token都计算attention
         if attention_mask is None:
             attention_mask = torch.ones(input_shape, device=device)
-        if token_type_ids is None:
+        if token_type_ids is None:   #如果token_type_ids为None，设所有都为0，表示这是一个句子，而不是2个句子
             token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=device)
-
+        # 开始把输入id，token type，位置id生成一个嵌入向量
         embedding_output = self.embeddings(
             input_ids=input_ids,
             token_type_ids=token_type_ids,
@@ -911,7 +911,7 @@ class DebertaModel(DebertaPreTrainedModel):
             mask=attention_mask,
             inputs_embeds=inputs_embeds,
         )
-
+        # 开始进行transformer的编码层
         encoder_outputs = self.encoder(
             embedding_output,
             attention_mask,
@@ -996,18 +996,18 @@ class DebertaForMaskedLM(DebertaPreTrainedModel):
             config.vocab_size]`` (see ``input_ids`` docstring) Tokens with indices set to ``-100`` are ignored
             (masked), the loss is only computed for the tokens with labels in ``[0, ..., config.vocab_size]``
         """
-
+        # 模型返回的形式
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
-
+        #deberta模型
         outputs = self.deberta(
-            input_ids,
-            attention_mask=attention_mask,
-            token_type_ids=token_type_ids,
-            position_ids=position_ids,
-            inputs_embeds=inputs_embeds,
-            output_attentions=output_attentions,
-            output_hidden_states=output_hidden_states,
-            return_dict=return_dict,
+            input_ids,    #输入的id, [batch_size, seq_length]
+            attention_mask=attention_mask,    #[batch_size, seq_length], 注意力的mask
+            token_type_ids=token_type_ids,    #[batch_size, seq_length], 句子1为0，句子2为1
+            position_ids=position_ids,   #None, 位置嵌入中每个输入序列token的位置指示,  在[0，config.max_position_embeddings-1]范围内选择
+            inputs_embeds=inputs_embeds,   #None, 您可以选择直接传递嵌入的表示形式，而不是传递input_ids。用你自己的嵌>入表达，而不用模型的
+            output_attentions=output_attentions,  #bool 是否返回所有注意力层的注意力张量。
+            output_hidden_states=output_hidden_states, #bool  是否返回所有层的隐藏状态
+            return_dict=return_dict,   # 是否返回ModelOutput而不是普通的元组
         )
 
         sequence_output = outputs[0]

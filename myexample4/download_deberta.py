@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 import os
-tokenizer = AutoTokenizer.from_pretrained("microsoft/deberta-base")
-model = AutoModelForMaskedLM.from_pretrained("microsoft/deberta-base")
+tokenizer = AutoTokenizer.from_pretrained("microsoft/deberta-base", cache_dir="cache_deberta")
+model = AutoModelForMaskedLM.from_pretrained("microsoft/deberta-base", cache_dir="cache_deberta")
 model.save_pretrained('deberta-base')
 tokenizer.save_pretrained('deberta-base')
 # os.remove("deberta-base/special_tokens_map.json")
