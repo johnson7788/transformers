@@ -35,7 +35,6 @@ from ...modeling_utils import PreTrainedModel
 from ...utils import logging
 from .configuration_deberta import DebertaConfig
 
-
 logger = logging.get_logger(__name__)
 
 _CONFIG_FOR_DOC = "DebertaConfig"
@@ -247,7 +246,6 @@ class DebertaSelfOutput(nn.Module):
         hidden_states = self.LayerNorm(hidden_states + input_tensor)
         return hidden_states
 
-
 class DebertaAttention(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -314,7 +312,6 @@ class DebertaOutput(nn.Module):
         hidden_states = self.LayerNorm(hidden_states + input_tensor)
         return hidden_states
 
-
 class DebertaLayer(nn.Module):
     def __init__(self, config):
         super(DebertaLayer, self).__init__()
@@ -347,7 +344,6 @@ class DebertaLayer(nn.Module):
             return (layer_output, att_matrix)
         else:
             return layer_output
-
 
 class DebertaEncoder(nn.Module):
     """Modified BertEncoder with relative position bias support"""
@@ -392,7 +388,7 @@ class DebertaEncoder(nn.Module):
         relative_pos=None,
         return_dict=True,
     ):
-            attention_mask = self.get_attention_mask(attention_mask)
+        attention_mask = self.get_attention_mask(attention_mask)
         relative_pos = self.get_rel_pos(hidden_states, query_states, relative_pos)
 
         all_hidden_states = () if output_hidden_states else None
