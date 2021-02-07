@@ -70,6 +70,10 @@ class DataTrainingArguments:
     dataset_name: Optional[str] = field(
         default=None, metadata={"help": "要使用的数据集的名称(通过datasets库)。 "}
     )
+    data_dir: Optional[str] = field(
+        default=None,
+        metadata={"help": "训练数据文件夹路径"},
+    )
     dataset_config_name: Optional[str] = field(
         default=None, metadata={"help": "要使用的数据集的配置名称(通过datasets库)。 "}
     )
@@ -174,7 +178,7 @@ def main():
         cache_script = os.path.join("data", data_args.dataset_name+".py")
         if not os.path.exists(cache_script):
             raise Exception("请检查本地是否存在相关脚本文件")
-        datasets = load_dataset(cache_script, data_args.dataset_config_name)
+        datasets = load_dataset(path=cache_script, name=data_args.dataset_config_name, data_dir=data_args.data_dir)
     else:
         data_files = {}
         if data_args.train_file is not None:

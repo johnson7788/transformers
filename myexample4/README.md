@@ -35,8 +35,8 @@ python sequence_classfication.py \
 
 
 # 继续训练DeBERTa
-python run_mlm.py  --model_name_or_path microsoft/deberta-base --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --do_train --do_eval --output_dir output/mydeberta
-
+```
+python run_mlm.py --model_name_or_path microsoft/deberta-base --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --do_train --do_eval --output_dir output/mydeberta --per_device_train_batch_size 24 --gradient_accumulation_steps 2 --max_seq_length 128
 python run_mlm.py \
     --model_name_or_path microsoft/deberta-base \
     --dataset_name wikitext \
@@ -45,8 +45,87 @@ python run_mlm.py \
     --do_eval \
     --output_dir output/mydeberta
     
+# 输出结果:
+perplexity = 10.445827453447645
+```
+
+## 使用继续训练好的DeBERTa微调SST2数据
+模型保存的目录 output/mydeberta
+python sequence_classfication.py --model_name_or_path output/mydeberta --task_name sst2 --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 32 --learning_rate 2e-5 --num_train_epochs 3.0 --output_dir output/sst2/  --evaluation_strategy steps --eval_steps 500
+
+# 使用自定义的中文训练集继续预训练模型, 示例 bert-base-chinese
+python run_mlm.py --model_name_or_path bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/myalbert --per_device_train_batch_size 24 --gradient_accumulation_steps 2 --max_seq_length 128
+
 # 分布式训练
-## 节点1上运行:
-python -m torch.distributed.launch --nproc_per_node=1 --nnodes=2 --node_rank=0 --master_addr="192.168.50.139" --master_port=1234  run_mlm.py --model_name_or_path microsoft/deberta-base --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --do_train --do_eval --output_dir output/mydeberta
-## 节点2上运行:
+## 2个节点的测试
+### 节点139上运行:
+python -m torch.distributed.launch --nproc_per_node=1 --nnodes=2 --node_rank=0 --master_addr="192.168.50.139" --master_port=1234 run_mlm.py --model_name_or_path microsoft/deberta-base --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --do_train --do_eval --output_dir output/mydeberta
+### 节点169上运行:
 python -m torch.distributed.launch --nproc_per_node=1 --nnodes=2 --node_rank=1 --master_addr="192.168.50.139" --master_port=1234 run_mlm.py --model_name_or_path microsoft/deberta-base --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --do_train --do_eval --output_dir output/mydeberta
+
+
+# 参数
+```buildoutcfg
+usage: run_mlm.py [-h] [--model_name_or_path MODEL_NAME_OR_PATH]
+                  [--model_type MODEL_TYPE] [--config_name CONFIG_NAME]
+                  [--tokenizer_name TOKENIZER_NAME] [--cache_dir CACHE_DIR]
+                  [--no_use_fast_tokenizer]
+                  [--use_fast_tokenizer [USE_FAST_TOKENIZER]]
+                  [--dataset_name DATASET_NAME]
+                  [--dataset_config_name DATASET_CONFIG_NAME]
+                  [--train_file TRAIN_FILE]
+                  [--validation_file VALIDATION_FILE]
+                  [--overwrite_cache [OVERWRITE_CACHE]]
+                  [--max_seq_length MAX_SEQ_LENGTH]
+                  [--preprocessing_num_workers PREPROCESSING_NUM_WORKERS]
+                  [--mlm_probability MLM_PROBABILITY]
+                  [--line_by_line [LINE_BY_LINE]]
+                  [--pad_to_max_length [PAD_TO_MAX_LENGTH]]
+                  [--output_dir OUTPUT_DIR]
+                  [--overwrite_output_dir [OVERWRITE_OUTPUT_DIR]]
+                  [--do_train [DO_TRAIN]] [--do_eval [DO_EVAL]]
+                  [--do_predict [DO_PREDICT]]
+                  [--evaluation_strategy {no,steps,epoch}]
+                  [--prediction_loss_only [PREDICTION_LOSS_ONLY]]
+                  [--per_device_train_batch_size PER_DEVICE_TRAIN_BATCH_SIZE]
+                  [--per_device_eval_batch_size PER_DEVICE_EVAL_BATCH_SIZE]
+                  [--per_gpu_train_batch_size PER_GPU_TRAIN_BATCH_SIZE]
+                  [--per_gpu_eval_batch_size PER_GPU_EVAL_BATCH_SIZE]
+                  [--gradient_accumulation_steps GRADIENT_ACCUMULATION_STEPS]
+                  [--eval_accumulation_steps EVAL_ACCUMULATION_STEPS]
+                  [--learning_rate LEARNING_RATE]
+                  [--weight_decay WEIGHT_DECAY] [--adam_beta1 ADAM_BETA1]
+                  [--adam_beta2 ADAM_BETA2] [--adam_epsilon ADAM_EPSILON]
+                  [--max_grad_norm MAX_GRAD_NORM]
+                  [--num_train_epochs NUM_TRAIN_EPOCHS]
+                  [--max_steps MAX_STEPS]
+                  [--lr_scheduler_type {linear,cosine,cosine_with_restarts,polynomial,constant,constant_with_warmup}]
+                  [--warmup_steps WARMUP_STEPS] [--logging_dir LOGGING_DIR]
+                  [--logging_first_step [LOGGING_FIRST_STEP]]
+                  [--logging_steps LOGGING_STEPS] [--save_steps SAVE_STEPS]
+                  [--save_total_limit SAVE_TOTAL_LIMIT] [--no_cuda [NO_CUDA]]
+                  [--seed SEED] [--fp16 [FP16]]
+                  [--fp16_opt_level FP16_OPT_LEVEL]
+                  [--fp16_backend {auto,amp,apex}] [--local_rank LOCAL_RANK]
+                  [--tpu_num_cores TPU_NUM_CORES]
+                  [--tpu_metrics_debug [TPU_METRICS_DEBUG]] [--debug [DEBUG]]
+                  [--dataloader_drop_last [DATALOADER_DROP_LAST]]
+                  [--eval_steps EVAL_STEPS]
+                  [--dataloader_num_workers DATALOADER_NUM_WORKERS]
+                  [--past_index PAST_INDEX] [--run_name RUN_NAME]
+                  [--disable_tqdm DISABLE_TQDM] [--no_remove_unused_columns]
+                  [--remove_unused_columns [REMOVE_UNUSED_COLUMNS]]
+                  [--label_names LABEL_NAMES [LABEL_NAMES ...]]
+                  [--load_best_model_at_end [LOAD_BEST_MODEL_AT_END]]
+                  [--metric_for_best_model METRIC_FOR_BEST_MODEL]
+                  [--greater_is_better GREATER_IS_BETTER]
+                  [--ignore_data_skip [IGNORE_DATA_SKIP]]
+                  [--sharded_ddp [SHARDED_DDP]] [--deepspeed DEEPSPEED]
+                  [--label_smoothing_factor LABEL_SMOOTHING_FACTOR]
+                  [--adafactor [ADAFACTOR]]
+                  [--group_by_length [GROUP_BY_LENGTH]]
+                  [--report_to REPORT_TO [REPORT_TO ...]]
+                  [--ddp_find_unused_parameters DDP_FIND_UNUSED_PARAMETERS]
+                  [--no_dataloader_pin_memory]
+                  [--dataloader_pin_memory [DATALOADER_PIN_MEMORY]]
+```
