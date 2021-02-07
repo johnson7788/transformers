@@ -44,3 +44,9 @@ python run_mlm.py \
     --do_train \
     --do_eval \
     --output_dir output/mydeberta
+    
+# 分布式训练
+## 节点1上运行:
+python -m torch.distributed.launch --nproc_per_node=1 --nnodes=2 --node_rank=0 --master_addr="192.168.50.139" --master_port=1234  run_mlm.py --model_name_or_path microsoft/deberta-base --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --do_train --do_eval --output_dir output/mydeberta
+## 节点2上运行:
+python -m torch.distributed.launch --nproc_per_node=1 --nnodes=2 --node_rank=1 --master_addr="192.168.50.139" --master_port=1234 run_mlm.py --model_name_or_path microsoft/deberta-base --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --do_train --do_eval --output_dir output/mydeberta
