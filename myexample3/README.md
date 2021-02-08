@@ -416,5 +416,10 @@ python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name
 ```
 
 #mini,100条数据训练
-python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name mini_smooth --task_script data/smooth.py --task_dir dataset/ --metric_script metric/smooth.py \
---output_dir smooth --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3
+python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name mini_smooth --task_script data/smooth.py --task_dir dataset/smooth --metric_script metric/smooth.py \
+--output_dir output/smooth --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3
+
+
+# 单词是否应该被替换，单词替换任务，单词在句子中的语义是否正确
+python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
+--output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3

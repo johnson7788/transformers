@@ -6,6 +6,9 @@
 # @Contact : github: johnson7788
 # @Desc  : 判断单词是否应该被替换
 from collections import Counter
+import os
+import random
+import json
 
 def static():
     """
@@ -13,7 +16,7 @@ def static():
     Returns:
     """
     examples = []
-    filename = "paper_train.md"
+    filename = "/opt/salt-daily-check/notes/paper_train.md"
     with open(filename, 'r') as f:
         lines = f.readlines()
         # 每5行一个样本,
@@ -49,6 +52,41 @@ def save_examples(examples):
         for e in filter_examples:
             f.writelines(e)
     print(f"保存文件成功")
-if __name__ == '__main__':
+
+def repair():
+    """
+    生成数据集dev.json test.json train.json, 生成labels
+    Returns:
+    """
     examples = static()
-    save_examples(examples)
+    dir_path = "../dataset/repair"
+    label_file = os.path.join(dir_path, "labels.json")
+    dev_file = os.path.join(dir_path, "dev.json")
+    test_file = os.path.join(dir_path,"test.json")
+    train_file = os.path.join(dir_path,"train.json")
+    # 随机拆分句子为正样本，txt --> sentence1, sentence2
+    # 随机拆分句子为负样本, txt1, txt2  ---> sentence1(from txt1), sentence2(from txt2)
+    random.shuffle(examples)
+    #拆分样本
+    total = len(examples)
+    train_num = int(total*0.8)
+    test_num = int(total*0.1)
+    train_data = examples[:train_num]
+    test_data = examples[train_num:train_num+test_num]
+    dev_data = examples[train_num+test_num:]
+    labels = sorted(list(set([i[3].strip() for i in examples])), key=len)
+    with open(train_file, 'w') as f:
+        json.dump(train_data, f)
+    with open(dev_file, 'w') as f:
+        json.dump(dev_data, f)
+    with open(test_file, 'w') as f:
+        json.dump(test_data, f)
+    with open(label_file, 'w') as f:
+        json.dump(labels, f)
+    print(f"训练集{train_num}, 测试集{test_num}, 开发集{total-train_num-test_num}")
+    print(f"标签数量{len(labels)}, 标签有:{labels}")
+
+if __name__ == '__main__':
+    # examples = static()
+    # save_examples(examples)
+    repair()
