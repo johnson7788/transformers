@@ -33,7 +33,6 @@ python sequence_classfication.py \
   --fp16
 ```
 
-
 # 继续训练DeBERTa
 ```
 python run_mlm.py --model_name_or_path microsoft/deberta-base --dataset_name wikitext --dataset_config_name wikitext-2-raw-v1 --do_train --do_eval --output_dir output/mydeberta --per_device_train_batch_size 24 --gradient_accumulation_steps 2 --max_seq_length 128
@@ -53,8 +52,36 @@ perplexity = 10.445827453447645
 模型保存的目录 output/mydeberta
 python sequence_classfication.py --model_name_or_path output/mydeberta --task_name sst2 --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 32 --learning_rate 2e-5 --num_train_epochs 3.0 --output_dir output/sst2/  --evaluation_strategy steps --eval_steps 500
 
-# 使用自定义的中文训练集继续预训练模型, 示例 bert-base-chinese
-python run_mlm.py --model_name_or_path bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/myalbert --per_device_train_batch_size 24 --gradient_accumulation_steps 2 --max_seq_length 128
+# 使用自定义的中文训练集继续预训练模型, 示例 bert-base-chinese, 2.75GB, 样本行数796万
+python run_mlm.py --model_name_or_path bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --per_device_train_batch_size 24 --gradient_accumulation_steps 2 --max_seq_length 128
+```buildoutcfg
+生成缓存数据集大概64GB
+du -sh /root/.cache/huggingface/datasets/*
+64G	/root/.cache/huggingface/datasets/demo_dataset
+
+使用CPU训练是不切实际的，如下所示:
+ 0% 0/10778 [00:00<?, ?ba/s][WARNING|tokenization_utils_base.py:3214] 2021-02-08 01:54:54,708 >> Token indices sequence length is longer than the specified maximum sequence length for this model (912 > 512). Running this sequence through the model will result in indexing errors
+100% 10778/10778 [37:09<00:00,  4.84ba/s]
+100% 1/1 [00:00<00:00, 18.74ba/s]
+100% 1/1 [00:00<00:00, 32.21ba/s]
+100% 10778/10778 [3:51:16<00:00,  1.29s/ba]
+100% 1/1 [00:00<00:00, 11.34ba/s]
+100% 1/1 [00:00<00:00, 22.13ba/s]
+[INFO|trainer.py:429] 2021-02-08 06:43:26,808 >> The following columns in the training set don't have a corresponding argument in `BertForMaskedLM.forward` and have been ignored: special_tokens_mask.
+[INFO|trainer.py:429] 2021-02-08 06:43:26,813 >> The following columns in the evaluation set don't have a corresponding argument in `BertForMaskedLM.forward` and have been ignored: special_tokens_mask.
+/content/transformers/src/transformers/trainer.py:702: FutureWarning: `model_path` is deprecated and will be removed in a future version. Use `resume_from_checkpoint` instead.
+  FutureWarning,
+[INFO|trainer.py:832] 2021-02-08 06:43:26,822 >> ***** Running training *****
+[INFO|trainer.py:833] 2021-02-08 06:43:26,822 >>   Num examples = 7961583
+[INFO|trainer.py:834] 2021-02-08 06:43:26,822 >>   Num Epochs = 3
+[INFO|trainer.py:835] 2021-02-08 06:43:26,822 >>   Instantaneous batch size per device = 24
+[INFO|trainer.py:836] 2021-02-08 06:43:26,822 >>   Total train batch size (w. parallel, distributed & accumulation) = 48
+[INFO|trainer.py:837] 2021-02-08 06:43:26,822 >>   Gradient Accumulation steps = 2
+[INFO|trainer.py:838] 2021-02-08 06:43:26,822 >>   Total optimization steps = 497598
+  0% 56/497598 [1:06:43<9887:09:08, 71.54s/it]
+```
+# 使用自定义的中文训练集继续预训练模型, 示例 clue/roberta_chinese_base , 2.75GB , 注意使用bert的tokenizer
+python run_mlm.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --per_device_train_batch_size 4 --gradient_accumulation_steps 12 --max_seq_length 512
 
 # 分布式训练
 ## 2个节点的测试
