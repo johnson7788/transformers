@@ -1,0 +1,483 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date  : 2021/2/8 5:14 下午
+# @File  : repair_api.py
+# @Author: johnson
+# @Contact : github: johnson7788
+# @Desc  : 加载模型，收到数据后进行预测
+
+
+
+# coding=utf-8
+# 文本序列分类微调脚本, 来自 examples/text-classification/run_glue.py
+
+import logging
+import os
+import random
+import sys
+from dataclasses import dataclass, field
+from typing import Optional
+from flask import Flask, request, jsonify, abort
+import numpy as np
+from datasets import load_dataset, load_metric
+
+import transformers
+from transformers import (
+    AutoConfig,
+    AutoModelForSequenceClassification,
+    AutoTokenizer,
+    EvalPrediction,
+    HfArgumentParser,
+    PretrainedConfig,
+    Trainer,
+    TrainingArguments,
+    default_data_collator,
+    set_seed,
+)
+
+app = Flask(__name__)
+logger = logging.getLogger(__name__)
+
+
+@dataclass
+class DataTrainingArguments:
+    """
+    要输入哪些数据以输入我们的模型进行训练和评估的Arguments。
+    使用`HfArgumentParser`，我们可以将此类转换为argparse参数，以便能够在命令行上指定它们。
+    """
+    task_name: Optional[str] = field(
+        default=None,
+        metadata={"help": "训练任务的名称"},
+    )
+    task_dir: Optional[str] = field(
+        default=None,
+        metadata={"help": "训练数据文件夹路径"},
+    )
+    task_script: Optional[str] = field(
+        default=None,
+        metadata={"help": "训练的处理脚本位置"},
+    )
+    metric_script: Optional[str] = field(
+        default=None,
+        metadata={"help": "训练集的metric脚本的位置"},
+    )
+    max_seq_length: int = field(
+        default=128,
+        metadata={
+            "help": "分词后的最大总输入序列长度。 长度大于此长度的序列将被截断，较短的序列将被填充。"
+        },
+    )
+    overwrite_cache: bool = field(
+        default=False, metadata={"help": "是否覆盖cached预处理数据集。"}
+    )
+    pad_to_max_length: bool = field(
+        default=True,
+        metadata={
+            "help": "是否将所有样本填充到“max_seq_length”。 如果为False，则将动态填充样本到批次中的最大长度。"
+        },
+    )
+    train_file: Optional[str] = field(
+        default=None, metadata={"help": "包含训练数据的csv或json文件。 "}
+    )
+    validation_file: Optional[str] = field(
+        default=None, metadata={"help": "包含验证数据的csv或json文件。 "}
+    )
+    test_file: Optional[str] = field(default=None, metadata={"help": "包含测试数据的csv或json文件。"})
+
+    def __post_init__(self):
+        if self.task_name is not None:
+            self.task_name = self.task_name.lower()
+        elif self.train_file is None or self.validation_file is None:
+            raise ValueError("Need either a GLUE task or a training/validation file.")
+        else:
+            train_extension = self.train_file.split(".")[-1]
+            assert train_extension in ["csv", "json"], "`train_file` should be a csv or a json file."
+            validation_extension = self.validation_file.split(".")[-1]
+            assert (
+                validation_extension == train_extension
+            ), "`validation_file` should have the same extension (csv or json) as `train_file`."
+
+
+@dataclass
+class ModelArguments:
+    """
+    关于我们要微调的model/config/tokenizer的参数。
+    """
+
+    model_name_or_path: str = field(
+        metadata={"help": "huggingface.co/models中预训练模型或模型标识符的路径"}
+    )
+    config_name: Optional[str] = field(
+        default=None, metadata={"help": "预训练的配置名称或路径（如果与model_name不同）"}
+    )
+    tokenizer_name: Optional[str] = field(
+        default=None, metadata={"help": "预训练的tokenizer生成器名称或路径（如果与model_name不同）"}
+    )
+    cache_dir: Optional[str] = field(
+        default=None, metadata={"help": "您想在哪里存储从s3下载的预训练模型,缓存模型文件夹"}
+    )
+    use_fast_tokenizer: bool = field(
+        default=True,
+        metadata={"help": "是否使用快速tokenizer之一(由tokenizer库支持)。"},
+    )
+    model_revision: str = field(
+        default="main",
+        metadata={"help": "要使用的特定模型版本 (can be a branch name, tag name or commit id)."},
+    )
+    use_auth_token: bool = field(
+        default=False,
+        metadata={
+            "help": "Will use the token generated when running `transformers-cli login` (necessary to use this script "
+            "with private models)."
+        },
+    )
+
+
+@app.route("/api", methods=['POST'])
+def api():
+    """
+    Args:
+        test_data: 需要预测的数据，是一个文字列表
+    Returns:
+
+    """
+    jsonres = request.get_json()
+    test_data = jsonres.get('data',None)
+    results = do_predict(test_data)
+    return jsonify(results)
+
+def do_predict():
+    # 在src/transformers/training_args.py中查看所有可能的参数，
+    # 或将 -help标志传递给此脚本。 现在，我们保留了不同的参数集，以更清晰地分离关注点。
+    parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
+    if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
+        # 如果我们仅向脚本传递一个参数，并且它是json文件的路径，
+        # 让我们对其进行解析以获取参数。
+        model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
+    else:
+        #通过命令行传递参数
+        model_args, data_args, training_args = parser.parse_args_into_dataclasses()
+
+    # 判断是不是重新训练
+    if (
+        os.path.exists(training_args.output_dir)
+        and os.listdir(training_args.output_dir)
+        and training_args.do_train
+        and not training_args.overwrite_output_dir
+    ):
+        raise ValueError(
+            f"Output directory ({training_args.output_dir}) already exists and is not empty. "
+            "Use --overwrite_output_dir to overcome."
+        )
+
+    #设置日志格式
+    logging.basicConfig(
+        format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
+        datefmt="%m/%d/%Y %H:%M:%S",
+        level=logging.INFO if is_main_process(training_args.local_rank) else logging.WARN,
+    )
+    #打印当前设置
+
+    # Log on each process the small summary:
+    logger.warning(
+        f"Process rank: {training_args.local_rank}, device: {training_args.device}, n_gpu: {training_args.n_gpu}"
+        + f"distributed training: {bool(training_args.local_rank != -1)}, 16-bits training: {training_args.fp16}"
+    )
+    #打印参数
+    logger.info("Training/evaluation parameters %s", training_args)
+
+    # Set seed before initializing model.
+    #随机数种子
+    set_seed(training_args.seed)
+    #num_labels 类别数量, output_mode  是任务类型，'classification'
+
+    # 加载预训练的模型和令牌生成器
+    # 分布式培训：
+    # from_pretrained方法保证只有一个本地进程可以并发下载模型和vocab。
+    #添加自定义参数finetuning_task, num_labels
+    # Set the verbosity to info of the Transformers logger (on main process only):
+    if is_main_process(training_args.local_rank):
+        transformers.utils.logging.set_verbosity_info()
+        transformers.utils.logging.enable_default_handler()
+        transformers.utils.logging.enable_explicit_format()
+    logger.info(f"Training/evaluation parameters {training_args}")
+
+    # Set seed before initializing model.
+    set_seed(training_args.seed)
+
+    # Get the datasets: you can either provide your own CSV/JSON training and evaluation files (see below)
+    # or specify a GLUE benchmark task (the dataset will be downloaded automatically from the datasets Hub).
+    #
+    # For CSV/JSON files, this script will use as labels the column called 'label' and as pair of sentences the
+    # sentences in columns called 'sentence1' and 'sentence2' if such column exists or the first two columns not named
+    # label if at least two columns are provided.
+    #
+    # If the CSVs/JSONs contain only one non-label column, the script does single sentence classification on this
+    # single column. You can easily tweak this behavior (see below)
+    #
+    # In distributed training, the load_dataset function guarantee that only one local process can concurrently
+    # download the dataset.
+    if data_args.task_name in task_to_keys.keys():
+        # Downloading and loading a dataset from the hub.
+        datasets = load_dataset(path="data/glue.py", name=data_args.task_name)
+    elif data_args.task_name and data_args.task_script:
+        datasets = load_dataset(path=data_args.task_script, name=data_args.task_name, data_dir=data_args.task_dir)
+    else:
+        # Loading a dataset from your local files.
+        # CSV/JSON training and evaluation files are needed.
+        data_files = {"train": data_args.train_file, "validation": data_args.validation_file}
+
+        # Get the test dataset: you can provide your own CSV/JSON test file (see below)
+        # when you use `do_predict` without specifying a GLUE benchmark task.
+        if training_args.do_predict:
+            if data_args.test_file is not None:
+                train_extension = data_args.train_file.split(".")[-1]
+                test_extension = data_args.test_file.split(".")[-1]
+                assert (
+                    test_extension == train_extension
+                ), "`test_file` should have the same extension (csv or json) as `train_file`."
+                data_files["test"] = data_args.test_file
+            else:
+                raise ValueError("Need either a GLUE task or a test file for `do_predict`.")
+
+        for key in data_files.keys():
+            logger.info(f"load a local file for {key}: {data_files[key]}")
+
+        if data_args.train_file.endswith(".csv"):
+            # Loading a dataset from local csv files
+            datasets = load_dataset("data/csv.py", data_files=data_files)
+        else:
+            # Loading a dataset from local json files
+            datasets = load_dataset("data/json.py", data_files=data_files)
+    # See more about loading any type of standard or custom dataset at
+    # https://huggingface.co/docs/datasets/loading_datasets.html.
+
+    # Labels, 标签设置
+    if data_args.task_name is not None:
+        is_regression = data_args.task_name == "stsb"
+        if not is_regression:
+            label_list = datasets["train"].features["label"].names
+            num_labels = len(label_list)
+        else:
+            num_labels = 1
+    else:
+        # Trying to have good defaults here, don't hesitate to tweak to your needs.
+        is_regression = datasets["train"].features["label"].dtype in ["float32", "float64"]
+        if is_regression:
+            num_labels = 1
+        else:
+            # A useful fast method:
+            # https://huggingface.co/docs/datasets/package_reference/main_classes.html#datasets.Dataset.unique
+            label_list = datasets["train"].unique("label")
+            label_list.sort()  # Let's sort it for determinism
+            num_labels = len(label_list)
+
+    # Load pretrained model and tokenizer
+    #
+    # In distributed training, the .from_pretrained methods guarantee that only one local process can concurrently download model & vocab.
+    config = AutoConfig.from_pretrained(
+        model_args.config_name if model_args.config_name else model_args.model_name_or_path,
+        num_labels=num_labels,
+        finetuning_task=data_args.task_name,
+        cache_dir=model_args.cache_dir,
+        revision=model_args.model_revision,
+        use_auth_token=True if model_args.use_auth_token else None,
+    )
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
+        cache_dir=model_args.cache_dir,
+        use_fast=model_args.use_fast_tokenizer,
+        revision=model_args.model_revision,
+        use_auth_token=True if model_args.use_auth_token else None,
+    )
+    # .ckpt 是可以加载tensorflow的模型
+    model = AutoModelForSequenceClassification.from_pretrained(
+        model_args.model_name_or_path,
+        from_tf=bool(".ckpt" in model_args.model_name_or_path),
+        config=config,
+        cache_dir=model_args.cache_dir,
+        revision=model_args.model_revision,
+        use_auth_token=True if model_args.use_auth_token else None,
+    )
+
+    # Preprocessing the datasets
+    if data_args.task_name is not None and data_args.task_name in task_to_keys.keys():
+        # 对于sstb:  sentence1_key, sentence2_key = ('sentence1', 'sentence2')
+        sentence1_key, sentence2_key = task_to_keys[data_args.task_name]
+    elif data_args.task_name in ["smooth", "mini_smooth"]:
+        sentence1_key, sentence2_key = ('sentence1', 'sentence2')
+    else:
+        # Again, we try to have some nice defaults but don't hesitate to tweak to your use case.
+        non_label_column_names = [name for name in datasets["train"].column_names if name != "label"]
+        if "sentence1" in non_label_column_names and "sentence2" in non_label_column_names:
+            sentence1_key, sentence2_key = "sentence1", "sentence2"
+        else:
+            if len(non_label_column_names) >= 2:
+                sentence1_key, sentence2_key = non_label_column_names[:2]
+            else:
+                sentence1_key, sentence2_key = non_label_column_names[0], None
+
+    # Padding strategy
+    if data_args.pad_to_max_length:
+        padding = "max_length"
+    else:
+        # We will pad later, dynamically at batch creation, to the max sequence length in each batch
+        padding = False
+
+    # Some models have set the order of the labels to use, so let's make sure we do use it.
+    label_to_id = None
+    if (
+        model.config.label2id != PretrainedConfig(num_labels=num_labels).label2id
+        and data_args.task_name is not None
+        and is_regression
+    ):
+        # Some have all caps in their config, some don't.
+        label_name_to_id = {k.lower(): v for k, v in model.config.label2id.items()}
+        if list(sorted(label_name_to_id.keys())) == list(sorted(label_list)):
+            label_to_id = {i: label_name_to_id[label_list[i]] for i in range(num_labels)}
+        else:
+            logger.warn(
+                "Your model seems to have been trained with labels, but they don't match the dataset: ",
+                f"model labels: {list(sorted(label_name_to_id.keys()))}, dataset labels: {list(sorted(label_list))}."
+                "\nIgnoring the model labels as a result.",
+            )
+    elif data_args.task_name is None and not is_regression:
+        label_to_id = {v: i for i, v in enumerate(label_list)}
+
+    def preprocess_function(examples):
+        """"
+        # Tokenize the texts
+        examples: {'idx': [0, 1], 'label': [5.0, 3.799999952316284], 'sentence1': ['A plane is taking off.', 'A man is playing a large flute.'], 'sentence2': ['An air plane is taking off.', 'A man is playing a flute.']}
+        """
+        args = (
+            (examples[sentence1_key],) if sentence2_key is None else (examples[sentence1_key], examples[sentence2_key])
+        )
+        result = tokenizer(*args, padding=padding, max_length=data_args.max_seq_length, truncation=True)
+
+        # Map labels to IDs (not necessary for GLUE tasks)
+        if label_to_id is not None and "label" in examples:
+            result["label"] = [label_to_id[l] for l in examples["label"]]
+        return result
+
+    datasets = datasets.map(preprocess_function, batched=True, load_from_cache_file=not data_args.overwrite_cache)
+
+    train_dataset = datasets["train"]
+    eval_dataset = datasets["validation_matched" if data_args.task_name == "mnli" else "validation"]
+    if data_args.task_name is not None or data_args.test_file is not None:
+        test_dataset = datasets["test_matched" if data_args.task_name == "mnli" else "test"]
+
+    # Log a few random samples from the training set:
+    for index in random.sample(range(len(train_dataset)), 3):
+        logger.info(f"Sample {index} of the training set: {train_dataset[index]}.")
+
+    # 设置metric的脚本
+    if data_args.task_name is not None and data_args.metric_script is not None:
+        metric = load_metric(data_args.metric_script, data_args.task_name)
+    else:
+        metric = load_metric("metric/glue.py", data_args.task_name)
+    # TODO: When datasets metrics include regular accuracy, make an else here and remove special branch from
+    # compute_metrics
+
+    # 您可以定义自定义的compute_metrics函数。 它需要一个`EvalPrediction`对象(一个带有predictions和label_ids字段的namedtuple)，并且必须返回一个值为float的字典字符串。
+    def compute_metrics(p: EvalPrediction):
+        preds = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
+        preds = np.squeeze(preds) if is_regression else np.argmax(preds, axis=1)
+        if data_args.task_name is not None:
+            result = metric.compute(predictions=preds, references=p.label_ids)
+            if len(result) > 1:
+                result["combined_score"] = np.mean(list(result.values())).item()
+            return result
+        elif is_regression:
+            return {"mse": ((preds - p.label_ids) ** 2).mean().item()}
+        else:
+            return {"accuracy": (preds == p.label_ids).astype(np.float32).mean().item()}
+
+    # Initialize our Trainer
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=train_dataset,
+        eval_dataset=eval_dataset if training_args.do_eval else None,
+        compute_metrics=compute_metrics,
+        tokenizer=tokenizer,
+        # Data collator will default to DataCollatorWithPadding, so we change it if we already did the padding.
+        data_collator=default_data_collator if data_args.pad_to_max_length else None,
+    )
+
+    # Training
+    if training_args.do_train:
+        train_result = trainer.train(
+            model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None
+        )
+        metrics = train_result.metrics
+
+        trainer.save_model()  # Saves the tokenizer too for easy upload
+
+        output_train_file = os.path.join(training_args.output_dir, "train_results.txt")
+        if trainer.is_world_process_zero():
+            with open(output_train_file, "w") as writer:
+                logger.info("***** Train results *****")
+                for key, value in sorted(metrics.items()):
+                    logger.info(f"  {key} = {value}")
+                    writer.write(f"{key} = {value}\n")
+
+            # Need to save the state, since Trainer.save_model saves only the tokenizer with the model
+            trainer.state.save_to_json(os.path.join(training_args.output_dir, "trainer_state.json"))
+
+    # Evaluation
+    eval_results = {}
+    if training_args.do_eval:
+        logger.info("*** Evaluate ***")
+        # 如果是mnli, 循环以处理MNLI双重评估（匹配，不匹配)
+        # Loop to handle MNLI double evaluation (matched, mis-matched)
+        tasks = [data_args.task_name]
+        eval_datasets = [eval_dataset]
+        if data_args.task_name == "mnli":
+            tasks.append("mnli-mm")
+            eval_datasets.append(datasets["validation_mismatched"])
+
+        for eval_dataset, task in zip(eval_datasets, tasks):
+            eval_result = trainer.evaluate(eval_dataset=eval_dataset)
+
+            output_eval_file = os.path.join(training_args.output_dir, f"eval_results_{task}.txt")
+            if trainer.is_world_process_zero():
+                with open(output_eval_file, "w") as writer:
+                    logger.info(f"***** Eval results {task} *****")
+                    for key, value in sorted(eval_result.items()):
+                        logger.info(f"  {key} = {value}")
+                        writer.write(f"{key} = {value}\n")
+
+            eval_results.update(eval_result)
+
+    if training_args.do_predict:
+        logger.info("*** Test ***")
+
+        # Loop to handle MNLI double evaluation (matched, mis-matched)
+        tasks = [data_args.task_name]
+        test_datasets = [test_dataset]
+        if data_args.task_name == "mnli":
+            tasks.append("mnli-mm")
+            test_datasets.append(datasets["test_mismatched"])
+
+        for test_dataset, task in zip(test_datasets, tasks):
+            # Removing the `label` columns because it contains -1 and Trainer won't like that.
+            test_dataset.remove_columns_("label")
+            predictions = trainer.predict(test_dataset=test_dataset).predictions
+            predictions = np.squeeze(predictions) if is_regression else np.argmax(predictions, axis=1)
+
+            output_test_file = os.path.join(training_args.output_dir, f"test_results_{task}.txt")
+            if trainer.is_world_process_zero():
+                with open(output_test_file, "w") as writer:
+                    logger.info(f"***** Test results {task} *****")
+                    writer.write("index\tprediction\n")
+                    for index, item in enumerate(predictions):
+                        if is_regression:
+                            writer.write(f"{index}\t{item:3.3f}\n")
+                        else:
+                            item = label_list[item]
+                            writer.write(f"{index}\t{item}\n")
+    return eval_results
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=23319, debug=True, threaded=True)

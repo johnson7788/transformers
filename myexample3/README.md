@@ -420,6 +420,14 @@ python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name
 --output_dir output/smooth --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3
 
 
-# 单词是否应该被替换，单词替换任务，单词在句子中的语义是否正确
+# 单词是否应该被替换，单词替换任务，单词在句子中的语义是否正确, 一共170个类别
 python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
---output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3
+--output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 10
+```buildoutcfg
+02/08/2021 17:08:23 - INFO - __main__ -   ***** Eval results repair *****
+02/08/2021 17:08:23 - INFO - __main__ -     epoch = 10.0
+02/08/2021 17:08:23 - INFO - __main__ -     eval_accuracy = 0.7403846153846154
+02/08/2021 17:08:23 - INFO - __main__ -     eval_loss = 2.0259742736816406
+02/08/2021 17:08:23 - INFO - __main__ -     eval_runtime = 0.5366
+02/08/2021 17:08:23 - INFO - __main__ -     eval_samples_per_second = 193.806
+```

@@ -40,7 +40,9 @@ _URLs = {
 
 #加载标签
 import json
-with open("/Users/admin/git/transformers/myexample3/dataset/repair/labels.json", 'r') as f:
+# labels_file = "/Users/admin/git/transformers/myexample3/dataset/repair/labels.json"
+labels_file = "/home/wac/johnson/johnson/transformers/myexample3/dataset/repair/labels.json"
+with open(labels_file, 'r') as f:
     LABELS = json.load(f)
 
 #通常CamelCase命名
@@ -125,7 +127,7 @@ class RepairDataset(datasets.GeneratorBasedBuilder):
             data = json.load(f)
             for id_, row in enumerate(data):
                 yield id_, {
-                    "sentence1": row[1],   #句子
+                    "sentence1": row[1].strip(),   #句子
                     "sentence2": row[0] + row[2],  #英语单词+错误单词
-                    "label": row[3],  #正确单词
+                    "label": row[3].strip(),  #正确单词
                 }

@@ -33,7 +33,9 @@ def static():
                 return
     print(f"共有样本数{len(examples)}")
     cnt = Counter([i[2] for i in examples])
-    print(cnt)
+    print(f"错误单词统计: {cnt}")
+    length_sentence = Counter([len(i[1]) for i in examples])
+    print(f"句子长度统计: {sorted(length_sentence.items())}")
     return examples
 
 def save_examples(examples):
