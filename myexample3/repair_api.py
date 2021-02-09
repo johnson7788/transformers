@@ -19,7 +19,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 from flask import Flask, request, jsonify, abort
 import numpy as np
-from datasets import load_dataset, load_metric
+from datasets import load_dataset, load_metric, Dataset
 
 import transformers
 from transformers import (
@@ -105,6 +105,7 @@ class ModelArguments:
     """
 
     model_name_or_path: str = field(
+        default='repair/',
         metadata={"help": "huggingface.co/models中预训练模型或模型标识符的路径"}
     )
     config_name: Optional[str] = field(
@@ -137,8 +138,8 @@ class ModelArguments:
 def api():
     """
     Args:
-        test_data: 需要预测的数据，是一个文字列表
-    Returns:
+        test_data: 需要预测的数据，是一个文字列表,[[sentence, [(english_word1,wrong_word1), (english_word2,wrong_word2)]],...]
+    Returns:[[fix_sentence,[correct_word1,correct_word2]],...]
 
     """
     jsonres = request.get_json()
@@ -146,10 +147,26 @@ def api():
     results = do_predict(test_data)
     return jsonify(results)
 
-def do_predict():
-    # 在src/transformers/training_args.py中查看所有可能的参数，
-    # 或将 -help标志传递给此脚本。 现在，我们保留了不同的参数集，以更清晰地分离关注点。
-    parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
+def do_predict(test_data):
+    parser = HfArgumentParser((ModelArguments, DataTrainingArguments))
+    model_args, data_args = parser.parse_args_into_dataclasses()
+    training_args = TrainingArguments(output_dir="output/repair", do_predict=True)
+    #准备数据集, 和训练时的输入保持一致sentence1, sentence2
+    test_dict = {'sentence1':[], 'sentence2':[]}
+    for data in test_data:
+        sentence1 = data[0]
+        for eng_wrong in data[1]:
+            eng_word, wrong_word = eng_wrong[0], eng_wrong[1]
+            sentence2 = eng_wrong +'\n' + wrong_word + '\n'
+            test_dict['sentence1'].append(sentence1)
+            test_dict['sentence2'].append(sentence2)
+    datasets = Dataset.from_dict(test_dict)
+
+    text_column_name = "tokens"
+    label_list = ['O', 'B-COM', 'I-COM', 'B-EFF', 'I-EFF']
+
+    num_labels = 5
+
     if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
         # 如果我们仅向脚本传递一个参数，并且它是json文件的路径，
         # 让我们对其进行解析以获取参数。
@@ -480,4 +497,4 @@ def do_predict():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=23319, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=5001, debug=True, threaded=True)

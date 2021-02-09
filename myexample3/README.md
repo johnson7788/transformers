@@ -415,14 +415,14 @@ python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name
 01/30/2021 10:53:37 - INFO - __main__ -     eval_samples_per_second = 221.35
 ```
 
-#mini,100条数据训练
+#mini,100条数据训练， 英文数据
 python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name mini_smooth --task_script data/smooth.py --task_dir dataset/smooth --metric_script metric/smooth.py \
 --output_dir output/smooth --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --learning_rate 2e-5 --num_train_epochs 3
 
 
-# 单词是否应该被替换，单词替换任务，单词在句子中的语义是否正确, 一共170个类别
-python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
---output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 10
+# 单词是否应该被替换，单词替换任务，单词在句子中的语义是否正确, 一共170个类别，中文数据, 训练20个epoch比较合适
+python sequence_classfication.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
+--output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 10 --evaluation_strategy steps --eval_steps 100
 ```buildoutcfg
 02/08/2021 17:08:23 - INFO - __main__ -   ***** Eval results repair *****
 02/08/2021 17:08:23 - INFO - __main__ -     epoch = 10.0
@@ -430,4 +430,18 @@ python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name
 02/08/2021 17:08:23 - INFO - __main__ -     eval_loss = 2.0259742736816406
 02/08/2021 17:08:23 - INFO - __main__ -     eval_runtime = 0.5366
 02/08/2021 17:08:23 - INFO - __main__ -     eval_samples_per_second = 193.806
+```
+## 继续训练, 使用上一个模型的输出，输出到新的位置，epoch变成20次
+python sequence_classfication.py --model_name_or_path output/repair --tokenizer_name bert-base-chinese --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
+--output_dir output/repairnew --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 20 --evaluation_strategy steps --eval_steps 100
+```buildoutcfg
+{'eval_loss': 1.1274174451828003, 'eval_accuracy': 0.8653846153846154, 'eval_runtime': 0.2152, 'eval_samples_per_second': 241.628, 'epoch': 18.97}
+]
+
+02/09/2021 10:05:12 - INFO - __main__ -   ***** Eval results repair *****
+02/09/2021 10:05:12 - INFO - __main__ -     epoch = 20.0
+02/09/2021 10:05:12 - INFO - __main__ -     eval_accuracy = 0.8461538461538461
+02/09/2021 10:05:12 - INFO - __main__ -     eval_loss = 1.0921281576156616
+02/09/2021 10:05:12 - INFO - __main__ -     eval_runtime = 0.2151
+02/09/2021 10:05:12 - INFO - __main__ -     eval_samples_per_second = 241.797
 ```

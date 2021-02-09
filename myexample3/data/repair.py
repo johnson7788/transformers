@@ -40,8 +40,8 @@ _URLs = {
 
 #加载标签
 import json
-# labels_file = "/Users/admin/git/transformers/myexample3/dataset/repair/labels.json"
-labels_file = "/home/wac/johnson/johnson/transformers/myexample3/dataset/repair/labels.json"
+labels_file = "/Users/admin/git/transformers/myexample3/dataset/repair/labels.json"
+# labels_file = "/home/wac/johnson/johnson/transformers/myexample3/dataset/repair/labels.json"
 with open(labels_file, 'r') as f:
     LABELS = json.load(f)
 
