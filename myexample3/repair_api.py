@@ -126,6 +126,7 @@ class ModelArguments:
 def api():
     """
     Args:
+        最大序列长度是128，所以sentence长度最好不要超过120个字
         test_data: 需要预测的数据，是一个文字列表,[[sentence, [(english_word1,wrong_word1), (english_word2,wrong_word2)]],...]
     Returns:[[fix_sentence,[(english_word1,wrong_word1,predict_word), (english_word2,wrong_word2,predict_word)]],...]
 
@@ -141,9 +142,19 @@ def api():
     return jsonify(results)
 
 def do_predict(test_data):
-    parser = HfArgumentParser((ModelArguments, DataTrainingArguments))
-    model_args, data_args = parser.parse_args_into_dataclasses()
-    training_args = TrainingArguments(output_dir="output/repair", do_predict=True)
+    """
+    模型预测
+    Args:
+        test_data:
+    Returns:
+
+    """
+    #设置日志格式
+    logging.basicConfig(
+        format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
+        datefmt="%m/%d/%Y %H:%M:%S",
+        level=logging.INFO
+    )
     #准备数据集, 和训练时的输入保持一致sentence1, sentence2
     test_dict = {'sentence1':[], 'sentence2':[]}
     for idx, data in enumerate(test_data):
@@ -155,20 +166,65 @@ def do_predict(test_data):
             test_dict['sentence2'].append(sentence2)
     test_datasets = Dataset.from_dict(test_dict)
 
-    label_list = LABELS
-
-    num_labels = len(label_list)
-
     sentence1_key, sentence2_key = "sentence1", "sentence2"
 
-    #设置日志格式
-    logging.basicConfig(
-        format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
-        datefmt="%m/%d/%Y %H:%M:%S",
-        level=logging.INFO
-    )
-    #打印当前设置
+    # Set seed before initializing model.
+    #随机数种子
+    #num_labels 类别数量, output_mode  是任务类型，'classification'
+    # Some models have set the order of the labels to use, so let's make sure we do use it.
+    label_to_id = {v: i for i, v in enumerate(label_list)}
 
+    def preprocess_function(examples):
+        """"
+        # Tokenize the texts
+        examples: {'idx': [0, 1], 'label': [5.0, 3.799999952316284], 'sentence1': ['A plane is taking off.', 'A man is playing a large flute.'], 'sentence2': ['An air plane is taking off.', 'A man is playing a flute.']}
+        """
+        args = (
+            (examples[sentence1_key],) if sentence2_key is None else (examples[sentence1_key], examples[sentence2_key])
+        )
+        result = tokenizer(*args, padding=True, max_length=128, truncation=True)
+
+        # Map labels to IDs (not necessary for GLUE tasks)
+        if label_to_id is not None and "label" in examples:
+            result["label"] = [label_to_id[l] for l in examples["label"]]
+        return result
+
+    t_datasets = test_datasets.map(preprocess_function, batched=True, load_from_cache_file=False)
+
+    logger.info("*** 预测 ***")
+    predictions = trainer.predict(t_datasets)
+    predictions = np.argmax(predictions.predictions, axis=1)
+
+    # 是一个嵌套列表，子列表是label的名字, 去掉prediction的第一个和最后一个元素CLS, SEP
+    predict_labels = [label_list[p] for p in predictions ]
+    results = []
+    #替换句子中的错误单词
+    for idx,data in enumerate(test_data):
+        sentence = data[0]
+        correct_words = []
+        for eng_wrong in data[1]:
+            #开始替换
+            eng_word, wrong_word = eng_wrong[0], eng_wrong[1]
+            predict_word = predict_labels.pop(0)
+            sentence = re.sub(wrong_word,predict_word, sentence)
+            eng_wrong.append(predict_word)
+            correct_words.append(eng_wrong)
+        results.append([sentence,correct_words])
+    print(results)
+    return results
+
+
+
+def load_model():
+    """
+    加载模型，返回初始化后的模型
+    Returns:
+    """
+    parser = HfArgumentParser((ModelArguments, DataTrainingArguments))
+    model_args, data_args = parser.parse_args_into_dataclasses()
+    training_args = TrainingArguments(output_dir="output/repair", do_predict=True)
+    logger.info(f"Training/evaluation parameters {training_args}")
+    num_labels = len(label_list)
     # Log on each process the small summary:
     logger.warning(
         f"Process rank: {training_args.local_rank}, device: {training_args.device}, n_gpu: {training_args.n_gpu}"
@@ -176,18 +232,6 @@ def do_predict(test_data):
     )
     #打印参数
     logger.info("Training/evaluation parameters %s", training_args)
-
-    # Set seed before initializing model.
-    #随机数种子
-    #num_labels 类别数量, output_mode  是任务类型，'classification'
-
-    logger.info(f"Training/evaluation parameters {training_args}")
-
-    # Set seed before initializing model.
-    set_seed(training_args.seed)
-
-    # Load pretrained model and tokenizer
-    #
     # In distributed training, the .from_pretrained methods guarantee that only one local process can concurrently download model & vocab.
     config = AutoConfig.from_pretrained(
         model_args.config_name if model_args.config_name else model_args.model_name_or_path,
@@ -213,34 +257,6 @@ def do_predict(test_data):
         revision=model_args.model_revision,
         use_auth_token=True if model_args.use_auth_token else None,
     )
-
-    # Padding strategy
-    if data_args.pad_to_max_length:
-        padding = "max_length"
-    else:
-        # We will pad later, dynamically at batch creation, to the max sequence length in each batch
-        padding = False
-    is_regression =False
-    # Some models have set the order of the labels to use, so let's make sure we do use it.
-    label_to_id = {v: i for i, v in enumerate(label_list)}
-
-    def preprocess_function(examples):
-        """"
-        # Tokenize the texts
-        examples: {'idx': [0, 1], 'label': [5.0, 3.799999952316284], 'sentence1': ['A plane is taking off.', 'A man is playing a large flute.'], 'sentence2': ['An air plane is taking off.', 'A man is playing a flute.']}
-        """
-        args = (
-            (examples[sentence1_key],) if sentence2_key is None else (examples[sentence1_key], examples[sentence2_key])
-        )
-        result = tokenizer(*args, padding=padding, max_length=data_args.max_seq_length, truncation=True)
-
-        # Map labels to IDs (not necessary for GLUE tasks)
-        if label_to_id is not None and "label" in examples:
-            result["label"] = [label_to_id[l] for l in examples["label"]]
-        return result
-
-    t_datasets = test_datasets.map(preprocess_function, batched=True, load_from_cache_file=not data_args.overwrite_cache)
-
     # Initialize our Trainer
     trainer = Trainer(
         model=model,
@@ -249,33 +265,13 @@ def do_predict(test_data):
         # Data collator will default to DataCollatorWithPadding, so we change it if we already did the padding.
         data_collator=default_data_collator if data_args.pad_to_max_length else None,
     )
-
-    if training_args.do_predict:
-        logger.info("*** 预测 ***")
-        predictions = trainer.predict(t_datasets)
-        predictions = np.argmax(predictions.predictions, axis=1)
-
-        # 是一个嵌套列表，子列表是label的名字, 去掉prediction的第一个和最后一个元素CLS, SEP
-        predict_labels = [label_list[p] for p in predictions ]
-        results = []
-        #替换句子中的错误单词
-        for idx,data in enumerate(test_data):
-            sentence = data[0]
-            correct_words = []
-            for eng_wrong in data[1]:
-                #开始替换
-                eng_word, wrong_word = eng_wrong[0], eng_wrong[1]
-                predict_word = predict_labels.pop(0)
-                sentence = re.sub(wrong_word,predict_word, sentence)
-                correct_words.append([eng_wrong,predict_word])
-            results.append([sentence,correct_words])
-    return results
-
+    return tokenizer, trainer
 
 if __name__ == "__main__":
     import json
     labels_file = "/Users/admin/git/transformers/myexample3/dataset/repair/labels.json"
     # labels_file = "/home/wac/johnson/johnson/transformers/myexample3/dataset/repair/labels.json"
     with open(labels_file, 'r') as f:
-        LABELS = json.load(f)
+        label_list = json.load(f)
+    tokenizer, trainer = load_model()
     app.run(host='0.0.0.0', port=5001, debug=True, threaded=True)
