@@ -214,7 +214,6 @@ def do_predict(test_data):
     return results
 
 
-
 def load_model():
     """
     加载模型，返回初始化后的模型
@@ -269,9 +268,8 @@ def load_model():
 
 if __name__ == "__main__":
     import json
-    labels_file = "/Users/admin/git/transformers/myexample3/dataset/repair/labels.json"
-    # labels_file = "/home/wac/johnson/johnson/transformers/myexample3/dataset/repair/labels.json"
+    labels_file = "dataset/repair/labels.json"
     with open(labels_file, 'r') as f:
         label_list = json.load(f)
     tokenizer, trainer = load_model()
-    app.run(host='0.0.0.0', port=5001, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=6666, debug=True, threaded=True)
