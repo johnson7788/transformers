@@ -138,6 +138,7 @@ def api():
     for data in test_data:
         words = sorted(data[1], key=lambda x:len(x[1]),reverse=True)
         sorted_data.append([data[0],words])
+    print(f"收到数据{test_data}")
     results = do_predict(test_data)
     return jsonify(results)
 
