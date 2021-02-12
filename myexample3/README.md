@@ -421,7 +421,8 @@ python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name
 
 
 # 单词是否应该被替换，单词替换任务，单词在句子中的语义是否正确, 一共170个类别，中文数据, 训练20个epoch比较合适
-# 清缓存rm -rf /home/wac/johnson/.cache/huggingface/datasets/repair_dataset/repair/1.1.0
+# 清缓存 --overwrite_cache 不好用，手动清理缓存
+# rm -rf /home/wac/johnson/.cache/huggingface/datasets/repair_dataset/repair/1.1.0
 
 python sequence_classfication.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
 --output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 20 --evaluation_strategy steps --eval_steps 100  --overwrite_output_dir --overwrite_cache
