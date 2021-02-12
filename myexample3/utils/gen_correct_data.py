@@ -71,11 +71,18 @@ def repair(train_rate=0.8, test_rate=0.1, dev_rate=0.1):
     random.shuffle(examples)
     #拆分样本
     total = len(examples)
-    train_num = int(total*train_rate)
-    test_num = int(total*test_rate)
-    train_data = examples[:train_num]
-    test_data = examples[train_num:train_num+test_num]
-    dev_data = examples[train_num+test_num:]
+    if train_rate == 1:
+        train_data = examples
+        start_num = int(total*0.8)
+        test_num = int(total*0.1)
+        test_data = examples[start_num:start_num+test_num]
+        dev_data = examples[start_num+test_num:]
+    else:
+        train_num = int(total*train_rate)
+        test_num = int(total*test_rate)
+        train_data = examples[:train_num]
+        test_data = examples[train_num:train_num+test_num]
+        dev_data = examples[train_num+test_num:]
     labels = sorted(list(set([i[3].strip() for i in examples])), key=len)
     with open(train_file, 'w') as f:
         json.dump(train_data, f)
@@ -85,7 +92,7 @@ def repair(train_rate=0.8, test_rate=0.1, dev_rate=0.1):
         json.dump(test_data, f)
     with open(label_file, 'w') as f:
         json.dump(labels, f)
-    print(f"训练集{train_num}, 测试集{test_num}, 开发集{len(dev_data)}")
+    print(f"训练集{len(train_data)}, 测试集{test_num}, 开发集{len(dev_data)}")
     print(f"标签数量{len(labels)}, 标签有:{labels}")
 
 if __name__ == '__main__':
