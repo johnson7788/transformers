@@ -55,7 +55,7 @@ def save_examples(examples):
             f.writelines(e)
     print(f"保存文件成功")
 
-def repair():
+def repair(train_rate=0.8, test_rate=0.1, dev_rate=0.1):
     """
     生成数据集dev.json test.json train.json, 生成labels
     Returns:
@@ -71,8 +71,8 @@ def repair():
     random.shuffle(examples)
     #拆分样本
     total = len(examples)
-    train_num = int(total*0.8)
-    test_num = int(total*0.1)
+    train_num = int(total*train_rate)
+    test_num = int(total*test_rate)
     train_data = examples[:train_num]
     test_data = examples[train_num:train_num+test_num]
     dev_data = examples[train_num+test_num:]
@@ -85,10 +85,10 @@ def repair():
         json.dump(test_data, f)
     with open(label_file, 'w') as f:
         json.dump(labels, f)
-    print(f"训练集{train_num}, 测试集{test_num}, 开发集{total-train_num-test_num}")
+    print(f"训练集{train_num}, 测试集{test_num}, 开发集{len(dev_data)}")
     print(f"标签数量{len(labels)}, 标签有:{labels}")
 
 if __name__ == '__main__':
     # examples = static()
     # save_examples(examples)
-    repair()
+    repair(train_rate=1)

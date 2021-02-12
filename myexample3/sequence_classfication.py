@@ -71,7 +71,7 @@ class DataTrainingArguments:
         },
     )
     overwrite_cache: bool = field(
-        default=False, metadata={"help": "是否覆盖cached预处理数据集。"}
+        default=True, metadata={"help": "是否覆盖cached预处理数据集。"}
     )
     pad_to_max_length: bool = field(
         default=True,
@@ -262,6 +262,7 @@ def main():
             label_list.sort()  # Let's sort it for determinism
             num_labels = len(label_list)
 
+    logger.info(f"标签的总数是: {num_labels}")
     # Load pretrained model and tokenizer
     #
     # In distributed training, the .from_pretrained methods guarantee that only one local process can concurrently download model & vocab.
