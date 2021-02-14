@@ -421,11 +421,12 @@ python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name
 
 
 # 单词是否应该被替换，单词替换任务，单词在句子中的语义是否正确, 一共170个类别，中文数据, 训练20个epoch比较合适
-# 清缓存 --overwrite_cache 不好用，手动清理缓存
-# rm -rf /home/wac/johnson/.cache/huggingface/datasets/repair_dataset/repair/1.1.0
-
+## 清缓存 --overwrite_cache 不好用，手动清理缓存
+## rm -rf /home/wac/johnson/.cache/huggingface/datasets/repair_dataset/repair/1.1.0
+```
 python sequence_classfication.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
 --output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 20 --evaluation_strategy steps --eval_steps 100  --overwrite_output_dir --overwrite_cache
+```
 ```buildoutcfg
 02/08/2021 17:08:23 - INFO - __main__ -   ***** Eval results repair *****
 02/08/2021 17:08:23 - INFO - __main__ -     epoch = 10.0
@@ -435,8 +436,10 @@ python sequence_classfication.py --model_name_or_path clue/roberta_chinese_base 
 02/08/2021 17:08:23 - INFO - __main__ -     eval_samples_per_second = 193.806
 ```
 ## 继续训练, 使用上一个模型的输出，输出到新的位置，epoch变成20次
+```
 python sequence_classfication.py --model_name_or_path output/repair --tokenizer_name bert-base-chinese --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
 --output_dir output/repairnew --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 20 --evaluation_strategy steps --eval_steps 100
+```
 ```buildoutcfg
 {'eval_loss': 1.1274174451828003, 'eval_accuracy': 0.8653846153846154, 'eval_runtime': 0.2152, 'eval_samples_per_second': 241.628, 'epoch': 18.97}
 ]
@@ -447,4 +450,23 @@ python sequence_classfication.py --model_name_or_path output/repair --tokenizer_
 02/09/2021 10:05:12 - INFO - __main__ -     eval_loss = 1.0921281576156616
 02/09/2021 10:05:12 - INFO - __main__ -     eval_runtime = 0.2151
 02/09/2021 10:05:12 - INFO - __main__ -     eval_samples_per_second = 241.797
+```
+
+
+# 使用多语言的模型训练 
+```buildoutcfg
+python sequence_classfication.py --model_name_or_path xlm-roberta-base --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
+--output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 20 --evaluation_strategy steps --eval_steps 100  --overwrite_output_dir --overwrite_cache
+02/14/2021 10:44:01 - INFO - __main__ -   ***** Eval results repair *****
+02/14/2021 10:44:01 - INFO - __main__ -     epoch = 20.0
+02/14/2021 10:44:01 - INFO - __main__ -     eval_accuracy = 0.8878504672897196
+02/14/2021 10:44:01 - INFO - __main__ -     eval_loss = 1.2562549114227295
+02/14/2021 10:44:01 - INFO - __main__ -     eval_runtime = 0.4562
+02/14/2021 10:44:01 - INFO - __main__ -     eval_samples_per_second = 234.555
+```
+
+xlm-mlm-17-1280 
+```buildoutcfg
+python sequence_classfication.py --model_name_or_path xlm-mlm-17-1280 --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
+--output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 20 --evaluation_strategy steps --eval_steps 100  --overwrite_output_dir --overwrite_cache
 ```
