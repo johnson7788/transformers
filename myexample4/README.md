@@ -79,6 +79,12 @@ du -sh /root/.cache/huggingface/datasets/*
 [INFO|trainer.py:837] 2021-02-08 06:43:26,822 >>   Gradient Accumulation steps = 2
 [INFO|trainer.py:838] 2021-02-08 06:43:26,822 >>   Total optimization steps = 497598
   0% 56/497598 [1:06:43<9887:09:08, 71.54s/it]
+
+#使用GPU训练
+tokenizer时间得超过3个小时
+02/23/2021 11:17:11 - INFO - __main__ -   ***** Eval results *****
+02/23/2021 11:17:11 - INFO - __main__ -     perplexity = 6.76226732730057
+
 ```
 # 使用自定义的中文训练集继续预训练模型, 示例 clue/roberta_chinese_base , 2.75GB , 注意使用bert的tokenizer
 python run_mlm.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --per_device_train_batch_size 4 --gradient_accumulation_steps 12 --max_seq_length 512
