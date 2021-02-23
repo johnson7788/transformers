@@ -15,7 +15,9 @@ from transformers import (
     MODEL_FOR_MASKED_LM_MAPPING,
     AutoConfig,
     AutoModelForMaskedLM,
+    RobertaForMaskedLM,
     AutoTokenizer,
+    BertTokenizer,
     DataCollatorForLanguageModeling,
     HfArgumentParser,
     Trainer,
@@ -205,9 +207,14 @@ def main():
         logger.warning("你正从头开始初始化一个新的config.")
     # tokenizer的设置
     if model_args.tokenizer_name:
-        tokenizer = AutoTokenizer.from_pretrained(
-            model_args.tokenizer_name, cache_dir=model_args.cache_dir, use_fast=model_args.use_fast_tokenizer
-        )
+        if model_args.tokenizer_name == "myroberta":
+            tokenizer = BertTokenizer.from_pretrained(
+                model_args.tokenizer_name, cache_dir=model_args.cache_dir, use_fast=model_args.use_fast_tokenizer
+            )
+        else:
+            tokenizer = AutoTokenizer.from_pretrained(
+                model_args.tokenizer_name, cache_dir=model_args.cache_dir, use_fast=model_args.use_fast_tokenizer
+            )
     elif model_args.model_name_or_path:
         tokenizer = AutoTokenizer.from_pretrained(
             model_args.model_name_or_path, cache_dir=model_args.cache_dir, use_fast=model_args.use_fast_tokenizer
@@ -219,12 +226,20 @@ def main():
         )
     #模型的设置
     if model_args.model_name_or_path:
-        model = AutoModelForMaskedLM.from_pretrained(
-            model_args.model_name_or_path,
-            from_tf=bool(".ckpt" in model_args.model_name_or_path),
-            config=config,
-            cache_dir=model_args.cache_dir,
-        )
+        if model_args.model_name_or_path == 'myroberta':
+            model = RobertaForMaskedLM.from_pretrained(
+                model_args.model_name_or_path,
+                from_tf=bool(".ckpt" in model_args.model_name_or_path),
+                config=config,
+                cache_dir=model_args.cache_dir,
+            )
+        else:
+            model = AutoModelForMaskedLM.from_pretrained(
+                model_args.model_name_or_path,
+                from_tf=bool(".ckpt" in model_args.model_name_or_path),
+                config=config,
+                cache_dir=model_args.cache_dir,
+            )
     else:
         logger.info("从头开始训练一个模型")
         model = AutoModelForMaskedLM.from_config(config)
@@ -245,8 +260,10 @@ def main():
 
         def tokenize_function(examples):
             # 移除空行
+            # 收到的数据长度
+            print(f"收到的数据长度: {[len(t) for t in examples['text']]}")
             examples["text"] = [line for line in examples["text"] if len(line) > 0 and not line.isspace()]
-            return tokenizer(
+            tokenizer_res = tokenizer(
                 examples["text"],
                 padding=padding,
                 truncation=True,
@@ -255,6 +272,8 @@ def main():
                 # receives the `special_tokens_mask`.
                 return_special_tokens_mask=True,
             )
+            print(f"tokenizer之后的数据长度: {print([len(t) for t in tokenizer_res['input_ids']])}")
+            return tokenizer_res
 
         tokenized_datasets = datasets.map(
             tokenize_function,

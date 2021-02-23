@@ -53,7 +53,7 @@ perplexity = 10.445827453447645
 python sequence_classfication.py --model_name_or_path output/mydeberta --task_name sst2 --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 32 --learning_rate 2e-5 --num_train_epochs 3.0 --output_dir output/sst2/  --evaluation_strategy steps --eval_steps 500
 
 # 使用自定义的中文训练集继续预训练模型, 示例 bert-base-chinese, 2.75GB, 样本行数796万
-python run_mlm.py --model_name_or_path bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --per_device_train_batch_size 24 --gradient_accumulation_steps 2 --max_seq_length 128
+python run_mlm.py --model_name_or_path bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --line_by_line --per_device_train_batch_size 24 --gradient_accumulation_steps 2 --max_seq_length 128
 ```buildoutcfg
 生成缓存数据集大概64GB
 du -sh /root/.cache/huggingface/datasets/*
@@ -87,8 +87,14 @@ tokenizer时间得超过3个小时
 
 ```
 # 使用自定义的中文训练集继续预训练模型, 示例 clue/roberta_chinese_base , 2.75GB , 注意使用bert的tokenizer
-python run_mlm.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --per_device_train_batch_size 4 --gradient_accumulation_steps 12 --max_seq_length 512
+python run_mlm.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --line_by_line --pad_to_max_length --per_device_train_batch_size 4 --gradient_accumulation_steps 12 --max_seq_length 500
+## 或者下载后自定义训练
+download_roberta.py
+python run_mlm.py --model_name_or_path myroberta --tokenizer_name myroberta --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --line_by_line --pad_to_max_length --per_device_train_batch_size 4 --gradient_accumulation_steps 12 --max_seq_length 500
+## 训练结果
+```buildoutcfg
 
+```
 # 分布式训练
 ## 2个节点的测试
 ### 节点139上运行:
