@@ -425,7 +425,7 @@ python sequence_classfication.py --model_name_or_path albert-base-v2 --task_name
 ## rm -rf /home/wac/johnson/.cache/huggingface/datasets/repair_dataset/repair/1.1.0
 ```
 python sequence_classfication.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
---output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 20 --evaluation_strategy steps --eval_steps 100  --overwrite_output_dir --overwrite_cache
+--output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 40 --evaluation_strategy steps --eval_steps 100  --overwrite_output_dir --overwrite_cache
 ```
 ```buildoutcfg
 02/08/2021 17:08:23 - INFO - __main__ -   ***** Eval results repair *****
