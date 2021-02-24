@@ -98,4 +98,4 @@ def repair(train_rate=0.8, test_rate=0.1, dev_rate=0.1):
 if __name__ == '__main__':
     # examples = static()
     # save_examples(examples)
-    repair(train_rate=1)
+    repair(train_rate=0.8)

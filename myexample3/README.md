@@ -452,6 +452,11 @@ python sequence_classfication.py --model_name_or_path output/repair --tokenizer_
 02/09/2021 10:05:12 - INFO - __main__ -     eval_samples_per_second = 241.797
 ```
 
+# 用二分类的方法
+```buildoutcfg
+python sequence_classfication.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --task_name repair --task_script data/repair.py --task_dir dataset/repair --metric_script metric/repair.py \
+--output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 20 --evaluation_strategy steps --eval_steps 100  --overwrite_output_dir --overwrite_cache
+```
 
 # 使用多语言的模型训练 
 ```buildoutcfg

@@ -39,10 +39,10 @@ _URLs = {
 }
 
 #加载标签
-import json
-labels_file = "dataset/repair/labels.json"
-with open(labels_file, 'r') as f:
-    LABELS = json.load(f)
+# import json
+# labels_file = "dataset/repair/labels.json"
+# with open(labels_file, 'r') as f:
+#     LABELS = json.load(f)
 
 #通常CamelCase命名
 class RepairDataset(datasets.GeneratorBasedBuilder):
@@ -62,7 +62,7 @@ class RepairDataset(datasets.GeneratorBasedBuilder):
             {
                 "sentence1": datasets.Value("string"),
                 "sentence2": datasets.Value("string"),
-                "label": datasets.features.ClassLabel(names=LABELS)
+                "label": datasets.features.ClassLabel(names=["YES", "NO"])
             }
         )
         return datasets.DatasetInfo(
@@ -125,8 +125,12 @@ class RepairDataset(datasets.GeneratorBasedBuilder):
         with open(filepath, encoding="utf-8") as f:
             data = json.load(f)
             for id_, row in enumerate(data):
+                if row[2].strip() == row[3].strip():
+                    label = "NO"
+                else:
+                    label = "YES"
                 yield id_, {
                     "sentence1": row[1].strip(),   #句子
-                    "sentence2": row[0] + row[2],  #英语单词+错误单词
-                    "label": row[3].strip(),  #正确单词
+                    "sentence2": row[2].strip(),  #错误单词
+                    "label": label,  #需要替换，那么为YES, 不需要替换为NO
                 }

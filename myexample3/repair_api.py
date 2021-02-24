@@ -162,7 +162,7 @@ def do_predict(test_data):
         sentence1 = data[0]
         for eng_wrong in data[1]:
             eng_word, wrong_word = eng_wrong[0], eng_wrong[1]
-            sentence2 = eng_word +'\n' + wrong_word + '\n'
+            sentence2 = wrong_word
             test_dict['sentence1'].append(sentence1)
             test_dict['sentence2'].append(sentence2)
     test_datasets = Dataset.from_dict(test_dict)
@@ -199,22 +199,21 @@ def do_predict(test_data):
     # 是一个嵌套列表，子列表是label的名字, 去掉prediction的第一个和最后一个元素CLS, SEP
     predict_labels = [label_list[p] for p in predictions ]
     results = []
-    #替换句子中的错误单词
+    #循环数据
     for idx,data in enumerate(test_data):
         sentence = data[0]
-        correct_words = []
-        for eng_wrong in data[1]:
-            #开始替换
-            eng_word, wrong_word = eng_wrong[0], eng_wrong[1]
-            predict_word = predict_labels.pop(0)
-            if predict_word == "DELETE":
-                #如果预测是删除的关键字，那么就删掉这个词从原始句子中
-                sentence = re.sub(wrong_word,'',sentence)
-            else:
-                sentence = re.sub(wrong_word,predict_word, sentence)
-            eng_wrong.append(predict_word)
-            correct_words.append(eng_wrong)
-        results.append([sentence,correct_words])
+        after_list = []
+        for eng_wrong_list in data[1]:
+            #开始替换, 如果预测结果为YES或NO的，那么就不能替换了
+            eng_word, wrong_word, correct_words = eng_wrong_list[0], eng_wrong_list[1], eng_wrong_list[2]
+            predict = predict_labels.pop(0)
+            if predict == "YES":
+                #如果为YES，那么开始替换，如果为NO，那么不替换
+                replace_word = '|'.join(correct_words)
+                sentence = re.sub(wrong_word,replace_word,sentence)
+            eng_wrong_list.append(predict)
+            after_list.append(eng_wrong_list)
+        results.append([sentence,after_list])
     print(results)
     return results
 
@@ -272,9 +271,6 @@ def load_model():
     return tokenizer, trainer
 
 if __name__ == "__main__":
-    import json
-    labels_file = "dataset/repair/labels.json"
-    with open(labels_file, 'r') as f:
-        label_list = json.load(f)
+    label_list = ["YES", "NO"]
     tokenizer, trainer = load_model()
     app.run(host='0.0.0.0', port=6666, debug=True, threaded=True)
