@@ -87,13 +87,14 @@ tokenizer时间得超过3个小时
 
 ```
 # 使用自定义的中文训练集继续预训练模型, 示例 clue/roberta_chinese_base , 2.75GB , 注意使用bert的tokenizer
-python run_mlm.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --line_by_line --pad_to_max_length --per_device_train_batch_size 4 --gradient_accumulation_steps 12 --max_seq_length 500
+python run_mlm.py --model_name_or_path clue/roberta_chinese_base --tokenizer_name bert-base-chinese --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --line_by_line --pad_to_max_length --per_device_train_batch_size 4 --gradient_accumulation_steps 12 --max_seq_length 500 --overwrite_output_dir
 ## 或者下载后自定义训练
 download_roberta.py
-python run_mlm.py --model_name_or_path myroberta --tokenizer_name myroberta --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --line_by_line --pad_to_max_length --per_device_train_batch_size 4 --gradient_accumulation_steps 12 --max_seq_length 500
+python run_mlm.py --model_name_or_path myroberta --tokenizer_name myroberta --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --line_by_line --pad_to_max_length --per_device_train_batch_size 4 --gradient_accumulation_steps 12 --max_seq_length 500 --overwrite_output_dir
 ## 训练结果
 ```buildoutcfg
-
+02/23/2021 15:05:28 - INFO - __main__ -   ***** Eval results *****
+02/23/2021 15:05:28 - INFO - __main__ -     perplexity = 9144.315938640746
 ```
 # 分布式训练
 ## 2个节点的测试
