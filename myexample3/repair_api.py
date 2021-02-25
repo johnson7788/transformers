@@ -208,11 +208,6 @@ def do_predict(test_data):
             #开始替换
             eng_word, wrong_word = eng_wrong[0], eng_wrong[1]
             predict_word = predict_labels.pop(0)
-            if predict_word == "DELETE":
-                #如果预测是删除的关键字，那么就删掉这个词从原始句子中
-                sentence = re.sub(wrong_word,'',sentence)
-            else:
-                sentence = re.sub(wrong_word,predict_word, sentence)
             eng_wrong.append(predict_word)
             correct_words.append(eng_wrong)
         results.append([sentence,correct_words])
