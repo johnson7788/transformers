@@ -428,12 +428,12 @@ python sequence_classfication.py --model_name_or_path clue/roberta_chinese_base 
 --output_dir output/repair --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 8 --gradient_accumulation_steps 2 --learning_rate 2e-5 --num_train_epochs 40 --evaluation_strategy steps --eval_steps 100  --overwrite_output_dir --overwrite_cache
 ```
 ```buildoutcfg
-02/08/2021 17:08:23 - INFO - __main__ -   ***** Eval results repair *****
-02/08/2021 17:08:23 - INFO - __main__ -     epoch = 10.0
-02/08/2021 17:08:23 - INFO - __main__ -     eval_accuracy = 0.7403846153846154
-02/08/2021 17:08:23 - INFO - __main__ -     eval_loss = 2.0259742736816406
-02/08/2021 17:08:23 - INFO - __main__ -     eval_runtime = 0.5366
-02/08/2021 17:08:23 - INFO - __main__ -     eval_samples_per_second = 193.806
+02/25/2021 09:15:18 - INFO - __main__ -   ***** Eval results repair *****
+02/25/2021 09:15:18 - INFO - __main__ -     epoch = 20.0
+02/25/2021 09:15:18 - INFO - __main__ -     eval_accuracy = 0.9652173913043478
+02/25/2021 09:15:18 - INFO - __main__ -     eval_loss = 0.6397014260292053
+02/25/2021 09:15:18 - INFO - __main__ -     eval_runtime = 0.4708
+02/25/2021 09:15:18 - INFO - __main__ -     eval_samples_per_second = 244.249
 ```
 ## 继续训练, 使用上一个模型的输出，输出到新的位置，epoch变成20次
 ```

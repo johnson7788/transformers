@@ -162,7 +162,8 @@ def do_predict(test_data):
         sentence1 = data[0]
         for eng_wrong in data[1]:
             eng_word, wrong_word = eng_wrong[0], eng_wrong[1]
-            sentence2 = eng_word +'\n' + wrong_word + '\n'
+            # sentence2 = eng_word +'\n' + wrong_word + '\n'
+            sentence2 = wrong_word
             test_dict['sentence1'].append(sentence1)
             test_dict['sentence2'].append(sentence2)
     test_datasets = Dataset.from_dict(test_dict)
