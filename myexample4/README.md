@@ -93,6 +93,11 @@ download_roberta.py
 python run_mlm.py --model_name_or_path myroberta --tokenizer_name myroberta --dataset_name demo --dataset_config_name demo --data_dir dataset/demo --do_train --do_eval --output_dir output/mybert --line_by_line --pad_to_max_length --per_device_train_batch_size 4 --gradient_accumulation_steps 12 --max_seq_length 500 --overwrite_output_dir
 ## 训练结果
 ```buildoutcfg
+训练一个epoch耗时大概23天左右
+0%|          | 798/673593 [41:08<568:26:21,  3.04s/it]^CTraceback (most recent call last):
+```
+```buildoutcfg
+#mini训练集
 02/23/2021 15:05:28 - INFO - __main__ -   ***** Eval results *****
 02/23/2021 15:05:28 - INFO - __main__ -     perplexity = 9144.315938640746
 ```
