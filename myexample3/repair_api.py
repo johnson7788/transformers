@@ -195,10 +195,13 @@ def do_predict(test_data):
 
     logger.info("*** 预测 ***")
     predictions = trainer.predict(t_datasets)
-    predictions = np.argmax(predictions.predictions, axis=1)
-
+    topk = 3
+    topk_predictions = np.argsort(predictions.predictions, axis=1)[:, -topk:][:, ::-1]
+    #eg: [['欠拟合', '性能', '精度'], ['训练', '预训练', '损失'], ['low-resource', 'high-resource', '存储'], ['值', 'value', 'k-means'], ['值', 'value', '边'], ['key', '键', '关键'], ['步', '步骤', '步数'], ['早停', '维度', 'query'], ['checkpoint', '问答', 'self-attention']]
+    topk_predict_labels = [[label_list[p]for p in plist] for plist in topk_predictions]
+    # predictions = np.argmax(predictions.predictions, axis=1)
     # 是一个嵌套列表，子列表是label的名字, 去掉prediction的第一个和最后一个元素CLS, SEP
-    predict_labels = [label_list[p] for p in predictions ]
+    # predict_labels = [label_list[p] for p in predictions ]
     results = []
     #替换句子中的错误单词
     for idx,data in enumerate(test_data):
@@ -207,8 +210,9 @@ def do_predict(test_data):
         for eng_wrong in data[1]:
             #开始替换
             eng_word, wrong_word = eng_wrong[0], eng_wrong[1]
-            predict_word = predict_labels.pop(0)
-            eng_wrong.append(predict_word)
+            #预测的单词列表
+            predict_words = topk_predict_labels.pop(0)
+            eng_wrong.append(predict_words)
             correct_words.append(eng_wrong)
         results.append([sentence,correct_words])
     print(results)
