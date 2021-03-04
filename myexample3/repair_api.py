@@ -277,4 +277,4 @@ if __name__ == "__main__":
     with open(labels_file, 'r') as f:
         label_list = json.load(f)
     tokenizer, trainer = load_model()
-    app.run(host='0.0.0.0', port=6666, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=6666, debug=False, threaded=True)
