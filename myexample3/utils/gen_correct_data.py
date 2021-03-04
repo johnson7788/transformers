@@ -95,7 +95,9 @@ def repair(train_rate=0.8, test_rate=0.1, dev_rate=0.1):
     print(f"训练集{len(train_data)}, 测试集{test_num}, 开发集{len(dev_data)}")
     print(f"标签数量{len(labels)}, 标签有:{labels}")
 
+
 if __name__ == '__main__':
     # examples = static()
     # save_examples(examples)
     repair(train_rate=1)
+    # train_repair()
