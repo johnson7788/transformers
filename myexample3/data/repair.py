@@ -127,7 +127,7 @@ class RepairDataset(datasets.GeneratorBasedBuilder):
             for id_, row in enumerate(data):
                 yield id_, {
                     "sentence1": row[1].strip(),   #句子
-                    # "sentence2": row[0] + row[2],  #英语单词+错误单词
-                    "sentence2": row[2].strip(),  #英语单词+错误单词
+                    "sentence2": row[0] + row[2].strip(),  #英语单词\n+错误单词
+                    # "sentence2": row[2].strip(),  #英语单词+错误单词
                     "label": row[3].strip(),  #正确单词
                 }
