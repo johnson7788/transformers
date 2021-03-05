@@ -63,7 +63,7 @@ class DataTrainingArguments:
         metadata={"help": "训练集的metric脚本的位置"},
     )
     max_seq_length: int = field(
-        default=128,
+        default=64,
         metadata={
             "help": "分词后的最大总输入序列长度。 长度大于此长度的序列将被截断，较短的序列将被填充。"
         },
@@ -276,5 +276,6 @@ if __name__ == "__main__":
     labels_file = "dataset/repair/labels.json"
     with open(labels_file, 'r') as f:
         label_list = json.load(f)
+    print(f"共有标签数{len(label_list)}")
     tokenizer, trainer = load_model()
     app.run(host='0.0.0.0', port=6666, debug=False, threaded=True)

@@ -31,8 +31,8 @@ def static():
             else:
                 print(f"第{i}行样本有问题，请检查")
                 return
-    print(f"共有样本数{len(examples)}")
     cnt = Counter([i[2] for i in examples])
+    print(f"共有样本数{len(examples)}, 错误单词总数{len(cnt)}")
     print(f"错误单词统计: {cnt}")
     length_sentence = Counter([len(i[1]) for i in examples])
     print(f"句子长度统计: {sorted(length_sentence.items())}")
@@ -97,7 +97,7 @@ def repair(train_rate=0.8, test_rate=0.1, dev_rate=0.1):
 
 
 if __name__ == '__main__':
-    # examples = static()
+    examples = static()
     # save_examples(examples)
-    repair(train_rate=1)
+    # repair(train_rate=1)
     # train_repair()
