@@ -33,6 +33,7 @@ from ..albert.modeling_albert import (
     AlbertModel,
 )
 from ..bart.modeling_bart import (
+    BartForCausalLM,
     BartForConditionalGeneration,
     BartForQuestionAnswering,
     BartForSequenceClassification,
@@ -50,8 +51,12 @@ from ..bert.modeling_bert import (
     BertModel,
 )
 from ..bert_generation.modeling_bert_generation import BertGenerationDecoder, BertGenerationEncoder
-from ..blenderbot.modeling_blenderbot import BlenderbotForConditionalGeneration, BlenderbotModel
-from ..blenderbot_small.modeling_blenderbot_small import BlenderbotSmallForConditionalGeneration, BlenderbotSmallModel
+from ..blenderbot.modeling_blenderbot import BlenderbotForCausalLM, BlenderbotForConditionalGeneration, BlenderbotModel
+from ..blenderbot_small.modeling_blenderbot_small import (
+    BlenderbotSmallForCausalLM,
+    BlenderbotSmallForConditionalGeneration,
+    BlenderbotSmallModel,
+)
 from ..camembert.modeling_camembert import (
     CamembertForCausalLM,
     CamembertForMaskedLM,
@@ -61,8 +66,6 @@ from ..camembert.modeling_camembert import (
     CamembertForTokenClassification,
     CamembertModel,
 )
-
-# Add modeling imports here
 from ..convbert.modeling_convbert import (
     ConvBertForMaskedLM,
     ConvBertForMultipleChoice,
@@ -78,6 +81,13 @@ from ..deberta.modeling_deberta import (
     DebertaForSequenceClassification,
     DebertaForTokenClassification,
     DebertaModel,
+)
+from ..deberta_v2.modeling_deberta_v2 import (
+    DebertaV2ForMaskedLM,
+    DebertaV2ForQuestionAnswering,
+    DebertaV2ForSequenceClassification,
+    DebertaV2ForTokenClassification,
+    DebertaV2Model,
 )
 from ..distilbert.modeling_distilbert import (
     DistilBertForMaskedLM,
@@ -117,6 +127,14 @@ from ..funnel.modeling_funnel import (
     FunnelModel,
 )
 from ..gpt2.modeling_gpt2 import GPT2ForSequenceClassification, GPT2LMHeadModel, GPT2Model
+from ..ibert.modeling_ibert import (
+    IBertForMaskedLM,
+    IBertForMultipleChoice,
+    IBertForQuestionAnswering,
+    IBertForSequenceClassification,
+    IBertForTokenClassification,
+    IBertModel,
+)
 from ..layoutlm.modeling_layoutlm import (
     LayoutLMForMaskedLM,
     LayoutLMForSequenceClassification,
@@ -138,8 +156,10 @@ from ..longformer.modeling_longformer import (
     LongformerModel,
 )
 from ..lxmert.modeling_lxmert import LxmertForPreTraining, LxmertForQuestionAnswering, LxmertModel
-from ..marian.modeling_marian import MarianModel, MarianMTModel
+from ..m2m_100.modeling_m2m_100 import M2M100ForConditionalGeneration, M2M100Model
+from ..marian.modeling_marian import MarianForCausalLM, MarianModel, MarianMTModel
 from ..mbart.modeling_mbart import (
+    MBartForCausalLM,
     MBartForConditionalGeneration,
     MBartForQuestionAnswering,
     MBartForSequenceClassification,
@@ -165,7 +185,7 @@ from ..mpnet.modeling_mpnet import (
 )
 from ..mt5.modeling_mt5 import MT5ForConditionalGeneration, MT5Model
 from ..openai.modeling_openai import OpenAIGPTForSequenceClassification, OpenAIGPTLMHeadModel, OpenAIGPTModel
-from ..pegasus.modeling_pegasus import PegasusForConditionalGeneration, PegasusModel
+from ..pegasus.modeling_pegasus import PegasusForCausalLM, PegasusForConditionalGeneration, PegasusModel
 from ..prophetnet.modeling_prophetnet import ProphetNetForCausalLM, ProphetNetForConditionalGeneration, ProphetNetModel
 from ..rag.modeling_rag import (  # noqa: F401 - need to import all RagModels to be in globals() function
     RagModel,
@@ -189,6 +209,7 @@ from ..roberta.modeling_roberta import (
     RobertaForTokenClassification,
     RobertaModel,
 )
+from ..speech_to_text.modeling_speech_to_text import Speech2TextForConditionalGeneration, Speech2TextModel
 from ..squeezebert.modeling_squeezebert import (
     SqueezeBertForMaskedLM,
     SqueezeBertForMultipleChoice,
@@ -248,6 +269,7 @@ from .configuration_auto import (
     ConvBertConfig,
     CTRLConfig,
     DebertaConfig,
+    DebertaV2Config,
     DistilBertConfig,
     DPRConfig,
     ElectraConfig,
@@ -256,10 +278,12 @@ from .configuration_auto import (
     FSMTConfig,
     FunnelConfig,
     GPT2Config,
+    IBertConfig,
     LayoutLMConfig,
     LEDConfig,
     LongformerConfig,
     LxmertConfig,
+    M2M100Config,
     MarianConfig,
     MBartConfig,
     MobileBertConfig,
@@ -271,6 +295,7 @@ from .configuration_auto import (
     ReformerConfig,
     RetriBertConfig,
     RobertaConfig,
+    Speech2TextConfig,
     SqueezeBertConfig,
     T5Config,
     TapasConfig,
@@ -290,7 +315,9 @@ logger = logging.get_logger(__name__)
 MODEL_MAPPING = OrderedDict(
     [
         # Base model mapping
+        (Speech2TextConfig, Speech2TextModel),
         (Wav2Vec2Config, Wav2Vec2Model),
+        (M2M100Config, M2M100Model),
         (ConvBertConfig, ConvBertModel),
         (LEDConfig, LEDModel),
         (BlenderbotSmallConfig, BlenderbotSmallModel),
@@ -326,12 +353,14 @@ MODEL_MAPPING = OrderedDict(
         (LxmertConfig, LxmertModel),
         (BertGenerationConfig, BertGenerationEncoder),
         (DebertaConfig, DebertaModel),
+        (DebertaV2Config, DebertaV2Model),
         (DPRConfig, DPRQuestionEncoder),
         (XLMProphetNetConfig, XLMProphetNetModel),
         (ProphetNetConfig, ProphetNetModel),
         (MPNetConfig, MPNetModel),
         (TapasConfig, TapasModel),
         (MarianConfig, MarianModel),
+        (IBertConfig, IBertModel),
     ]
 )
 
@@ -364,13 +393,18 @@ MODEL_FOR_PRETRAINING_MAPPING = OrderedDict(
         (FunnelConfig, FunnelForPreTraining),
         (MPNetConfig, MPNetForMaskedLM),
         (TapasConfig, TapasForMaskedLM),
+        (IBertConfig, IBertForMaskedLM),
+        (DebertaConfig, DebertaForMaskedLM),
+        (DebertaV2Config, DebertaV2ForMaskedLM),
     ]
 )
 
 MODEL_WITH_LM_HEAD_MAPPING = OrderedDict(
     [
         # Model with LM heads mapping
+        (Speech2TextConfig, Speech2TextForConditionalGeneration),
         (Wav2Vec2Config, Wav2Vec2ForMaskedLM),
+        (M2M100Config, M2M100ForConditionalGeneration),
         (ConvBertConfig, ConvBertForMaskedLM),
         (LEDConfig, LEDForConditionalGeneration),
         (BlenderbotSmallConfig, BlenderbotSmallForConditionalGeneration),
@@ -402,6 +436,8 @@ MODEL_WITH_LM_HEAD_MAPPING = OrderedDict(
         (MPNetConfig, MPNetForMaskedLM),
         (TapasConfig, TapasForMaskedLM),
         (DebertaConfig, DebertaForMaskedLM),
+        (DebertaV2Config, DebertaV2ForMaskedLM),
+        (IBertConfig, IBertForMaskedLM),
     ]
 )
 
@@ -425,6 +461,12 @@ MODEL_FOR_CAUSAL_LM_MAPPING = OrderedDict(
         (BertGenerationConfig, BertGenerationDecoder),
         (XLMProphetNetConfig, XLMProphetNetForCausalLM),
         (ProphetNetConfig, ProphetNetForCausalLM),
+        (BartConfig, BartForCausalLM),
+        (MBartConfig, MBartForCausalLM),
+        (PegasusConfig, PegasusForCausalLM),
+        (MarianConfig, MarianForCausalLM),
+        (BlenderbotConfig, BlenderbotForCausalLM),
+        (BlenderbotSmallConfig, BlenderbotSmallForCausalLM),
     ]
 )
 
@@ -453,12 +495,15 @@ MODEL_FOR_MASKED_LM_MAPPING = OrderedDict(
         (MPNetConfig, MPNetForMaskedLM),
         (TapasConfig, TapasForMaskedLM),
         (DebertaConfig, DebertaForMaskedLM),
+        (DebertaV2Config, DebertaV2ForMaskedLM),
+        (IBertConfig, IBertForMaskedLM),
     ]
 )
 
 MODEL_FOR_SEQ_TO_SEQ_CAUSAL_LM_MAPPING = OrderedDict(
     [
         # Model for Seq2Seq Causal LM mapping
+        (M2M100Config, M2M100ForConditionalGeneration),
         (LEDConfig, LEDForConditionalGeneration),
         (BlenderbotSmallConfig, BlenderbotSmallForConditionalGeneration),
         (MT5Config, MT5ForConditionalGeneration),
@@ -498,6 +543,7 @@ MODEL_FOR_SEQUENCE_CLASSIFICATION_MAPPING = OrderedDict(
         (ElectraConfig, ElectraForSequenceClassification),
         (FunnelConfig, FunnelForSequenceClassification),
         (DebertaConfig, DebertaForSequenceClassification),
+        (DebertaV2Config, DebertaV2ForSequenceClassification),
         (GPT2Config, GPT2ForSequenceClassification),
         (OpenAIGPTConfig, OpenAIGPTForSequenceClassification),
         (ReformerConfig, ReformerForSequenceClassification),
@@ -505,6 +551,7 @@ MODEL_FOR_SEQUENCE_CLASSIFICATION_MAPPING = OrderedDict(
         (TransfoXLConfig, TransfoXLForSequenceClassification),
         (MPNetConfig, MPNetForSequenceClassification),
         (TapasConfig, TapasForSequenceClassification),
+        (IBertConfig, IBertForSequenceClassification),
     ]
 )
 
@@ -533,6 +580,8 @@ MODEL_FOR_QUESTION_ANSWERING_MAPPING = OrderedDict(
         (LxmertConfig, LxmertForQuestionAnswering),
         (MPNetConfig, MPNetForQuestionAnswering),
         (DebertaConfig, DebertaForQuestionAnswering),
+        (DebertaV2Config, DebertaV2ForQuestionAnswering),
+        (IBertConfig, IBertForQuestionAnswering),
     ]
 )
 
@@ -565,6 +614,8 @@ MODEL_FOR_TOKEN_CLASSIFICATION_MAPPING = OrderedDict(
         (FunnelConfig, FunnelForTokenClassification),
         (MPNetConfig, MPNetForTokenClassification),
         (DebertaConfig, DebertaForTokenClassification),
+        (DebertaV2Config, DebertaV2ForTokenClassification),
+        (IBertConfig, IBertForTokenClassification),
     ]
 )
 
@@ -587,6 +638,7 @@ MODEL_FOR_MULTIPLE_CHOICE_MAPPING = OrderedDict(
         (FlaubertConfig, FlaubertForMultipleChoice),
         (FunnelConfig, FunnelForMultipleChoice),
         (MPNetConfig, MPNetForMultipleChoice),
+        (IBertConfig, IBertForMultipleChoice),
     ]
 )
 
@@ -749,7 +801,7 @@ class AutoModel:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/bert_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/bert_tf_model_config.json')
             >>> model = AutoModel.from_pretrained('./tf_model/bert_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)
@@ -843,7 +895,7 @@ class AutoModelForPreTraining:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/bert_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/bert_tf_model_config.json')
             >>> model = AutoModelForPreTraining.from_pretrained('./tf_model/bert_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)
@@ -948,7 +1000,7 @@ class AutoModelWithLMHead:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/bert_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/bert_tf_model_config.json')
             >>> model = AutoModelWithLMHead.from_pretrained('./tf_model/bert_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         warnings.warn(
@@ -1047,7 +1099,7 @@ class AutoModelForCausalLM:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/gpt2_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/gpt2_tf_model_config.json')
             >>> model = AutoModelForCausalLM.from_pretrained('./tf_model/gpt2_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)
@@ -1140,7 +1192,7 @@ class AutoModelForMaskedLM:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/bert_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/bert_tf_model_config.json')
             >>> model = AutoModelForMaskedLM.from_pretrained('./tf_model/bert_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)
@@ -1236,7 +1288,7 @@ class AutoModelForSeq2SeqLM:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/t5_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/t5_tf_model_config.json')
             >>> model = AutoModelForSeq2SeqLM.from_pretrained('./tf_model/t5_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)
@@ -1334,7 +1386,7 @@ class AutoModelForSequenceClassification:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/bert_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/bert_tf_model_config.json')
             >>> model = AutoModelForSequenceClassification.from_pretrained('./tf_model/bert_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)
@@ -1431,7 +1483,7 @@ class AutoModelForQuestionAnswering:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/bert_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/bert_tf_model_config.json')
             >>> model = AutoModelForQuestionAnswering.from_pretrained('./tf_model/bert_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)
@@ -1531,7 +1583,7 @@ class AutoModelForTableQuestionAnswering:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/tapas_tf_checkpoint.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/tapas_tf_checkpoint.json')
             >>> model = AutoModelForQuestionAnswering.from_pretrained('./tf_model/tapas_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)
@@ -1629,7 +1681,7 @@ class AutoModelForTokenClassification:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/bert_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/bert_tf_model_config.json')
             >>> model = AutoModelForTokenClassification.from_pretrained('./tf_model/bert_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)
@@ -1729,7 +1781,7 @@ class AutoModelForMultipleChoice:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/bert_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/bert_tf_model_config.json')
             >>> model = AutoModelForMultipleChoice.from_pretrained('./tf_model/bert_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)
@@ -1829,7 +1881,7 @@ class AutoModelForNextSentencePrediction:
             True
 
             >>> # Loading from a TF checkpoint file instead of a PyTorch model (slower)
-            >>> config = AutoConfig.from_json_file('./tf_model/bert_tf_model_config.json')
+            >>> config = AutoConfig.from_pretrained('./tf_model/bert_tf_model_config.json')
             >>> model = AutoModelForNextSentencePrediction.from_pretrained('./tf_model/bert_tf_checkpoint.ckpt.index', from_tf=True, config=config)
         """
         config = kwargs.pop("config", None)

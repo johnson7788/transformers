@@ -18,7 +18,6 @@ import math
 from collections.abc import Sequence
 
 import torch
-from packaging import version
 from torch import _softmax_backward_data, nn
 from torch.nn import CrossEntropyLoss
 
@@ -39,10 +38,15 @@ logger = logging.get_logger(__name__)
 
 _CONFIG_FOR_DOC = "DebertaConfig"
 _TOKENIZER_FOR_DOC = "DebertaTokenizer"
+_CHECKPOINT_FOR_DOC = "microsoft/deberta-base"
 
 DEBERTA_PRETRAINED_MODEL_ARCHIVE_LIST = [
     "microsoft/deberta-base",
     "microsoft/deberta-large",
+    "microsoft/deberta-xlarge",
+    "microsoft/deberta-base-mnli",
+    "microsoft/deberta-large-mnli",
+    "microsoft/deberta-xlarge-mnli",
 ]
 
 
@@ -53,7 +57,7 @@ class ContextPooler(nn.Module):
         self.dropout = StableDropout(config.pooler_dropout)
         self.config = config
 
-    def forward(self, hidden_states, mask=None):
+    def forward(self, hidden_states):
         # We "pool" the model by simply taking the hidden state corresponding
         # to the first token.
 
@@ -73,27 +77,28 @@ class XSoftmax(torch.autograd.Function):
     Masked Softmax which is optimized for saving memory
 
     Args:
-      input (:obj:`torch.tensor`): The input tensor that will apply softmax.
-      mask (:obj:`torch.IntTensor`): The mask matrix where 0 indicate that element will be ignored in the softmax calculation.
-      dim (int): The dimension that will apply softmax
+        input (:obj:`torch.tensor`): The input tensor that will apply softmax.
+        mask (:obj:`torch.IntTensor`): The mask matrix where 0 indicate that element will be ignored in the softmax calculation.
+        dim (int): The dimension that will apply softmax
 
     Example::
-      import torch
-      from transformers.models.deberta import XSoftmax
-      # Make a tensor
-      x = torch.randn([4,20,100])
-      # Create a mask
-      mask = (x>0).int()
-      y = XSoftmax.apply(x, mask, dim=-1)
+
+          >>> import torch
+          >>> from transformers.models.deberta.modeling_deberta import XSoftmax
+
+          >>> # Make a tensor
+          >>> x = torch.randn([4,20,100])
+
+          >>> # Create a mask
+          >>> mask = (x>0).int()
+
+          >>> y = XSoftmax.apply(x, mask, dim=-1)
     """
 
     @staticmethod
     def forward(self, input, mask, dim):
         self.dim = dim
-        if version.Version(torch.__version__) >= version.Version("1.2.0a"):
-            rmask = ~(mask.bool())
-        else:
-            rmask = (1 - mask).byte()  # This line is not supported by Onnx tracing.
+        rmask = ~(mask.bool())
 
         output = input.masked_fill(rmask, float("-inf"))
         output = torch.softmax(output, self.dim)
@@ -126,10 +131,7 @@ def get_mask(input, local_context):
         mask = local_context.mask if local_context.reuse_mask else None
 
     if dropout > 0 and mask is None:
-        if version.Version(torch.__version__) >= version.Version("1.2.0a"):
-            mask = (1 - torch.empty_like(input).bernoulli_(1 - dropout)).bool()
-        else:
-            mask = (1 - torch.empty_like(input).bernoulli_(1 - dropout)).byte()
+        mask = (1 - torch.empty_like(input).bernoulli_(1 - dropout)).bool()
 
     if isinstance(local_context, DropoutContext):
         if local_context.mask is None:
@@ -165,9 +167,7 @@ class StableDropout(torch.nn.Module):
     Optimized dropout module for stabilizing the training
 
     Args:
-
         drop_prob (float): the dropout probabilities
-
     """
 
     def __init__(self, drop_prob):
@@ -182,8 +182,6 @@ class StableDropout(torch.nn.Module):
 
         Args:
             x (:obj:`torch.tensor`): The input tensor to apply dropout
-
-
         """
         if self.training and self.drop_prob > 0:   #只有在训练的时候和使用dropout的时候才进行计算
             return XDropout.apply(x, self.get_context())
@@ -300,7 +298,7 @@ class DebertaIntermediate(nn.Module):
 
 class DebertaOutput(nn.Module):
     def __init__(self, config):
-        super(DebertaOutput, self).__init__()
+        super().__init__()
         self.dense = nn.Linear(config.intermediate_size, config.hidden_size)
         self.LayerNorm = DebertaLayerNorm(config.hidden_size, config.layer_norm_eps)
         self.dropout = StableDropout(config.hidden_dropout_prob)
@@ -314,7 +312,7 @@ class DebertaOutput(nn.Module):
 
 class DebertaLayer(nn.Module):
     def __init__(self, config):
-        super(DebertaLayer, self).__init__()
+        super().__init__()
         self.attention = DebertaAttention(config)
         self.intermediate = DebertaIntermediate(config)
         self.output = DebertaOutput(config)
@@ -697,7 +695,6 @@ class DebertaEmbeddings(nn.Module):
             self.embed_proj = nn.Linear(self.embedding_size, config.hidden_size, bias=False)
         self.LayerNorm = DebertaLayerNorm(config.hidden_size, config.layer_norm_eps)
         self.dropout = StableDropout(config.hidden_dropout_prob)
-        self.output_to_half = False
         self.config = config
 
         # position_ids (1, len position emb) is contiguous in memory and exported when serialized
@@ -759,15 +756,43 @@ class DebertaPreTrainedModel(PreTrainedModel):
     config_class = DebertaConfig
     base_model_prefix = "deberta"
     _keys_to_ignore_on_load_missing = ["position_ids"]
+    _keys_to_ignore_on_load_unexpected = ["position_embeddings"]
+
+    def __init__(self, config):
+        super().__init__(config)
+        self._register_load_state_dict_pre_hook(self._pre_load_hook)
 
     def _init_weights(self, module):
-        """ Initialize the weights """
-        if isinstance(module, (nn.Linear, nn.Embedding)):
+        """Initialize the weights."""
+        if isinstance(module, nn.Linear):
             # Slightly different from the TF version which uses truncated_normal for initialization
             # cf https://github.com/pytorch/pytorch/pull/5617
             module.weight.data.normal_(mean=0.0, std=self.config.initializer_range)
-        if isinstance(module, nn.Linear) and module.bias is not None:
-            module.bias.data.zero_()
+            if module.bias is not None:
+                module.bias.data.zero_()
+        elif isinstance(module, nn.Embedding):
+            module.weight.data.normal_(mean=0.0, std=self.config.initializer_range)
+            if module.padding_idx is not None:
+                module.weight.data[module.padding_idx].zero_()
+
+    def _pre_load_hook(self, state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys, error_msgs):
+        """
+        Removes the classifier if it doesn't have the correct number of labels.
+        """
+        self_state = self.state_dict()
+        if (
+            ("classifier.weight" in self_state)
+            and ("classifier.weight" in state_dict)
+            and self_state["classifier.weight"].size() != state_dict["classifier.weight"].size()
+        ):
+            logger.warning(
+                f"The checkpoint classifier head has a shape {state_dict['classifier.weight'].size()} and this model "
+                f"classifier head has a shape {self_state['classifier.weight'].size()}. Ignoring the checkpoint "
+                f"weights. You should train your model on new data."
+            )
+            del state_dict["classifier.weight"]
+            if "classifier.bias" in state_dict:
+                del state_dict["classifier.bias"]
 
 
 DEBERTA_START_DOCSTRING = r"""
@@ -863,7 +888,7 @@ class DebertaModel(DebertaPreTrainedModel):
     @add_start_docstrings_to_model_forward(DEBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @add_code_sample_docstrings(
         tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="microsoft/deberta-base",
+        checkpoint=_CHECKPOINT_FOR_DOC,
         output_type=SequenceClassifierOutput,
         config_class=_CONFIG_FOR_DOC,
     )
@@ -949,7 +974,6 @@ class DebertaModel(DebertaPreTrainedModel):
 
 @add_start_docstrings("""DeBERTa Model with a `language modeling` head on top. """, DEBERTA_START_DOCSTRING)
 class DebertaForMaskedLM(DebertaPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
     _keys_to_ignore_on_load_missing = [r"position_ids", r"predictions.decoder.bias"]
 
@@ -970,7 +994,7 @@ class DebertaForMaskedLM(DebertaPreTrainedModel):
     @add_start_docstrings_to_model_forward(DEBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @add_code_sample_docstrings(
         tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="microsoft/deberta-base",
+        checkpoint=_CHECKPOINT_FOR_DOC,
         output_type=MaskedLMOutput,
         config_class=_CONFIG_FOR_DOC,
     )
@@ -1110,7 +1134,7 @@ class DebertaForSequenceClassification(DebertaPreTrainedModel):
     @add_start_docstrings_to_model_forward(DEBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @add_code_sample_docstrings(
         tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="microsoft/deberta-base",
+        checkpoint=_CHECKPOINT_FOR_DOC,
         output_type=SequenceClassifierOutput,
         config_class=_CONFIG_FOR_DOC,
     )
@@ -1190,7 +1214,6 @@ class DebertaForSequenceClassification(DebertaPreTrainedModel):
     DEBERTA_START_DOCSTRING,
 )
 class DebertaForTokenClassification(DebertaPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
 
     def __init__(self, config):
@@ -1206,7 +1229,7 @@ class DebertaForTokenClassification(DebertaPreTrainedModel):
     @add_start_docstrings_to_model_forward(DEBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @add_code_sample_docstrings(
         tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="microsoft/deberta-base",
+        checkpoint=_CHECKPOINT_FOR_DOC,
         output_type=TokenClassifierOutput,
         config_class=_CONFIG_FOR_DOC,
     )
@@ -1279,7 +1302,6 @@ class DebertaForTokenClassification(DebertaPreTrainedModel):
     DEBERTA_START_DOCSTRING,
 )
 class DebertaForQuestionAnswering(DebertaPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
 
     def __init__(self, config):
@@ -1294,7 +1316,7 @@ class DebertaForQuestionAnswering(DebertaPreTrainedModel):
     @add_start_docstrings_to_model_forward(DEBERTA_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @add_code_sample_docstrings(
         tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="microsoft/deberta-base",
+        checkpoint=_CHECKPOINT_FOR_DOC,
         output_type=QuestionAnsweringModelOutput,
         config_class=_CONFIG_FOR_DOC,
     )

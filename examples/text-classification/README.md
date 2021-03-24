@@ -85,9 +85,81 @@ Using mixed precision training usually results in 2x-speedup for training with t
 | WNLI  | Accuracy                     | 56.34       | 24            | 56.34         | 12                   |
 
 
+<<<<<<< HEAD
 # Run TensorFlow 2.0 version
 run_tf_glue.py 是tensorflow版本的GLUE分类
 脚本是  [`run_tf_glue.py`](https://github.com/huggingface/transformers/blob/master/examples/text-classification/run_tf_glue.py).
+=======
+## PyTorch version, no Trainer
+
+Based on the script [`run_glue_no_trainer.py`](https://github.com/huggingface/transformers/blob/master/examples/text-classification/run_glue_no_trainer.py).
+
+Like `run_glue.py`, this script allows you to fine-tune any of the models on the [hub](https://huggingface.co/models) on a
+text classification task, either a GLUE task or your own data in a csv or a JSON file. The main difference is that this
+script exposes the bare training loop, to allow you to quickly experiment and add any customization you would like.
+
+It offers less options than the script with `Trainer` (for instance you can easily change the options for the optimizer
+or the dataloaders directly in the script) but still run in a distributed setup, on TPU and supports mixed precision by
+the mean of the [🤗 `Accelerate`](https://github.com/huggingface/accelerate) library. You can use the script normally
+after installing it:
+
+```bash
+pip install accelerate
+```
+
+then
+
+```bash
+export TASK_NAME=mrpc
+
+python run_glue_no_trainer.py \
+  --model_name_or_path bert-base-cased \
+  --task_name $TASK_NAME \
+  --max_seq_length 128 \
+  --per_device_train_batch_size 32 \
+  --learning_rate 2e-5 \
+  --num_train_epochs 3 \
+  --output_dir /tmp/$TASK_NAME/
+```
+
+You can then use your usual launchers to run in it in a distributed environment, but the easiest way is to run
+
+```bash
+accelerate config
+```
+
+and reply to the questions asked. Then
+
+```bash
+accelerate test
+```
+
+that will check everything is ready for training. Finally, you cna launch training with
+
+```bash
+export TASK_NAME=mrpc
+
+accelerate launch run_glue_no_trainer.py \
+  --model_name_or_path bert-base-cased \
+  --task_name $TASK_NAME \
+  --max_seq_length 128 \
+  --per_device_train_batch_size 32 \
+  --learning_rate 2e-5 \
+  --num_train_epochs 3 \
+  --output_dir /tmp/$TASK_NAME/
+```
+
+This command is the same and will work for:
+
+- a CPU-only setup
+- a setup with one GPU
+- a distributed training with several GPUs (single or multi node)
+- a training on TPUs
+
+Note that this library is in alpha release so your feedback is more than welcome if you encounter any problem using it.
+
+## TensorFlow 2.0 version
+>>>>>>> upstream/master
 
 对GLUE基准的MRPC任务上的序列分类库TensorFlow 2.0 Bert模型进行微调:  [General Language Understanding Evaluation](https://gluebenchmark.com/).
 
@@ -394,23 +466,24 @@ Based on the script [`run_xnli.py`](https://github.com/huggingface/transformers/
 
 #### Fine-tuning on XNLI
 
+<<<<<<< HEAD
 此示例代码在XNLI数据集上微调了mBERT（多语言BERT）。 它在单个tesla V100 16GB上运行106分钟。 
 可以通过以下链接下载XNLI的数据，并且应将其同时保存（并解压缩）在`$XNLI_DIR`目录中。
 
 
 * [XNLI 1.0](https://cims.nyu.edu/~sbowman/xnli/XNLI-1.0.zip)
 * [XNLI-MT 1.0](https://dl.fbaipublicfiles.com/XNLI/XNLI-MT-1.0.zip)
+=======
+This example code fine-tunes mBERT (multi-lingual BERT) on the XNLI dataset. It runs in 106 mins on a single tesla V100 16GB.
+>>>>>>> upstream/master
 
 ```bash
-export XNLI_DIR=/path/to/XNLI
-
 python run_xnli.py \
   --model_name_or_path bert-base-multilingual-cased \
   --language de \
   --train_language en \
   --do_train \
   --do_eval \
-  --data_dir $XNLI_DIR \
   --per_device_train_batch_size 32 \
   --learning_rate 5e-5 \
   --num_train_epochs 2.0 \

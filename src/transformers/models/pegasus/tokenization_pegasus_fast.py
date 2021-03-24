@@ -38,8 +38,10 @@ SPIECE_UNDERLINE = "▁"
 VOCAB_FILES_NAMES = {"vocab_file": "spiece.model", "tokenizer_file": "tokenizer.json"}
 
 PRETRAINED_VOCAB_FILES_MAP = {
-    "vocab_file": {"google/pegasus-xsum": "https://cdn.huggingface.co/google/pegasus-xsum/spiece.model"},
-    "tokenizer_file": {"google/pegasus-xsum": "https://cdn.huggingface.co/google/pegasus-xsum/tokenizer.json"},
+    "vocab_file": {"google/pegasus-xsum": "https://huggingface.co/google/pegasus-xsum/resolve/main/spiece.model"},
+    "tokenizer_file": {
+        "google/pegasus-xsum": "https://huggingface.co/google/pegasus-xsum/resolve/main/tokenizer.json"
+    },
 }
 
 PRETRAINED_POSITIONAL_EMBEDDINGS_SIZES = {
@@ -52,8 +54,8 @@ class PegasusTokenizerFast(PreTrainedTokenizerFast):
     Construct a "fast" PEGASUS tokenizer (backed by HuggingFace's `tokenizers` library). Based on `Unigram
     <https://huggingface.co/docs/tokenizers/python/latest/components.html?highlight=unigram#models>`__.
 
-    This tokenizer inherits from :class:`~transformers.PreTrainedTokenizer` which contains most of the main methods.
-    Users should refer to this superclass for more information regarding those methods.
+    This tokenizer inherits from :class:`~transformers.PreTrainedTokenizerFast` which contains most of the main
+    methods. Users should refer to this superclass for more information regarding those methods.
 
     Args:
         vocab_file (:obj:`str`):
