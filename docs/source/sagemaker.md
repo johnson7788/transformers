@@ -67,6 +67,9 @@ role = sagemaker.get_execution_role()
 **Local environment**
 
 ```python
+import sagemaker
+import boto3
+
 iam_client = boto3.client('iam')
 role = iam_client.get_role(RoleName='role-name-of-your-iam-role-with-right-permissions')['Role']['Arn']
 sess = sagemaker.Session()
@@ -113,7 +116,7 @@ For a complete example of a 🤗 Transformers training script, see [train.py](ht
 
 ### Create an HuggingFace Estimator
 
-You run 🤗 Transformers training scripts on SageMaker by creating `HuggingFace` Estimators. The Estimator handles end-to-end Amazon SageMaker training. The training of your script is invoked when you call `fit` on a `HuggingFace` Estimator. In the Estimator you define, which fine-tuning script should be used as `entry_point`, which `instance_type` should be used, which `hyperparameters` are passed in, you can find all possible `HuggingFace` Parameter [here](https://link-me-to-the-a-sagemaker-sdk-hf-estimator.py). and an example of a fine-tuning script [here](https://github.com/huggingface/notebooks/blob/master/sagemaker/01_getting_started_pytorch/scripts/train.py).
+You run 🤗 Transformers training scripts on SageMaker by creating `HuggingFace` Estimators. The Estimator handles end-to-end Amazon SageMaker training. The training of your script is invoked when you call `fit` on a `HuggingFace` Estimator. In the Estimator you define, which fine-tuning script should be used as `entry_point`, which `instance_type` should be used, which `hyperparameters` are passed in, you can find all possible `HuggingFace` Parameter [here](https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#huggingface-estimator). and an example of a fine-tuning script [here](https://github.com/huggingface/notebooks/blob/master/sagemaker/01_getting_started_pytorch/scripts/train.py).
 You can find all useable `instance_types` [here](https://aws.amazon.com/de/sagemaker/pricing/).
 
 The following code sample shows how you train a custom `HuggingFace` script `train.py`, passing in three hyperparameters (`epochs`, `per_device_train_batch_size`, and `model_name_or_path`).
@@ -190,7 +193,9 @@ You can find here a list of the official notebooks provided by Hugging Face.
 | [Distributed Training Model Parallelism](https://github.com/huggingface/notebooks/blob/master/sagemaker/04_distributed_training_model_parallelism/sagemaker-notebook.ipynb)                     | End-to-End model parallelism example using `SageMakerTrainer` and `run_glue.py` script                           |
 | [Spot Instances and continues training](https://github.com/huggingface/notebooks/blob/master/sagemaker/05_spot_instances/sagemaker-notebook.ipynb)                                              | End-to-End to Text-Classification example using spot instances with continued training.                          |
 | [SageMaker Metrics](https://github.com/huggingface/notebooks/blob/master/sagemaker/06_sagemaker_metrics/sagemaker-notebook.ipynb)                                                               | End-to-End to Text-Classification example using SageMaker Metrics to extract and log metrics during training     |
-| [Distributed Training Data Parallelism Tensorflow](https://github.com/huggingface/notebooks/blob/master/sagemaker/07_tensorflow_distributed_training_data_parallelism/sagemaker-notebook.ipynb) | End-to-End distributed binary Text-Classification example using `Keras` and `TensorFlow`                         |
+| [Distributed Training Data Parallelism Tensorflow](https://github.com/huggingface/notebooks/blob/master/sagemaker/07_tensorflow_distributed_training_data_parallelism/sagemaker-notebook.ipynb) | End-to-End distributed binary Text-Classification example using `Keras` and `TensorFlow`                    
+| [Distributed Seq2Seq Training with Data Parallelism and BART](https://github.com/huggingface/notebooks/blob/master/sagemaker/08_distributed_summarization_bart_t5/sagemaker-notebook.ipynb) | End-to-End distributed summarization example `BART-large` and 🤗 Transformers example script for `summarization`                        |
+
 
 ---
 
@@ -200,7 +205,7 @@ In addition to the Deep Learning Container and the SageMaker SDK, we have implem
 
 ### Distributed Training: Data-Parallel
 
-You can use [SageMaker Data Parallelism Library](https://aws.amazon.com/blogs/aws/managed-data-parallelism-in-amazon-sagemaker-simplifies-training-on-large-datasets/) out of the box for distributed training. We added the functionality of Data Parallelism directly into the [Trainer](https://huggingface.co/transformers/main_classes/trainer.html). If your train.py uses the [Trainer](https://huggingface.co/transformers/main_classes/trainer.html) API you only need to define the distribution parameter in the HuggingFace Estimator.
+You can use [SageMaker Data Parallelism Library](https://aws.amazon.com/blogs/aws/managed-data-parallelism-in-amazon-sagemaker-simplifies-training-on-large-datasets/) out of the box for distributed training. We added the functionality of Data Parallelism directly into the [Trainer](https://huggingface.co/transformers/main_classes/trainer.html). If your `train.py` uses the [Trainer](https://huggingface.co/transformers/main_classes/trainer.html) API you only need to define the distribution parameter in the HuggingFace Estimator.
 
 - [Example Notebook PyTorch](https://github.com/huggingface/notebooks/blob/master/sagemaker/04_distributed_training_model_parallelism/sagemaker-notebook.ipynb)
 - [Example Notebook TensorFlow](https://github.com/huggingface/notebooks/blob/master/sagemaker/07_tensorflow_distributed_training_data_parallelism/sagemaker-notebook.ipynb)
@@ -227,16 +232,12 @@ huggingface_estimator = HuggingFace(
 
 ### Distributed Training: Model-Parallel
 
-You can use [SageMaker Model Parallelism Library](https://aws.amazon.com/blogs/aws/amazon-sagemaker-simplifies-training-deep-learning-models-with-billions-of-parameters/) out of the box for distributed training. We extended the Trainer API to the [SageMakerTrainer](https://github.com/huggingface/transformers/blob/461e8cacf94d1f76367cc9ba2cfd5b9bd3641c81/src/transformers/sagemaker/trainer_sm.py#L72) to use the model parallelism library. Therefore you only have to change the imports in your `train.py`.
+You can use [SageMaker Model Parallelism Library](https://aws.amazon.com/blogs/aws/amazon-sagemaker-simplifies-training-deep-learning-models-with-billions-of-parameters/) out of the box for distributed training. We added the functionality of Model Parallelism directly into the [Trainer](https://huggingface.co/transformers/main_classes/trainer.html). If your `train.py` uses the [Trainer](https://huggingface.co/transformers/main_classes/trainer.html) API you only need to define the distribution parameter in the HuggingFace Estimator.  
+For detailed information about the adjustments take a look [here](https://sagemaker.readthedocs.io/en/stable/api/training/smd_model_parallel_general.html?highlight=modelparallel#required-sagemaker-python-sdk-parameters).
+
 
 - [Example Notebook](https://github.com/huggingface/notebooks/blob/master/sagemaker/04_distributed_training_model_parallelism/sagemaker-notebook.ipynb)
 
-```python
-from transformers.sagemaker import SageMakerTrainingArguments as TrainingArguments
-from transformers.sagemaker import SageMakerTrainer as Trainer
-```
-
-After the adjustments in the train.py you need to extend the distribution configuration in the HuggingFace Estimator. For detailed information about the adjustments take a look [here](https://sagemaker.readthedocs.io/en/stable/api/training/smd_model_parallel_general.html?highlight=modelparallel#required-sagemaker-python-sdk-parameters).
 
 ```python
 # configuration for running training on smdistributed Model Parallel
@@ -272,7 +273,7 @@ huggingface_estimator = HuggingFace(
         transformers_version='4.4.2',
         pytorch_version='1.6.0',
         py_version='py36',
-        hyperparameters = hyperparameters
+        hyperparameters = hyperparameters,
         distribution = distribution
 )
 ```
@@ -320,7 +321,9 @@ huggingface_estimator = HuggingFace(
 
 ### Git Repository
 
-When you create a `HuggingFace` Estimator, you can specify a [training script that is stored in a GitHub repository](https://sagemaker.readthedocs.io/en/stable/overview.html#use-scripts-stored-in-a-git-repository) as the entry point for the estimator, so that you don’t have to download the scripts locally. If Git support is enabled, then `entry_point` and `source_dir` should be relative paths in the Git repo if provided.
+When you create a `HuggingFace` Estimator, you can specify a [training script that is stored in a GitHub repository](https://sagemaker.readthedocs.io/en/stable/overview.html#use-scripts-stored-in-a-git-repository) as the entry point for the estimator, so that you don’t have to download the scripts locally. If Git support is enabled, the `entry_point` and `source_dir` should be relative paths in the Git repo if provided. 
+
+If you are using `git_config` to run the [🤗 Transformers examples scripts](https://github.com/huggingface/transformers/tree/master/examples) keep in mind that you need to configure the right `'branch'` for you `transformers_version`, e.g. if you use `transformers_version='4.4.2` you have to use `'branch':'v4.4.2'`. 
 
 As an example to use `git_config` with an [example script from the transformers repository](https://github.com/huggingface/transformers/tree/master/examples/text-classification).
 
@@ -330,7 +333,7 @@ _Tip: define `output_dir` as `/opt/ml/model` in the hyperparameter for the scrip
 
 ```python
 # configure git settings
-git_config = {'repo': 'https://github.com/huggingface/transformers.git','branch': 'master'}
+git_config = {'repo': 'https://github.com/huggingface/transformers.git','branch': 'v4.4.2'} # v4.4.2 is referring to the `transformers_version you use in the estimator.
 
  # create the Estimator
 huggingface_estimator = HuggingFace(
@@ -387,4 +390,4 @@ huggingface_estimator = HuggingFace(
 
 - [Amazon SageMaker documentation for Hugging Face](https://docs.aws.amazon.com/sagemaker/latest/dg/hugging-face.html)
 
-- [SageMaker Python SDK](https://sagemaker.readthedocs.io/en/stable/index.html)
+- [SageMaker Python SDK](https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/index.html)

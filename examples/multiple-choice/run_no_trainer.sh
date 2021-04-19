@@ -12,15 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import unittest
-
-from .test_pipelines_common import MonoInputPipelineCommonMixin
-
-
-class SentimentAnalysisPipelineTests(MonoInputPipelineCommonMixin, unittest.TestCase):
-    pipeline_task = "sentiment-analysis"
-    small_models = [
-        "sshleifer/tiny-distilbert-base-uncased-finetuned-sst-2-english"
-    ]  # Default model - Models tested without the @slow decorator
-    large_models = [None]  # Models tested with the @slow decorator
-    mandatory_keys = {"label", "score"}  # Keys which should be in the output
+accelerate launch run_swag_no_trainer.py \
+  --model_name_or_path bert-base-uncased \
+  --dataset_name swag \
+  --output_dir /tmp/test-swag-no-trainer \
+  --pad_to_max_length

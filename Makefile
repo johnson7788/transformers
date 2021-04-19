@@ -31,6 +31,7 @@ extra_quality_checks:
 	python utils/check_table.py
 	python utils/check_dummies.py
 	python utils/check_repo.py
+	python utils/check_inits.py
 
 # this target runs checks on all files
 quality:
@@ -73,6 +74,12 @@ test:
 
 test-examples:
 	python -m pytest -n auto --dist=loadfile -s -v ./examples/
+
+# Run tests for SageMaker DLC release
+
+test-sagemaker: # install sagemaker dependencies in advance with pip install .[sagemaker]
+	TEST_SAGEMAKER=True python -m pytest -n auto  -s -v ./tests/sagemaker
+
 
 # Check that docs can build
 
