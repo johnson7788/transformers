@@ -215,6 +215,59 @@ output/en-ro-translation
 --max_val_samples=500
 --max_test_samples=200
 ```
+#使用facebook/mbart-large-cc25微调模型，fp16，12G显存不够用
+python run_translation.py  --model_name_or_path facebook/mbart-large-cc25  \
+    --do_train \
+    --do_eval \
+    --fp16 True \
+    --dataset_name wmt16 \
+    --dataset_config_name ro-en \
+    --source_lang en_XX \
+    --target_lang ro_RO \
+    --output_dir tst-translation \
+    --per_device_train_batch_size=2 \
+    --per_device_eval_batch_size=2 \
+    --overwrite_output_dir \
+    --predict_with_generate \
+    --max_train_samples=2000 \
+    --max_val_samples=500 \
+    --max_test_samples=200
+    
+# mbart50     facebook/mbart-large-50 还是显存溢出
+python run_translation.py  --model_name_or_path facebook/mbart-large-50  \
+    --do_train \
+    --do_eval \
+    --fp16 True \
+    --dataset_name wmt16 \
+    --dataset_config_name ro-en \
+    --source_lang en_XX \
+    --target_lang ro_RO \
+    --output_dir tst-translation \
+    --per_device_train_batch_size=2 \
+    --per_device_eval_batch_size=2 \
+    --overwrite_output_dir \
+    --predict_with_generate \
+    --max_train_samples=2000 \
+    --max_val_samples=500 \
+    --max_test_samples=200
+
+# m2m100模型 使用模型facebook/m2m100_418M, 注意source_lang和target_lang发生了改变，是不一样的格式， 英语到罗马尼亚语， 12GB显存不会溢出，很不错
+python run_translation.py  --model_name_or_path facebook/m2m100_418M  \
+    --do_train \
+    --do_eval \
+    --fp16 True \
+    --dataset_name wmt16 \
+    --dataset_config_name ro-en \
+    --source_lang en \
+    --target_lang ro \
+    --output_dir tst-translation \
+    --per_device_train_batch_size=2 \
+    --per_device_eval_batch_size=2 \
+    --overwrite_output_dir \
+    --predict_with_generate \
+    --max_train_samples=2000 \
+    --max_val_samples=500 \
+    --max_test_samples=200
 
 # 训练中文到英文, 使用wmt19数据集，使用下载好的本地模型facebook/mbart-large-cc25, 需要中英文平行语料下载，网络不太ok, 需要下载的数据集很多
 使用了m2m100的多语言模型，需要搭配使用--forced_bos_token参数，表明第一个token是生成的目标语言的种类
