@@ -217,7 +217,8 @@ output/en-ro-translation
 ```
 
 # 训练中文到英文, 使用wmt19数据集，使用下载好的本地模型facebook/mbart-large-cc25, 需要中英文平行语料下载，网络不太ok, 需要下载的数据集很多
-使用了mbart的多语言模型，需要搭配使用--forced_bos_token参数，表明第一个token是生成的目标语言的种类
+使用了m2m100的多语言模型，需要搭配使用--forced_bos_token参数，表明第一个token是生成的目标语言的种类
+mbart是自动设置了decoder_start_token_id
 ```
 'newscommentary_v14' = {list: 1} ['http://data.statmt.org/news-commentary/v14/training/news-commentary-v14.en-zh.tsv.gz']
 'wikititles_v1' = {list: 1} ['http://data.statmt.org/wikititles/v1/wikititles-v1.zh-en.tsv.gz']
