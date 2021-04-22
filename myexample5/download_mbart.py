@@ -1,0 +1,12 @@
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+tokenizer = AutoTokenizer.from_pretrained("facebook/mbart-large-cc25")
+model = AutoModelForSeq2SeqLM.from_pretrained("facebook/mbart-large-cc25")
+model.save_pretrained('mbart')
+tokenizer.save_pretrained('mbart')
+# os.remove("deberta-base/special_tokens_map.json")
+# os.remove("deberta-base/tokenizer_config.json")
+# os.system("mv deberta-base ../")
+# tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+# model = AutoModelForMaskedLM.from_pretrained("bert-base-uncased")
+# model.save_pretrained('bert_model_uncased')
+# tokenizer.save_pretrained('bert_model_uncased')
