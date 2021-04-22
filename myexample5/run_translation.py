@@ -50,12 +50,12 @@ from transformers.utils import check_min_version
 import os
 os.environ["WANDB_DISABLED"] = "true"
 
-# Will error if the minimal version of Transformers is not installed. Remove at your own risks.
+# 如果没有安装最小版本的transformer，将出现错误。移除的风险由你自己承担。
 check_min_version("4.6.0.dev0")
 
 logger = logging.getLogger(__name__)
 
-# A list of all multilingual tokenizer which require src_lang and tgt_lang attributes.
+# 所有需要 src_lang 和 tgt_lang 属性的多语言tokenizer的列表。
 MULTILINGUAL_TOKENIZERS = [MBartTokenizer, MBartTokenizerFast, MBart50Tokenizer, MBart50TokenizerFast, M2M100Tokenizer]
 
 
@@ -261,25 +261,22 @@ def main():
         f"Process rank: {training_args.local_rank}, device: {training_args.device}, n_gpu: {training_args.n_gpu}"
         + f"distributed training: {bool(training_args.local_rank != -1)}, 16-bits training: {training_args.fp16}"
     )
-    # Set the verbosity to info of the Transformers logger (on main process only):
+    # 设置transformer logger的粗略程度为info（仅在主进程中）
     if is_main_process(training_args.local_rank):
         transformers.utils.logging.set_verbosity_info()
-    logger.info(f"Training/evaluation parameters {training_args}")
+    logger.info(f"训练/评估参数 {training_args}")
 
-    # Set seed before initializing model.
+    # 在初始化模型之前设置random种子。
     set_seed(training_args.seed)
 
-    # Get the datasets: you can either provide your own JSON training and evaluation files (see below)
-    # or just provide the name of one of the public datasets available on the hub at https://huggingface.co/datasets/
-    # (the dataset will be downloaded automatically from the datasets Hub).
+    # 获取数据集：你可以提供你自己的JSON训练和评估文件（见下文）。
+    # 或只是提供中心上的一个公共数据集的名称 at https://huggingface.co/datasets/
+    # （数据集将自动从数据集hub下载）。
     #
-    # For translation, only JSON files are supported, with one field named "translation" containing two keys for the
-    # source and target languages (unless you adapt what follows).
-    #
-    # In distributed training, the load_dataset function guarantee that only one local process can concurrently
-    # download the dataset.
+    # 对于翻译，只支持JSON文件，其中有一个名为 "translation"的字段，包含源语言和目标语言的两个key（除非你调整下面的内容）。
+    # 在分布式训练中，load_dataset函数保证只有一个本地进程可以同时下载数据集。
     if data_args.dataset_name is not None:
-        # Downloading and loading a dataset from the hub.
+        # 从hub下载并加载数据集。
         datasets = load_dataset(data_args.dataset_name, data_args.dataset_config_name, cache_dir=model_args.cache_dir)
     else:
         data_files = {}
@@ -293,14 +290,13 @@ def main():
             data_files["test"] = data_args.test_file
             extension = data_args.test_file.split(".")[-1]
         datasets = load_dataset(extension, data_files=data_files, cache_dir=model_args.cache_dir)
-    # See more about loading any type of standard or custom dataset (from files, python dict, pandas DataFrame, etc) at
+    # 查看更多关于加载任何类型的标准或自定义数据集（从文件、python dict、pandas DataFrame等）的信息，请访问
     # https://huggingface.co/docs/datasets/loading_datasets.html.
 
-    # Load pretrained model and tokenizer
+    # 2. 加载预训练的模型和tokenizer
     #
-    # Distributed training:
-    # The .from_pretrained methods guarantee that only one local process can concurrently
-    # download model & vocab.
+    # 分布式训练：
+    # .from_pretrained方法保证只有一个本地进程可以同时下载模型和单词表。
     config = AutoConfig.from_pretrained(
         model_args.config_name if model_args.config_name else model_args.model_name_or_path,
         cache_dir=model_args.cache_dir,
@@ -323,7 +319,7 @@ def main():
         use_auth_token=True if model_args.use_auth_token else None,
     )
 
-    # Set decoder_start_token_id
+    # 设置解码的开始的token id decoder_start_token_id
     if model.config.decoder_start_token_id is None and isinstance(tokenizer, (MBartTokenizer, MBartTokenizerFast)):
         if isinstance(tokenizer, MBartTokenizer):
             model.config.decoder_start_token_id = tokenizer.lang_code_to_id[data_args.target_lang]
@@ -331,12 +327,12 @@ def main():
             model.config.decoder_start_token_id = tokenizer.convert_tokens_to_ids(data_args.target_lang)
 
     if model.config.decoder_start_token_id is None:
-        raise ValueError("Make sure that `config.decoder_start_token_id` is correctly defined")
-
+        raise ValueError("确保正确定义了`config.decoder_start_token_id` ")
+    # T5模型使用
     prefix = data_args.source_prefix if data_args.source_prefix is not None else ""
 
-    # Preprocessing the datasets.
-    # We need to tokenize inputs and targets.
+    # 预处理数据集。
+    # 我们需要tokenize输入和目标。 column_names: ['translation']
     if training_args.do_train:
         column_names = datasets["train"].column_names
     elif training_args.do_eval:
@@ -344,35 +340,34 @@ def main():
     elif training_args.do_predict:
         column_names = datasets["test"].column_names
     else:
-        logger.info("There is nothing to do. Please pass `do_train`, `do_eval` and/or `do_predict`.")
+        logger.info("没有什么可以做的。 请通过`do_train`，`do_eval`和/或`do_predict`。 ")
         return
 
-    # For translation we set the codes of our source and target languages (only useful for mBART, the others will
-    # ignore those attributes).
+    # mBart: 对于翻译，我们设置源语言和目标语言的代码（只对mBART有用，其他的会忽略这些属性
     if isinstance(tokenizer, tuple(MULTILINGUAL_TOKENIZERS)):
         assert data_args.target_lang is not None and data_args.source_lang is not None, (
             f"{tokenizer.__class__.__name__} is a multilingual tokenizer which requires --source_lang and "
             "--target_lang arguments."
         )
-
+        # tokenizer.src_lang: 'en_XX' ;  tokenizer.tgt_lang: 'ro_RO'
         tokenizer.src_lang = data_args.source_lang
         tokenizer.tgt_lang = data_args.target_lang
 
-        # For multilingual translation models like mBART-50 and M2M100 we need to force the target language token
-        # as the first generated token. We ask the user to explicitly provide this as --forced_bos_token argument.
+        # 对于像 mBART-50 和 M2M100 这样的多语言翻译模型，我们需要强制目标语言token作为第一个生成的token。我们要求用户明确提供--forced_bos_token参数。
         forced_bos_token_id = (
             tokenizer.lang_code_to_id[data_args.forced_bos_token] if data_args.forced_bos_token is not None else None
         )
         model.config.foced_bos_token_id = forced_bos_token_id
 
-    # Get the language codes for input/target.
+    # 获取输入/目标的语言code， source_lang：en,  target_lang: ro
     source_lang = data_args.source_lang.split("_")[0]
     target_lang = data_args.target_lang.split("_")[0]
 
-    # Temporarily set max_target_length for training.
+    # 临时设置Max_target_Length进行训练。 max_target_length: 128
     max_target_length = data_args.max_target_length
+    #是否padding到最长: False
     padding = "max_length" if data_args.pad_to_max_length else False
-
+    #标签平滑因子
     if training_args.label_smoothing_factor > 0 and not hasattr(model, "prepare_decoder_input_ids_from_labels"):
         logger.warning(
             "label_smoothing is enabled but the `prepare_decoder_input_ids_from_labels` method is not defined for"
@@ -380,17 +375,27 @@ def main():
         )
 
     def preprocess_function(examples):
+        """
+        # 对数据进行预处理
+        Args:
+            examples ():  {'translation': [{'en':xxx, 'ro':yyyy},....]}  一个translation里面包含1千条训练样本对
+            一条训练样本对 eg: {'en': 'Membership of Parliament: see Minutes', 'ro': 'Componenţa Parlamentului: a se vedea procesul-verbal'}
+        Returns:
+
+        """
+        #取出所有的src语句和trg语句，形成列表
         inputs = [ex[source_lang] for ex in examples["translation"]]
         targets = [ex[target_lang] for ex in examples["translation"]]
+        # 如果是T5模型，需要加前缀
         inputs = [prefix + inp for inp in inputs]
+        #max_source_length： 输入序列的的最大长度 , 返回tokenid和attention mask。  model_inputs.data : {'input_ids':[[xx,xx],...], 'attention_mask':[[1,1],...}
         model_inputs = tokenizer(inputs, max_length=data_args.max_source_length, padding=padding, truncation=True)
 
-        # Setup the tokenizer for targets
+        # 为目标设置token程序， labels也是和model_inputs同样的格式
         with tokenizer.as_target_tokenizer():
             labels = tokenizer(targets, max_length=max_target_length, padding=padding, truncation=True)
 
-        # If we are padding here, replace all tokenizer.pad_token_id in the labels by -100 when we want to ignore
-        # padding in the loss.
+        # 如果我们在这里进行填充，当我们想忽略损失中的填充时，将标签中所有tokenizer.pad_token_id替换为-100。
         if padding == "max_length" and data_args.ignore_pad_token_for_loss:
             labels["input_ids"] = [
                 [(l if l != tokenizer.pad_token_id else -100) for l in label] for label in labels["input_ids"]
@@ -404,6 +409,7 @@ def main():
         if "train" not in datasets:
             raise ValueError("--do_train requires a train dataset")
         if data_args.max_train_samples is not None:
+            # 是否从训练样本中截取部分，一般测试用
             train_dataset = train_dataset.select(range(data_args.max_train_samples))
         train_dataset = train_dataset.map(
             preprocess_function,
@@ -443,7 +449,7 @@ def main():
             load_from_cache_file=not data_args.overwrite_cache,
         )
 
-    # Data collator
+    # 数据的 collator 函数： label_pad_token_id: -100
     label_pad_token_id = -100 if data_args.ignore_pad_token_for_loss else tokenizer.pad_token_id
     if data_args.pad_to_max_length:
         data_collator = default_data_collator
@@ -455,7 +461,7 @@ def main():
             pad_to_multiple_of=8 if training_args.fp16 else None,
         )
 
-    # Metric
+    # 评估指标 Metric
     metric = load_metric("sacrebleu")
 
     def postprocess_text(preds, labels):
@@ -485,7 +491,7 @@ def main():
         result = {k: round(v, 4) for k, v in result.items()}
         return result
 
-    # Initialize our Trainer
+    # 初始化我们的Trainer
     trainer = Seq2SeqTrainer(
         model=model,
         args=training_args,
