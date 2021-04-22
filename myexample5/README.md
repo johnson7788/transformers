@@ -171,6 +171,7 @@ python examples/seq2seq/run_translation.py \
 
 对于上述一组T5模型，需要记住的是，如果切换到不同的语言对，一定要调整3个特定语言命令行参数中的源和目标值：`--source_lang`、`--target_lang`和`--source_prefix`。
 
+# Mbart
 MBart模型要求"--source_lang "和"--target_lang "的值采用不同的格式，例如，它希望用 "en_XX "代替 "en"，对于 "ro"，它希望用 "ro_RO"。完整的MBart语言代码规范可以在[这里](https://huggingface.co/facebook/mbart-large-cc25)找到。例如：
 
 export langs=ar_AR,cs_CZ,de_DE,en_XX,es_XX,et_EE,fi_FI,fr_XX,gu_IN,hi_IN,it_IT,ja_XX,kk_KZ,ko_KR,lt_LT,lv_LV,my_MM,ne_NP,nl_XX,ro_RO,ru_RU,si_LK,tr_TR,vi_VN,zh_CN
