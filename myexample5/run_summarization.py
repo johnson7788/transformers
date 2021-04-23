@@ -294,7 +294,11 @@ def main():
     # 在分布式训练中，load_dataset函数保证只有一个本地进程可以同时下载数据集。
     if data_args.dataset_name is not None:
         # 从hub下载并加载数据集。
-        datasets = load_dataset(data_args.dataset_name, data_args.dataset_config_name, cache_dir=model_args.cache_dir)
+        if os.path.exists('data_script/'+data_args.dataset_name):
+            dataset_path = 'data_script/'+ data_args.dataset_name +'/' +data_args.dataset_name+'.py'
+        else:
+            dataset_path = data_args.dataset_name
+        datasets = load_dataset(dataset_path, data_args.dataset_config_name, cache_dir=model_args.cache_dir)
     else:
         data_files = {}
         if data_args.train_file is not None:
@@ -456,7 +460,10 @@ def main():
     )
 
     # Metric
-    metric = load_metric("rouge")
+    if os.path.exists('data_script/rouge.py'):
+        metric = load_metric("data_script/rouge.py")
+    else:
+        metric = load_metric("rouge")
 
     def postprocess_text(preds, labels):
         preds = [pred.strip() for pred in preds]
