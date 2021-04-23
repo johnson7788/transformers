@@ -269,7 +269,7 @@ python run_translation.py  --model_name_or_path facebook/m2m100_418M  \
     --max_val_samples=500 \
     --max_test_samples=200
 
-# 中文到英文，自定义数据集
+# 中文到英文，自定义数据集 data/custom_zh_en
 python run_translation.py --model_name_or_path
 facebook/m2m100_418M
 --do_train
@@ -283,7 +283,7 @@ zh
 --target_lang
 en
 --output_dir
-tst-translation
+output/zh-en-translation
 --per_device_train_batch_size=2
 --per_device_eval_batch_size=2
 --overwrite_output_dir

@@ -464,7 +464,10 @@ def main():
         )
 
     # 评估指标 Metric
-    metric = load_metric("sacrebleu")
+    if os.path.exists('data/sacrebleu.py'):
+        metric = load_metric('data/sacrebleu.py')
+    else:
+        metric = load_metric("sacrebleu")
 
     def postprocess_text(preds, labels):
         preds = [pred.strip() for pred in preds]
