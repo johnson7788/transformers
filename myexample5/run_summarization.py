@@ -99,7 +99,7 @@ class ModelArguments:
 @dataclass
 class DataTrainingArguments:
     """
-    Arguments pertaining to what data we are going to input our model for training and eval.
+    与我们要输入模型进行训练和评估的数据有关的参数。
     """
 
     dataset_name: Optional[str] = field(
@@ -110,11 +110,11 @@ class DataTrainingArguments:
     )
     text_column: Optional[str] = field(
         default = None,
-        metadata = {"help": "The name of the column in the datasets containing the full texts (for summarization)."},
+        metadata = {"help": "包含 全文的  数据集中的列的名称, 全文部分"},
     )
     summary_column: Optional[str] = field(
         default=None,
-        metadata={"help": "The name of the column in the datasets containing the summaries (for summarization)."},
+        metadata={"help": "包含 摘要的 数据集中列的名称，摘要部分"},
     )
     train_file: Optional[str] = field(
         default=None, metadata={"help": "输入训练数据文件（jsonlines 或csv）。"}
@@ -122,14 +122,13 @@ class DataTrainingArguments:
     validation_file: Optional[str] = field(
         default=None,
         metadata={
-            "help": "An optional input evaluation data file to evaluate the metrics (rouge) on "
-            "(a jsonlines or csv file)."
+            "help": "一个可选的输入评估数据文件，用于评估指标（rouge）（一个jsonlines或csv文件）。 "
         },
     )
     test_file: Optional[str] = field(
         default=None,
         metadata={
-            "help": "An optional input test data file to evaluate the metrics (rouge) on " "(a jsonlines or csv file)."
+            "help": "一个可选的输入测试数据文件，用于评估""（一个jsonlines或csv文件）上的指标（rouge）。"
         },
     )
     overwrite_cache: bool = field(
@@ -200,7 +199,7 @@ class DataTrainingArguments:
 
     def __post_init__(self):
         if self.dataset_name is None and self.train_file is None and self.validation_file is None:
-            raise ValueError("Need either a dataset name or a training/validation file.")
+            raise ValueError("需要数据集名称或训练/验证文件。")
         else:
             if self.train_file is not None:
                 extension = self.train_file.split(".")[-1]
@@ -228,14 +227,13 @@ summarization_name_mapping = {
 
 
 def main():
-    # See all possible arguments in src/transformers/training_args.py
+    # 查看SRC/Transformers/Training_args.py中的所有可能参数
     # or by passing the --help flag to this script.
-    # We now keep distinct sets of args, for a cleaner separation of concerns.
+    # 我们现在保留不同的args集，以便更干净地分离关注的参数。
 
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, Seq2SeqTrainingArguments))
     if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
-        # If we pass only one argument to the script and it's the path to a json file,
-        # let's parse it to get our arguments.
+        # 如果我们只向脚本传递一个参数，而且是一个json文件的路径，那么我们就来解析它以获得我们的参数。
         model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
@@ -248,8 +246,7 @@ def main():
         "t5-11b",
     ]:
         logger.warning(
-            "You're running a t5 model but didn't provide a source prefix, which is the expected, e.g. with "
-            "`--source_prefix 'summarize: ' `"
+            "你正在运行一个T5模型，但没有提供一个源前缀，这是必须的, e.g. with `--source_prefix 'summarize: ' `"
         )
 
     # Detecting last checkpoint.
@@ -288,17 +285,14 @@ def main():
     # Set seed before initializing model.
     set_seed(training_args.seed)
 
-    # Get the datasets: you can either provide your own CSV/JSON training and evaluation files (see below)
-    # or just provide the name of one of the public datasets available on the hub at https://huggingface.co/datasets/
-    # (the dataset will be downloaded automatically from the datasets Hub).
+    # 获取数据集：你可以提供你自己的JSON训练和评估文件（见下文）。
+    # 或只是提供中心上的一个公共数据集的名称 at https://huggingface.co/datasets/
+    # （数据集将自动从数据集hub下载）。
     #
-    # For CSV/JSON files this script will use the first column for the full texts and the second column for the
-    # summaries (unless you specify column names for this with the `text_column` and `summary_column` arguments).
-    #
-    # In distributed training, the load_dataset function guarantee that only one local process can concurrently
-    # download the dataset.
+    # 对于翻译，只支持JSON文件，其中有一个名为 "translation"的字段，包含源语言和目标语言的两个key（除非你调整下面的内容）。
+    # 在分布式训练中，load_dataset函数保证只有一个本地进程可以同时下载数据集。
     if data_args.dataset_name is not None:
-        # Downloading and loading a dataset from the hub.
+        # 从hub下载并加载数据集。
         datasets = load_dataset(data_args.dataset_name, data_args.dataset_config_name, cache_dir=model_args.cache_dir)
     else:
         data_files = {}
@@ -312,14 +306,13 @@ def main():
             data_files["test"] = data_args.test_file
             extension = data_args.test_file.split(".")[-1]
         datasets = load_dataset(extension, data_files=data_files, cache_dir=model_args.cache_dir)
-    # See more about loading any type of standard or custom dataset (from files, python dict, pandas DataFrame, etc) at
+    # 查看更多关于加载任何类型的标准或自定义数据集（从文件、python dict、pandas DataFrame等）的信息，请访问
     # https://huggingface.co/docs/datasets/loading_datasets.html.
 
-    # Load pretrained model and tokenizer
+    # 2. 加载预训练的模型和tokenizer
     #
-    # Distributed training:
-    # The .from_pretrained methods guarantee that only one local process can concurrently
-    # download model & vocab.
+    # 分布式训练：
+    # .from_pretrained方法保证只有一个本地进程可以同时下载模型和单词表。
     config = AutoConfig.from_pretrained(
         model_args.config_name if model_args.config_name else model_args.model_name_or_path,
         cache_dir=model_args.cache_dir,
@@ -347,8 +340,8 @@ def main():
 
     prefix = data_args.source_prefix if data_args.source_prefix is not None else ""
 
-    # Preprocessing the datasets.
-    # We need to tokenize inputs and targets.
+    # 对数据集进行预处理。
+    # 我们需要对输入和目标进行tokenize。
     if training_args.do_train:
         column_names = datasets["train"].column_names
     elif training_args.do_eval:
@@ -356,10 +349,10 @@ def main():
     elif training_args.do_predict:
         column_names = datasets["test"].column_names
     else:
-        logger.info("There is nothing to do. Please pass `do_train`, `do_eval` and/or `do_predict`.")
+        logger.info("没有什么可以做的。 请传入 `do_train`, `do_eval` and/or `do_predict`.")
         return
 
-    # Get the column names for input/target.
+    # 获取输入/目标的列名称。
     dataset_columns = summarization_name_mapping.get(data_args.dataset_name, None)
     if data_args.text_column is None:
         text_column = dataset_columns[0] if dataset_columns is not None else column_names[0]
@@ -509,6 +502,7 @@ def main():
 
     # Training
     if training_args.do_train:
+        logger.info("*** 训练 ***")
         if last_checkpoint is not None:
             checkpoint = last_checkpoint
         elif os.path.isdir(model_args.model_name_or_path):
@@ -531,7 +525,7 @@ def main():
     # Evaluation
     results = {}
     if training_args.do_eval:
-        logger.info("*** Evaluate ***")
+        logger.info("*** 评估 ***")
 
         metrics = trainer.evaluate(
             max_length=data_args.val_max_target_length, num_beams=data_args.num_beams, metric_key_prefix="eval"
@@ -543,7 +537,7 @@ def main():
         trainer.save_metrics("eval", metrics)
 
     if training_args.do_predict:
-        logger.info("*** Test ***")
+        logger.info("*** 测试 ***")
 
         test_results = trainer.predict(
             test_dataset,

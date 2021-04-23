@@ -216,8 +216,7 @@ def main():
 
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, Seq2SeqTrainingArguments))
     if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
-        # 如果我们只向脚本传递一个参数，而且是一个json文件的路径。
-        # 让我们解析它以获得我们的参数。
+        # 如果我们只向脚本传递一个参数，而且是一个json文件的路径, 让我们解析它以获得我们的参数。
         model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
@@ -342,7 +341,7 @@ def main():
     elif training_args.do_predict:
         column_names = datasets["test"].column_names
     else:
-        logger.info("没有什么可以做的。 请通过`do_train`，`do_eval`和/或`do_predict`。 ")
+        logger.info("没有什么可以做的。 请传入`do_train`，`do_eval`和/或`do_predict`。 ")
         return
 
     # mBart: 对于翻译，我们设置源语言和目标语言的代码（只对mBART有用，其他的会忽略这些属性

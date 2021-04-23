@@ -38,7 +38,7 @@ python examples/seq2seq/run_summarization.py \
     --dataset_name cnn_dailymail \
     --dataset_config "3.0.0" \
     --source_prefix "summarize: " \
-    --output_dir /tmp/tst-summarization \
+    --output_dir output/t5-summarization \
     --per_device_train_batch_size=4 \
     --per_device_eval_batch_size=4 \
     --overwrite_output_dir \
