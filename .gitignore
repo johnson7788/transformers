@@ -185,7 +185,6 @@ myexample4/dataset/wikitext-2-raw
 myexample3/output/
 myexample3/repair
 myexample4/myroberta/
-myexample5/data
 myexample5/mbart-local
 myexample5/runs
 myexample5/output
