@@ -47,7 +47,6 @@ from transformers import (
 from transformers.trainer_utils import get_last_checkpoint, is_main_process
 from transformers.utils import check_min_version
 
-import os
 os.environ["WANDB_DISABLED"] = "true"
 
 # 如果没有安装最小版本的transformer，将出现错误。移除的风险由你自己承担。
