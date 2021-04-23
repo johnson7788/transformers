@@ -275,7 +275,9 @@ def main():
     #
     # 对于翻译，只支持JSON文件，其中有一个名为 "translation"的字段，包含源语言和目标语言的两个key（除非你调整下面的内容）。
     # 在分布式训练中，load_dataset函数保证只有一个本地进程可以同时下载数据集。
-    if data_args.dataset_name is not None:
+    if data_args.dataset_name == 'custom_zh_en':
+        datasets = load_dataset(path='data/custom_zh_en.py', name='custom_zh_en', data_files={'train': ['data/UN_train.zh','data/UN_train.en'], 'validation': ['data/UN_valid.zh','data/UN_valid.en'], 'test': ['data/UN_test.zh','data/UN_test.en']})
+    elif data_args.dataset_name is not None:
         # 从hub下载并加载数据集。
         datasets = load_dataset(data_args.dataset_name, data_args.dataset_config_name, cache_dir=model_args.cache_dir)
     else:
