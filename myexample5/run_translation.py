@@ -76,7 +76,7 @@ class ModelArguments:
     )
     cache_dir: Optional[str] = field(
         default=None,
-        metadata={"help": "本地路径：在哪里存储从HuggingFace.co下载的预磨模模型"},
+        metadata={"help": "本地路径：在哪里存储从HuggingFace.co下载的预训练模模型"},
     )
     use_fast_tokenizer: bool = field(
         default=True,

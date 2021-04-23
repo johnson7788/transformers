@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Fine-tuning the library models for sequence to sequence.
+微调seq2seq的库模型。
 """
 # You can also adapt this script on your own sequence to sequence task. Pointers for this are left as comments.
 
@@ -45,7 +45,7 @@ from transformers.trainer_utils import get_last_checkpoint, is_main_process
 from transformers.utils import check_min_version
 
 
-# Will error if the minimal version of Transformers is not installed. Remove at your own risks.
+# 如果没有安装最小版本的transformer，将出现错误。移除的风险由你自己承担。
 check_min_version("4.6.0.dev0")
 
 logger = logging.getLogger(__name__)
@@ -55,7 +55,7 @@ try:
 except (LookupError, OSError):
     if is_offline_mode():
         raise LookupError(
-            "Offline mode: run this script without TRANSFORMERS_OFFLINE first to download nltk data files"
+            "Offline mode: 在没有TRANSFORMERS_OFFLINE的情况下运行此脚本，请首先下载NLTK数据文件"
         )
     with FileLock(".lock") as lock:
         nltk.download("punkt", quiet=True)
@@ -64,35 +64,34 @@ except (LookupError, OSError):
 @dataclass
 class ModelArguments:
     """
-    Arguments pertaining to which model/config/tokenizer we are going to fine-tune from.
+    与我们将要微调的模型/配置/tokenizer相关的参数。
     """
 
     model_name_or_path: str = field(
-        metadata={"help": "Path to pretrained model or model identifier from huggingface.co/models"}
+        metadata={"help": "来自huggingface.co/models的预训练模型或模型标识符的路径 "}
     )
     config_name: Optional[str] = field(
-        default=None, metadata={"help": "Pretrained config name or path if not the same as model_name"}
+        default=None, metadata={"help": "预训练模型的配置名称或路径如果None，那么等同于model_name "}
     )
     tokenizer_name: Optional[str] = field(
-        default=None, metadata={"help": "Pretrained tokenizer name or path if not the same as model_name"}
+        default=None, metadata={"help": "预训练模型的tokenizer名称或路径如果None，那么等同于model_name"}
     )
     cache_dir: Optional[str] = field(
         default=None,
-        metadata={"help": "Where to store the pretrained models downloaded from huggingface.co"},
+        metadata={"help": "本地路径：在哪里存储从HuggingFace.co下载的预训练模模型"},
     )
     use_fast_tokenizer: bool = field(
         default=True,
-        metadata={"help": "Whether to use one of the fast tokenizer (backed by the tokenizers library) or not."},
+        metadata={"help": "是否使用其中一个fast tokenizer（由tokenizer库支持）"},
     )
     model_revision: str = field(
         default="main",
-        metadata={"help": "The specific model version to use (can be a branch name, tag name or commit id)."},
+        metadata={"help": "要使用的特定模型版本（可以是分支名称、标签名称或提交ID）。"},
     )
     use_auth_token: bool = field(
         default=False,
         metadata={
-            "help": "Will use the token generated when running `transformers-cli login` (necessary to use this script "
-            "with private models)."
+            "help": "将使用运行`transformers-cli login`时生成的token（在私有模型中使用此脚本时必须使用）。"
         },
     )
 
@@ -104,21 +103,21 @@ class DataTrainingArguments:
     """
 
     dataset_name: Optional[str] = field(
-        default=None, metadata={"help": "The name of the dataset to use (via the datasets library)."}
+        default=None, metadata={"help": "要使用的数据集的名称（通过datasets库）"}
     )
     dataset_config_name: Optional[str] = field(
-        default=None, metadata={"help": "The configuration name of the dataset to use (via the datasets library)."}
+        default=None, metadata={"help": "要使用的数据集的配置名称（通过datasets库）。"}
     )
     text_column: Optional[str] = field(
-        default=None,
-        metadata={"help": "The name of the column in the datasets containing the full texts (for summarization)."},
+        default = None,
+        metadata = {"help": "The name of the column in the datasets containing the full texts (for summarization)."},
     )
     summary_column: Optional[str] = field(
         default=None,
         metadata={"help": "The name of the column in the datasets containing the summaries (for summarization)."},
     )
     train_file: Optional[str] = field(
-        default=None, metadata={"help": "The input training data file (a jsonlines or csv file)."}
+        default=None, metadata={"help": "输入训练数据文件（jsonlines 或csv）。"}
     )
     validation_file: Optional[str] = field(
         default=None,
@@ -134,79 +133,69 @@ class DataTrainingArguments:
         },
     )
     overwrite_cache: bool = field(
-        default=False, metadata={"help": "Overwrite the cached training and evaluation sets"}
+        default=False, metadata={"help": "覆盖缓存的训练和评估集 "}
     )
     preprocessing_num_workers: Optional[int] = field(
         default=None,
-        metadata={"help": "The number of processes to use for the preprocessing."},
+        metadata={"help": "用于预处理的进程数量。"},
     )
     max_source_length: Optional[int] = field(
         default=1024,
         metadata={
-            "help": "The maximum total input sequence length after tokenization. Sequences longer "
-            "than this will be truncated, sequences shorter will be padded."
+            "help": "token化后的最大输入序列长度。长于这个长度的序列将被截断，短于这个长度的序列将被填充。"
         },
     )
     max_target_length: Optional[int] = field(
         default=128,
         metadata={
-            "help": "The maximum total sequence length for target text after tokenization. Sequences longer "
-            "than this will be truncated, sequences shorter will be padded."
+            "help": "token化后的最大输入序列长度。长于这个长度的序列将被截断，短于这个长度的序列将被填充。"
         },
     )
     val_max_target_length: Optional[int] = field(
         default=None,
         metadata={
-            "help": "The maximum total sequence length for validation target text after tokenization. Sequences longer "
-            "than this will be truncated, sequences shorter will be padded. Will default to `max_target_length`."
-            "This argument is also used to override the ``max_length`` param of ``model.generate``, which is used "
-            "during ``evaluate`` and ``predict``."
+            "help": "token化后的最大输入序列长度。长于这个长度的序列将被截断，短于这个长度的序列将被填充。将默认为`max_target_length`。"
+                    "这个参数也被用来覆盖``model.generate'的``max_length'参数，在``evaluate'和``predict'时使用。 "
         },
     )
     pad_to_max_length: bool = field(
         default=False,
         metadata={
-            "help": "Whether to pad all samples to model maximum sentence length. "
-            "If False, will pad the samples dynamically when batching to the maximum length in the batch. More "
-            "efficient on GPU but very bad for TPU."
+            "help": "是否将所有样本Padding到最大句子长度的模型上。如果是False，在批次时将动态地将样本Padding到批中的最大长度。在GPU上更有效，但对TPU非常不利。"
         },
     )
     max_train_samples: Optional[int] = field(
         default=None,
         metadata={
-            "help": "For debugging purposes or quicker training, truncate the number of training examples to this "
-            "value if set."
+            "help": "为了调试的目的或更快的训练，如果设置了训练实例的数量，就将其截断为这个值。"
         },
     )
     max_val_samples: Optional[int] = field(
         default=None,
         metadata={
-            "help": "For debugging purposes or quicker training, truncate the number of validation examples to this "
-            "value if set."
+            "help": "为了调试的目的或更快的训练，如果设置了验证实例的数量，则将其截断为这个值。"
         },
     )
     max_test_samples: Optional[int] = field(
         default=None,
         metadata={
-            "help": "For debugging purposes or quicker training, truncate the number of test examples to this "
-            "value if set."
+            "help": "为了调试的目的或更快的训练，如果设置了测试实例的数量，就将其截断为这个值。"
         },
     )
     num_beams: Optional[int] = field(
         default=None,
         metadata={
-            "help": "Number of beams to use for evaluation. This argument will be passed to ``model.generate``, "
-            "which is used during ``evaluate`` and ``predict``."
+            "help": "用于评估的beams的数量。这个参数将被传递给 `model.generate`，在 `evaluate`和 `predict`中使用。"
         },
     )
     ignore_pad_token_for_loss: bool = field(
         default=True,
         metadata={
-            "help": "Whether to ignore the tokens corresponding to padded labels in the loss computation or not."
+            "help": "在损失计算中是否忽略与填充标签相对应的token。"
         },
     )
     source_prefix: Optional[str] = field(
-        default=None, metadata={"help": "A prefix to add before every source text (useful for T5 models)."}
+        default=None, metadata={"help": "在每个源文本前添加一个前缀（对T5模型有用）。"}
     )
 
     def __post_init__(self):
