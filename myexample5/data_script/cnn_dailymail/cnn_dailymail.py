@@ -62,13 +62,23 @@ _CITATION = """\
 }
 """
 
+# _DL_URLS = {
+#     # pylint: disable=line-too-long
+#     "cnn_stories": "https://drive.google.com/uc?export=download&id=0BwmD_VLjROrfTHk4NFg2SndKcjQ",
+#     "dm_stories": "https://drive.google.com/uc?export=download&id=0BwmD_VLjROrfM1BxdkxVaTY2bWs",
+#     "test_urls": "https://raw.githubusercontent.com/abisee/cnn-dailymail/master/url_lists/all_test.txt",
+#     "train_urls": "https://raw.githubusercontent.com/abisee/cnn-dailymail/master/url_lists/all_train.txt",
+#     "val_urls": "https://raw.githubusercontent.com/abisee/cnn-dailymail/master/url_lists/all_val.txt",
+#     # pylint: enable=line-too-long
+# }
+
 _DL_URLS = {
     # pylint: disable=line-too-long
-    "cnn_stories": "https://drive.google.com/uc?export=download&id=0BwmD_VLjROrfTHk4NFg2SndKcjQ",
-    "dm_stories": "https://drive.google.com/uc?export=download&id=0BwmD_VLjROrfM1BxdkxVaTY2bWs",
-    "test_urls": "https://raw.githubusercontent.com/abisee/cnn-dailymail/master/url_lists/all_test.txt",
-    "train_urls": "https://raw.githubusercontent.com/abisee/cnn-dailymail/master/url_lists/all_train.txt",
-    "val_urls": "https://raw.githubusercontent.com/abisee/cnn-dailymail/master/url_lists/all_val.txt",
+    "cnn_stories": "/Users/admin/git/transformers/myexample5/data_script/cnn_dailymail_data/cnn_stories.tgz",
+    "dm_stories": "/Users/admin/git/transformers/myexample5/data_script/cnn_dailymail_data/dailymail_stories.tgz",
+    "test_urls": "/Users/admin/git/transformers/myexample5/data_script/cnn_dailymail_data/all_test.txt",
+    "train_urls": "/Users/admin/git/transformers/myexample5/data_script/cnn_dailymail_data/all_train.txt",
+    "val_urls": "/Users/admin/git/transformers/myexample5/data_script/cnn_dailymail_data/all_val.txt",
     # pylint: enable=line-too-long
 }
 

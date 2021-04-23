@@ -43,6 +43,9 @@ python examples/seq2seq/run_summarization.py \
     --per_device_eval_batch_size=4 \
     --overwrite_output_dir \
     --predict_with_generate
+
+#测试
+python run_summarization.py --model_name_or_path t5-small --do_train --do_eval --dataset_name cnn_dailymail --dataset_config "3.0.0" --source_prefix "summarize: " --output_dir output/t5-summarization --per_device_train_batch_size=4 --per_device_eval_batch_size=4 --overwrite_output_dir --predict_with_generate --max_train_samples=2000 --max_val_samples=500 --max_test_samples=200
 ```
 
 只有 T5 models `t5-small`, `t5-base`, `t5-large`, `t5-3b` and `t5-11b` 需要附加参数: `--source_prefix "summarize: "`.
