@@ -44,10 +44,10 @@ python examples/seq2seq/run_summarization.py \
     --overwrite_output_dir \
     --predict_with_generate
 ```
-#测试cnn_dailymail
+# 测试cnn_dailymail
 python run_summarization.py --model_name_or_path t5-small --do_train --do_eval --dataset_name cnn_dailymail --dataset_config "3.0.0" --source_prefix "summarize: " --output_dir output/t5-summarization --per_device_train_batch_size=4 --per_device_eval_batch_size=4 --overwrite_output_dir --predict_with_generate --max_train_samples=2000 --max_val_samples=500 --max_test_samples=200
 
-#测试自定义的中文数据集csl, 训练集2800,开发集350, 测试集350,  模型是uer/t5-base-chinese-cluecorpussmall， 需要测试下这个模型的tokenize和模型是否可以使用
+# 测试自定义的中文数据集csl, 训练集2800,开发集350, 测试集350,  模型是uer/t5-base-chinese-cluecorpussmall， 需要测试下这个模型的tokenize和模型是否可以使用
 # 数据处理的方式和英语不太一样，未进行测试
 ```
 #中文的
@@ -57,6 +57,9 @@ python run_summarization.py --model_name_or_path t5-small --do_train --do_eval -
 
 python run_summarization.py --model_name_or_path uer/t5-base-chinese-cluecorpussmall --do_train --do_eval --dataset_name csl --source_prefix "summarize: " --output_dir output/t5-summarization --per_device_train_batch_size=4 --per_device_eval_batch_size=4 --overwrite_output_dir --predict_with_generate --max_train_samples=2000 --max_val_samples=500 --max_test_samples=200
 ```
+
+# 使用mt5  google/mt5-small  测试文本摘要
+python run_summarization.py --model_name_or_path google/mt5-small --do_train --do_eval --dataset_name csl --source_prefix "summarize: " --output_dir output/t5-summarization --per_device_train_batch_size=4 --per_device_eval_batch_size=4 --overwrite_output_dir --predict_with_generate --max_train_samples=2000 --max_val_samples=500 --max_test_samples=200
 
 只有 T5 models `t5-small`, `t5-base`, `t5-large`, `t5-3b` and `t5-11b` 需要附加参数: `--source_prefix "summarize: "`.
 
