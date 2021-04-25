@@ -142,13 +142,13 @@ class DataTrainingArguments:
     max_source_length: Optional[int] = field(
         default=1024,
         metadata={
-            "help": "token化后的最大输入序列长度。长于这个长度的序列将被截断，短于这个长度的序列将被填充。"
+            "help": "token化后的最大输入序列长度。长于这个长度的序列将被截断，短于这个长度的序列将被填充。这是是原文被保留为1024长度"
         },
     )
     max_target_length: Optional[int] = field(
         default=128,
         metadata={
-            "help": "token化后的最大输入序列长度。长于这个长度的序列将被截断，短于这个长度的序列将被填充。"
+            "help": "token化后的最大输入序列长度。长于这个长度的序列将被截断，短于这个长度的序列将被填充。摘要文章被保留为128"
         },
     )
     val_max_target_length: Optional[int] = field(
@@ -295,10 +295,11 @@ def main():
     if data_args.dataset_name is not None:
         # 从hub下载并加载数据集。
         if os.path.exists('data_script/'+data_args.dataset_name):
-            dataset_path = 'data_script/'+ data_args.dataset_name +'/' +data_args.dataset_name+'.py'
+            dataset_path = 'data_script/' +data_args.dataset_name+'.py'
         else:
             dataset_path = data_args.dataset_name
-        datasets = load_dataset(dataset_path, data_args.dataset_config_name, cache_dir=model_args.cache_dir)
+        #如果手动把数据下载到本地，那么请设置忽略校验md5
+        datasets = load_dataset(dataset_path, data_args.dataset_config_name, cache_dir=model_args.cache_dir,ignore_verifications=True)
     else:
         data_files = {}
         if data_args.train_file is not None:
@@ -346,7 +347,7 @@ def main():
     prefix = data_args.source_prefix if data_args.source_prefix is not None else ""
 
     # 对数据集进行预处理。
-    # 我们需要对输入和目标进行tokenize。
+    # 我们需要对输入和目标进行tokenize。, column_names: ['article', 'highlights', 'id']
     if training_args.do_train:
         column_names = datasets["train"].column_names
     elif training_args.do_eval:
@@ -357,7 +358,7 @@ def main():
         logger.info("没有什么可以做的。 请传入 `do_train`, `do_eval` and/or `do_predict`.")
         return
 
-    # 获取输入/目标的列名称。
+    # 获取输入/目标的列名称。, 我们只需要  dataset_columns: ('article', 'highlights')
     dataset_columns = summarization_name_mapping.get(data_args.dataset_name, None)
     if data_args.text_column is None:
         text_column = dataset_columns[0] if dataset_columns is not None else column_names[0]
@@ -387,6 +388,13 @@ def main():
         )
 
     def preprocess_function(examples):
+        """
+        数据预处理的函数
+        Args:
+            examples ():
+        Returns:
+        """
+        # inputs 是一个批次的数据，是全文， targets是摘要数据，是一个批次的, prefix代表每个输入前都加前缀，代表要执行的任务: 'summarize: '
         inputs = examples[text_column]
         targets = examples[summary_column]
         inputs = [prefix + inp for inp in inputs]
