@@ -43,9 +43,19 @@ python examples/seq2seq/run_summarization.py \
     --per_device_eval_batch_size=4 \
     --overwrite_output_dir \
     --predict_with_generate
-
-#测试
+```
+#测试cnn_dailymail
 python run_summarization.py --model_name_or_path t5-small --do_train --do_eval --dataset_name cnn_dailymail --dataset_config "3.0.0" --source_prefix "summarize: " --output_dir output/t5-summarization --per_device_train_batch_size=4 --per_device_eval_batch_size=4 --overwrite_output_dir --predict_with_generate --max_train_samples=2000 --max_val_samples=500 --max_test_samples=200
+
+#测试自定义的中文数据集csl, 训练集2800,开发集350, 测试集350,  模型是uer/t5-base-chinese-cluecorpussmall， 需要测试下这个模型的tokenize和模型是否可以使用
+# 数据处理的方式和英语不太一样，未进行测试
+```
+#中文的
+'[CLS] summarize : 阐 述 了 针 对 海 量 存 储 系 统 的 可 用 性 测 试 方 法, 采 用 基 于 故 障 注 入 的 方 法 测 试 系 统 的 恢 复 时 间, 给 出 了 故 障 对 系 统 可 用 性 的 影 响 评 价, 设 计 了 模 拟 系 统 正 常 运 行 的 负 载 设 置 方 法 、 手 动 注 入 故 障 和 模 拟 [UNK] 磁 盘 故 障 的 方 法 。 [SEP]'
+#英文的
+'summarize :xxxxxxxx </s>
+
+python run_summarization.py --model_name_or_path uer/t5-base-chinese-cluecorpussmall --do_train --do_eval --dataset_name csl --source_prefix "summarize: " --output_dir output/t5-summarization --per_device_train_batch_size=4 --per_device_eval_batch_size=4 --overwrite_output_dir --predict_with_generate --max_train_samples=2000 --max_val_samples=500 --max_test_samples=200
 ```
 
 只有 T5 models `t5-small`, `t5-base`, `t5-large`, `t5-3b` and `t5-11b` 需要附加参数: `--source_prefix "summarize: "`.

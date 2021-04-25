@@ -224,6 +224,7 @@ summarization_name_mapping = {
     "xglue": ("news_body", "news_title"),
     "xsum": ("document", "summary"),
     "wiki_summary": ("article", "highlights"),
+    "csl": ("content", "title"),
 }
 
 
@@ -292,7 +293,9 @@ def main():
     #
     # 对于翻译，只支持JSON文件，其中有一个名为 "translation"的字段，包含源语言和目标语言的两个key（除非你调整下面的内容）。
     # 在分布式训练中，load_dataset函数保证只有一个本地进程可以同时下载数据集。
-    if data_args.dataset_name is not None:
+    if data_args.dataset_name == 'csl':
+        datasets = load_dataset(path='data_csl/csl.py', name='csl', data_files={'train': 'data_csl/train.json', 'validation': 'data_csl/dev.json', 'test': 'data_csl/test.json'})
+    elif data_args.dataset_name is not None:
         # 从hub下载并加载数据集。
         if os.path.exists('data_script/'+data_args.dataset_name):
             dataset_path = 'data_script/' +data_args.dataset_name+'.py'
