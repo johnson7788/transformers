@@ -285,6 +285,7 @@ python run_translation.py  --model_name_or_path facebook/m2m100_418M  \
     --max_val_samples=500 \
     --max_test_samples=200
 
+在data/collect_data下是收集的原始数据，生成训练集，测试集，和验证集
 # 中文到英文，自定义数据集 data/custom_zh_en
 python run_translation.py --model_name_or_path
 facebook/m2m100_418M
