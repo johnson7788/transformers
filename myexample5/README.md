@@ -285,27 +285,59 @@ python run_translation.py  --model_name_or_path facebook/m2m100_418M  \
     --max_val_samples=500 \
     --max_test_samples=200
 
-在data/collect_data下是收集的原始数据，生成训练集，测试集，和验证集
+在data/collect_data下是收集的原始数据，生成训练集，测试集，和验证集, GPU显存占用 10591MiB, 使用减少GPU显存占用技术
+gradient_checkpointing = True,
+use_cache = False
 # 中文到英文，自定义数据集 data/custom_zh_en
 python run_translation.py --model_name_or_path
 facebook/m2m100_418M
 --do_train
 --do_eval
---fp16
-True
---dataset_name
-custom_zh_en
---source_lang
-zh
---target_lang
-en
---output_dir
-output/zh-en-translation
+--fp16 True
+--dataset_name custom_zh_en
+--source_lang zh
+--target_lang en
+--output_dir output/zh-en-translation
 --per_device_train_batch_size=2
 --per_device_eval_batch_size=2
 --overwrite_output_dir
 --predict_with_generate
 
+```buildoutcfg
+运行的结果
+***** Running Evaluation *****
+  Num examples = 5000
+  Batch size = 2
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2500/2500 [49:10<00:00,  1.18s/it]
+  *** eval metrics *****
+  epoch                     =        3.0
+  eval_bleu                 =    34.8537
+  eval_gen_len              =    37.8668
+  eval_loss                 =     1.3082
+  eval_mem_cpu_alloc_delta  =        8MB
+  eval_mem_cpu_peaked_delta =        4MB
+  eval_mem_gpu_alloc_delta  =        0MB
+  eval_mem_gpu_peaked_delta =     1186MB
+  eval_runtime              = 0:49:10.82
+  eval_samples              =       5000
+  eval_samples_per_second   =      1.694
+05/17/2021 19:13:30 - INFO - __main__ -   *** Test ***
+***** Running Prediction *****
+  Num examples = 2000
+  Batch size = 2
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1000/1000 [23:01<00:00,  2.20s/it]
+***** test metrics *****
+  test_bleu                 =    25.1618
+  test_gen_len              =    46.9625
+  test_loss                 =     1.9077
+  test_mem_cpu_alloc_delta  =        0MB
+  test_mem_cpu_peaked_delta =        0MB
+  test_mem_gpu_alloc_delta  =        0MB
+  test_mem_gpu_peaked_delta =     1445MB
+  test_runtime              = 0:23:50.40
+  test_samples              =       2000
+  test_samples_per_second   =      1.398
+```
 
 
 # 训练中文到英文, 使用wmt19数据集，使用下载好的本地模型facebook/mbart-large-cc25, 需要中英文平行语料下载，网络不太ok, 需要下载的数据集很多

@@ -26,10 +26,10 @@ def split_data():
     print(f"共有数据 {len(cn_lines)}条")
     data_pair = [(cn,en) for cn,en in zip(cn_lines, en_lines)]
     #打乱数据
-    random.shuffle(data_pair)
-    dev_data = data_pair[:5000]
-    test_data = data_pair[5000:10000]
-    train_data = data_pair[10000:]
+    # random.shuffle(data_pair)
+    dev_data = data_pair[:2000]
+    test_data = data_pair[2000:4000]
+    train_data = data_pair[-10000:]
     #保存到文件
     parent_dir = '../'
     train_en_file = os.path.join(parent_dir, 'train.en')

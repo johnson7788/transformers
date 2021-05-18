@@ -128,19 +128,19 @@ class DataTrainingArguments:
         metadata={"help": "用于预处理的进程数量。"},
     )
     max_source_length: Optional[int] = field(
-        default=1024,
+        default=256,
         metadata={
             "help": "token化后的最大输入序列长度。长于这个长度的序列将被截断，短于这个长度的序列将被填充。"
         },
     )
     max_target_length: Optional[int] = field(
-        default=128,
+        default=256,
         metadata={
             "help": "token化后的最大输入序列长度。长于这个长度的序列将被截断，短于这个长度的序列将被填充。"
         },
     )
     val_max_target_length: Optional[int] = field(
-        default=None,
+        default=256,
         metadata={
             "help": "token化后的最大输入序列长度。长于这个长度的序列将被截断，短于这个长度的序列将被填充。将默认为`max_target_length`。"
                     "这个参数也被用来覆盖``model.generate'的``max_length'参数，在``evaluate'和``predict'时使用。 "
@@ -274,7 +274,7 @@ def main():
     # 对于翻译，只支持JSON文件，其中有一个名为 "translation"的字段，包含源语言和目标语言的两个key（除非你调整下面的内容）。
     # 在分布式训练中，load_dataset函数保证只有一个本地进程可以同时下载数据集。
     if data_args.dataset_name == 'custom_zh_en':
-        datasets = load_dataset(path='data/custom_zh_en.py', name='custom_zh_en', data_files={'train': ['data/UN_train.zh','data/UN_train.en'], 'validation': ['data/UN_valid.zh','data/UN_valid.en'], 'test': ['data/UN_test.zh','data/UN_test.en']})
+        datasets = load_dataset(path='data/custom_zh_en.py', name='custom_zh_en', data_files={'train': ['data/train.cn','data/train.en'], 'validation': ['data/dev.cn','data/dev.en'], 'test': ['data/test.cn','data/test.en']})
     elif data_args.dataset_name is not None:
         # 从hub下载并加载数据集。
         datasets = load_dataset(data_args.dataset_name, data_args.dataset_config_name, cache_dir=model_args.cache_dir)
@@ -302,6 +302,8 @@ def main():
         cache_dir=model_args.cache_dir,
         revision=model_args.model_revision,
         use_auth_token=True if model_args.use_auth_token else None,
+        gradient_checkpointing = True,
+        use_cache = False
     )
     tokenizer = AutoTokenizer.from_pretrained(
         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,

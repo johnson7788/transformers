@@ -190,3 +190,5 @@ myexample5/runs
 myexample5/output
 myexample5/data_script/cnn_dailymail_data/
 myexample5/data_csl/csl_data.json
+myexample5/data/*.cn
+myexample5/data/*.en
