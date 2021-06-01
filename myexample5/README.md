@@ -304,6 +304,26 @@ facebook/m2m100_418M
 --predict_with_generate
 
 ```buildoutcfg
+ 93%|█████████████████████████████████████████████████████████████████████████████████████████████████       | 14000/15000 [1:41:49<07:02,  2.37it/s]
+Saving model checkpoint to output/zh-en-translation/checkpoint-14000
+Configuration saved in output/zh-en-translation/checkpoint-14000/config.json
+Model weights saved in output/zh-en-translation/checkpoint-14000/pytorch_model.bin
+tokenizer config file saved in output/zh-en-translation/checkpoint-14000/tokenizer_config.json
+Special tokens file saved in output/zh-en-translation/checkpoint-14000/special_tokens_map.json
+{'loss': 0.6335, 'learning_rate': 1.6833333333333332e-06, 'epoch': 2.9}
+ 97%|████████████████████████████████████████████████████████████████████████████████████████████████████▌   | 14500/15000 [1:45:30<03:31,  2.37it/s]
+Saving model checkpoint to output/zh-en-translation/checkpoint-14500
+Configuration saved in output/zh-en-translation/checkpoint-14500/config.json
+Model weights saved in output/zh-en-translation/checkpoint-14500/pytorch_model.bin
+tokenizer config file saved in output/zh-en-translation/checkpoint-14500/tokenizer_config.json
+Special tokens file saved in output/zh-en-translation/checkpoint-14500/special_tokens_map.json
+{'loss': 0.6271, 'learning_rate': 1.6666666666666667e-08, 'epoch': 3.0}
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 15000/15000 [1:49:11<00:00,  3.01it/s]Saving model checkpoint to output/zh-en-translation/checkpoint-15000
+Configuration saved in output/zh-en-translation/checkpoint-15000/config.json
+Model weights saved in output/zh-en-translation/checkpoint-15000/pytorch_model.bin
+tokenizer config file saved in output/zh-en-translation/checkpoint-15000/tokenizer_config.json
+Special tokens file saved in output/zh-en-translation/checkpoint-15000/special_tokens_map.json
+
 运行的结果
 ***** Running Evaluation *****
   Num examples = 5000

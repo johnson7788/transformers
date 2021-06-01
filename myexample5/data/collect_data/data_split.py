@@ -9,6 +9,7 @@
 import random
 import os
 random.seed(10)
+import re
 
 def split_data():
     # 5000条作为验证集，5000条作为测试集，剩下的都为训练集
@@ -24,7 +25,14 @@ def split_data():
             lines = ef.readlines()
             en_lines.extend(lines)
     print(f"共有数据 {len(cn_lines)}条")
-    data_pair = [(cn,en) for cn,en in zip(cn_lines, en_lines)]
+    data_pair = []
+    for cn,en in zip(cn_lines, en_lines):
+        res = re.findall('[\u4e00-\u9fa5]+', en)
+        if res:
+            #跳过中文数据集
+            continue
+        data_pair.append([cn,en])
+    print(f"过滤后的数据有 {len(data_pair)}条")
     #打乱数据
     # random.shuffle(data_pair)
     dev_data = data_pair[:2000]
